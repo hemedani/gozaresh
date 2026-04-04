@@ -1,9 +1,11 @@
 # Gozarish Frontend TODO.md
+
 **Project**: Gozarish Frontend – Citizen Report Registration System
 **Goal**: Beautiful, accessible, multi-language Next.js 16 frontend with shadcn/ui components
 **Tech stack**: Next.js 16 + TypeScript + Tailwind v4 + shadcn/ui + next-intl + Zustand + React Hook Form + Zod
 
 **Workflow rules for ZED IDE AI agent**:
+
 - Always read `CONTINUE.md` first as your system prompt.
 - Work **one step at a time** from this TODO.md.
 - After finishing a step: mark it `[x]`, add any notes, then run the exact git commit procedure described in root QWEN.md.
@@ -15,6 +17,7 @@
 - All UI must be beautiful, accessible, and production-ready with shadcn/ui.
 
 ## Phase 1: Setup & Configuration (Beginning – do these first)
+
 - [x] Next.js 16 app scaffolded with TypeScript, Tailwind v4, App Router
 - [x] Install core dependencies: next-intl, zustand, react-hook-form, zod, jose, next-themes
 - [x] Install Radix UI primitives, class-variance-authority, lucide-react, framer-motion
@@ -33,17 +36,18 @@
 - [x] Copy backend type declarations to src/types/declarations/
 
 ## Phase 2: Core UI Components (Build shadcn/ui component library)
-- [ ] Add more shadcn/ui components as needed:
-  - [ ] Dialog/Modal (for confirmations, forms)
-  - [ ] Toast/Notification (for success/error messages)
-  - [ ] Select (for dropdowns: tags, categories, status)
-  - [ ] Checkbox (for multi-select tags, filters)
-  - [ ] Tabs (for admin panel sections)
-  - [ ] Table (for reports/users lists in admin)
-  - [ ] Dropdown Menu (for user menu, actions)
-  - [ ] Avatar (for user profiles)
-  - [ ] Badge (for tags, status indicators)
-  - [ ] Form (React Hook Form integration with shadcn/ui)
+
+- [x] Add more shadcn/ui components as needed:
+  - [x] Dialog/Modal (for confirmations, forms)
+  - [x] Toast/Notification (for success/error messages)
+  - [x] Select (for dropdowns: tags, categories, status)
+  - [x] Checkbox (for multi-select tags, filters)
+  - [x] Tabs (for admin panel sections)
+  - [x] Table (for reports/users lists in admin)
+  - [x] Dropdown Menu (for user menu, actions)
+  - [x] Avatar (for user profiles)
+  - [x] Badge (for tags, status indicators)
+  - [x] Form (React Hook Form integration with shadcn/ui)
   - [ ] File Upload component
   - [ ] Loading/Spinner component
 - [ ] Create reusable form components:
@@ -63,6 +67,7 @@
   - [ ] Smooth theme transitions
 
 ## Phase 3: Public User Pages (Multi-language)
+
 - [ ] **Landing Page** (`/[locale]/`)
   - [ ] Hero section with app description
   - [ ] Features overview (simple, secure, multi-language)
@@ -115,6 +120,7 @@
   - [ ] Comments/reviews section (if applicable)
 
 ## Phase 4: Admin Panel (`/admin/*` – no locale prefix)
+
 - [ ] **Admin Layout**
   - [ ] Sidebar navigation (Dashboard, Reports, Users, Tags, Categories, Files)
   - [ ] Admin header with user menu
@@ -166,6 +172,7 @@
   - [ ] Preview images/videos
 
 ## Phase 5: Internationalization (Complete all 9 languages)
+
 - [ ] Add translation files for all languages:
   - [ ] fa.json (Persian – default, RTL) ✅ started
   - [ ] en.json (English – LTR) ✅ started
@@ -195,6 +202,7 @@
 - [ ] Test LTR layouts thoroughly (en, zh, pt, es, nl, tr, ru)
 
 ## Phase 6: PWA & Polish
+
 - [ ] Install next-pwa
 - [ ] Configure service worker
   - [ ] Cache static assets
@@ -224,6 +232,7 @@
   - [ ] ARIA labels where needed
 
 ## Phase 7: Testing & Production Readiness
+
 - [ ] Form validation testing (Zod schemas)
 - [ ] Auth flow testing (login, register, logout, session)
 - [ ] Server actions error handling
@@ -253,6 +262,7 @@
 - [ ] Deployment preparation (env vars, ports, etc.)
 
 ## Known Issues & Technical Debt
+
 - [ ] Check if all server actions properly handle errors
 - [ ] Verify JWT cookie handling is secure (httpOnly, secure flags)
 - [ ] Ensure all forms have proper loading states
