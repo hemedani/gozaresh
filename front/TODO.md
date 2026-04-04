@@ -55,10 +55,10 @@
   - [x] FileUploadField (with preview for images)
   - [x] TagSelector (multi-select with chips)
   - [x] LocationPicker (map or address input)
-- [ ] Create layout components:
-  - [ ] Header (with language switcher, theme toggle, auth buttons)
-  - [ ] Footer (simple, multi-lang)
-  - [ ] Sidebar (for admin panel)
+- [x] Create layout components:
+  - [x] Header (with language switcher, theme toggle, auth buttons)
+  - [x] Footer (simple, multi-lang)
+  - [x] Sidebar (for admin panel)
   - [ ] Navigation (public site)
 - [ ] Theme configuration:
   - [ ] Dark mode with next-themes
