@@ -50,11 +50,11 @@
   - [x] Form (React Hook Form integration with shadcn/ui)
   - [ ] File Upload component
   - [ ] Loading/Spinner component
-- [ ] Create reusable form components:
-  - [ ] FormField (with label, input, error message)
-  - [ ] FileUploadField (with preview for images)
-  - [ ] TagSelector (multi-select with chips)
-  - [ ] LocationPicker (map or address input)
+- [x] Create reusable form components:
+  - [x] FormField (with label, input, error message)
+  - [x] FileUploadField (with preview for images)
+  - [x] TagSelector (multi-select with chips)
+  - [x] LocationPicker (map or address input)
 - [ ] Create layout components:
   - [ ] Header (with language switcher, theme toggle, auth buttons)
   - [ ] Footer (simple, multi-lang)
