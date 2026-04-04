@@ -60,11 +60,11 @@
   - [x] Footer (simple, multi-lang)
   - [x] Sidebar (for admin panel)
   - [ ] Navigation (public site)
-- [ ] Theme configuration:
-  - [ ] Dark mode with next-themes
-  - [ ] Light mode (default)
-  - [ ] System preference detection
-  - [ ] Smooth theme transitions
+- [x] Theme configuration:
+  - [x] Dark mode with next-themes
+  - [x] Light mode (default)
+  - [x] System preference detection
+  - [x] Smooth theme transitions
 
 ## Phase 3: Public User Pages (Multi-language)
 
