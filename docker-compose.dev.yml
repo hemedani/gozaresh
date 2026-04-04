@@ -1,24 +1,6 @@
 version: "3.8"
 
 services:
-  # Traefik reverse proxy
-  traefik:
-    image: traefik:v2.10
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-    ports:
-      - "80:80"
-      - "8080:8080" # Traefik dashboard
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-      - "traefik.enable=true"
-    networks:
-      - gozarish-dev
-
   # MongoDB
   mongo:
     image: mongo:7
@@ -34,6 +16,8 @@ services:
     build:
       context: ./back
       target: development
+    ports:
+      - "1405:1405"
     volumes:
       - ./back:/app
       - /app/deps
@@ -41,10 +25,6 @@ services:
       - MONGO_URI=mongodb://mongo:27017/gozarish
       - ENV=development
       - APP_PORT=1405
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`api.localhost`)"
-      - "traefik.http.services.backend.loadbalancer.server.port=1405"
     depends_on:
       - mongo
     networks:
@@ -55,18 +35,16 @@ services:
     build:
       context: ./front
       target: development
+    ports:
+      - "3000:3000"
     volumes:
       - ./front:/app
       - /app/node_modules
       - /app/.next
     environment:
-      - NEXT_PUBLIC_LESAN_URL=http://api.localhost
-      - LESAN_URL=http://backend:1405
+      - NEXT_PUBLIC_LESAN_URL=http://localhost:1405
+      - LESAN_URL=http://localhost:1405
       - APP_PORT=3000
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`frontend.localhost`)"
-      - "traefik.http.services.frontend.loadbalancer.server.port=3000"
     depends_on:
       - backend
     networks:
