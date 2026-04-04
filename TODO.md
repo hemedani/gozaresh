@@ -57,14 +57,16 @@
 - [x] Add API playground access (playground: true in mod.ts)
 
 ## Phase 2: Frontend Skeleton (Next.js 15)
-- [ ] In `front/` run `npx create-next-app@latest . --typescript --tailwind --app --eslint --yes` (or copy exact structure from yademan/front)
-- [ ] Install all exact dependencies from yademan/front (pnpm install)
-- [ ] Setup next-intl (fa/en, RTL/LTR, middleware, routing.ts, messages/fa.json + en.json)
+- [x] In `front/` run `npx create-next-app@latest . --typescript --tailwind --app --eslint --yes` (or copy exact structure from yademan/front)
+- [x] Install all exact dependencies from yademan/front (pnpm install)
+  - [x] next-intl, zustand, react-hook-form, zod, jose, next-themes
+  - [x] Radix UI primitives, class-variance-authority, lucide-react, framer-motion
+- [x] Setup next-intl (fa/en, RTL/LTR, middleware, routing.ts, messages/fa.json + en.json)
 - [ ] Setup PWA, dark theme, Tailwind config
-- [ ] Create folder structure: src/app, src/components (atomic), src/stores (Zustand), src/actions (server actions per model), src/types/declarations
-- [ ] Setup auth context + JWT cookie handling (same as yademan)
-- [ ] Create public/ assets and i18n folder
-- [ ] Create Dockerfile for front
+- [x] Create folder structure: src/app, src/components (atomic), src/stores (Zustand), src/actions (server actions per model), src/types/declarations
+- [x] Setup auth context + JWT cookie handling (server actions in actions/auth/)
+- [x] Create public/ assets and i18n folder
+- [x] Create Dockerfile for front (multi-stage: dev + prod)
 - [ ] Update docker-compose files for dev (Traefik routing: frontend.localhost, api.localhost)
 
 ## Phase 3: Core User-Facing Pages (Multi-language)

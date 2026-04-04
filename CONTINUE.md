@@ -25,25 +25,27 @@ You are an expert full-stack TypeScript/Deno/Next.js developer working exclusive
 [the full git commit assistant instruction block that appears at the end of the original Naghshe root QWEN.md – I copied it verbatim into the root QWEN.md you received]
 
 **Current Status**:
-- Phase 1: Backend ~95% complete. Dockerfile created.
-- 7 models, 45 acts, multi-stage Dockerfile
-- **Next**: Phase 2 - Frontend Skeleton (Next.js 16)
+- Phase 2 Frontend: ~85% complete. Next.js 16 scaffolded, next-intl setup, auth + report pages created, Dockerfile done.
+- **Remaining**: PWA setup, update docker-compose files
+- **Next**: Phase 3 - Core User-Facing Pages (complete login/register/new report pages)
 
 **Next Session Prompt**:
 Continue with next unchecked step from TODO.md.
-Phase 2: Frontend Skeleton (Next.js 16)
-- First step: Check if front/ has Next.js app already or run `pnpm create next-app`
-- Install dependencies (next-intl, zustand, react-hook-form, zod, etc.)
-- Setup i18n (fa/en, RTL/LTR, middleware, routing)
-- Create folder structure: src/app, src/components, src/stores, src/actions, src/types/declarations
-- Setup auth context + JWT cookie handling
-- Create Dockerfile for front
-- Update docker-compose files
+Phase 2 remaining:
+1. Update docker-compose files for dev (Traefik routing)
+2. PWA/dark theme polish (optional, can defer)
 
-**Backend Summary** (Complete ✅):
-- 7 models: User, File, Province, City, Tag, Category, Report
-- 45 acts across all schemas
-- JWT auth, role-based access (Ghost, Manager, Editor, Ordinary)
-- GeoJSON support, file upload, CORS
-- Multi-stage Dockerfile (dev + prod)
-- Type declarations generated
+Phase 3: Core User-Facing Pages
+- Complete login/register pages (already scaffolded, need polish)
+- Complete report submission page (scaffolded, needs tags/category/map integration)
+- My Reports page
+- All using server actions (never direct fetch)
+
+**Frontend Structure So Far**:
+- ✅ Next.js 16 + TypeScript + Tailwind v4
+- ✅ next-intl: fa/en with RTL support, middleware, routing
+- ✅ Zustand auth store + server actions (login, register, getMe, logout)
+- ✅ Report server actions (createReport, getMyReports)
+- ✅ Login, Register, New Report pages scaffolded
+- ✅ Multi-stage Dockerfile (dev + prod)
+- ✅ Backend type declarations copied
