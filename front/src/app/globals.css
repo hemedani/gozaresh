@@ -36,3 +36,12 @@ body {
   background-color: var(--color-background);
   color: var(--color-foreground);
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
