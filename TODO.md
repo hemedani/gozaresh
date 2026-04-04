@@ -21,7 +21,7 @@
 - [x] Create `CONTINUE.md` in root with the exact content I provided below (if not already done)
 - [x] Create empty `docker-compose.dev.yml` and `docker-compose.yml` (we will fill them later)
 - [x] Create `.env.backend` and `.env.frontend` templates (copy structure from yademan if you have it locally, otherwise minimal placeholders)
-- [ ] Commit the skeleton with proper gitmoji commit (use the rule in QWEN.md)
+- [x] Commit the skeleton with proper gitmoji commit (use the rule in QWEN.md)
 
 ## Phase 1: Backend Skeleton (Deno + Lesan)
 - [x] In `back/` run `deno init` (or copy deno.json/deps.ts/mod.ts structure from yademan/back)
@@ -29,20 +29,28 @@
 - [x] Create `back/models/` folder + basic model utilities
 - [x] Create `back/src/` folder + mod.ts entry point
 - [x] Create `back/uploads/` folder for attachments
-- [ ] Define core models (one small step each):
-  - [ ] User model (with roles: normal, admin, etc. – JWT ready)
-  - [ ] File model (for attachments)
-  - [ ] Tag model
+- [x] Define core models (one small step each):
+  - [x] User model (with roles: Ghost, Manager, Editor, Ordinary – JWT ready, bcrypt, unique email index)
+  - [x] File model (for attachments, type-based directory routing: images/videos/docs)
+  - [x] Tag model (with registrar relation, color, icon)
+  - [x] Province model (GeoJSON MultiPolygon area + Point center, 2dsphere indexes)
+  - [x] City model (with province relation, GeoJSON, 2dsphere indexes)
+  - [x] Category model (with registrar relation, color, icon)
   - [ ] Report model (title, description, attachments relation, tags relation, location (GeoJSON or address), status, createdBy, date, extra minor fields)
-  - [ ] Any extra minor models if needed (e.g. Category)
-- [ ] Implement auth acts (register/login/logout + secure JWT)
+  - [ ] Comments model
+  - [ ] Places model
+  - [ ] City Zones model
+- [x] Implement auth acts (register/login + secure JWT with 90-day expiry, bcrypt, HS512)
+  - [x] user.login, user.registerUser, user.tempUser, user.getMe
+  - [x] user.getUser, user.getUsers, user.addUser, user.updateUser, user.updateUserRelations, user.removeUser, user.countUsers, user.dashboardStatistic
+- [x] Implement CRUD acts for Province, City, Tag, Category (add, get, gets, update, remove, count)
 - [ ] Implement Report CRUD acts (create with file upload, get, gets, update, delete)
-- [ ] Add file upload endpoint + static serving
-- [ ] Add CORS, MongoDB connection, Redis if needed (same as yademan)
-- [ ] Generate declarations/ for frontend type safety
+- [x] Add file upload endpoint + static serving (file.uploadFile, file.getFiles)
+- [x] Add CORS, MongoDB connection (CORS configured with multiple origins, static file serving)
+- [x] Generate declarations/ for frontend type safety (declarations/selectInp.ts – 2128 lines)
 - [ ] Create Dockerfile for back
 - [ ] Test backend locally with `deno task bc-dev` (or equivalent)
-- [ ] Add API playground access
+- [x] Add API playground access (playground: true in mod.ts)
 
 ## Phase 2: Frontend Skeleton (Next.js 15)
 - [ ] In `front/` run `npx create-next-app@latest . --typescript --tailwind --app --eslint --yes` (or copy exact structure from yademan/front)
@@ -84,5 +92,16 @@
 ## Phase 6: Extra (optional)
 - [ ] Map integration for location selection (reuse MapLibre/Leaflet if desired)
 - [ ] Notifications, advanced filtering, analytics, etc.
+
+**Backend Audit Notes** (from code review):
+- ⚠️ Missing Report model (core feature – next priority)
+- ⚠️ Bug: `getUsers` and `countUsers` use `levels` instead of `level` field name
+- ⚠️ Bug: `category.update` doesn't update `color`/`icon` fields
+- ⚠️ Bug: CORS config has malformed URLs with double `http://`
+- ⚠️ Bug: `getUsers` references "Examiner" level but it's not defined in user_level_array
+- ⚠️ Province/City/Tag/Category acts have NO auth (all public)
+- ℹ️ File model uses `mimType` instead of `mimeType` (typo)
+- ℹ️ 38 acts total implemented across 5 schemas (user, file, province, city, tag, category)
+- ℹ️ No Dockerfile yet in back/
 
 **How to proceed**: Open `CONTINUE.md` in ZED, tell the AI agent: "Continue with next unchecked step from TODO.md". After each step the agent must update TODO.md and commit.

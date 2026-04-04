@@ -25,18 +25,28 @@ You are an expert full-stack TypeScript/Deno/Next.js developer working exclusive
 [the full git commit assistant instruction block that appears at the end of the original Naghshe root QWEN.md – I copied it verbatim into the root QWEN.md you received]
 
 **Current Status**:
-- Phase 1: Backend skeleton created (deno.json, deps.ts, mod.ts, folder structure). 
-- Next step: Define core models starting with User model.
+- Phase 1: Backend is ~80% complete. Extensive review done.
+- 38 acts implemented across 6 schemas (user, file, province, city, tag, category)
+- Full auth system (JWT, bcrypt, role-based access)
+- Generated TypeScript declarations (2128 lines)
+- **Missing**: Report model (core feature), Dockerfile
+- **Bugs found**: See TODO.md "Backend Audit Notes" section
 
 **Next Session Prompt**:
 Continue with next unchecked step from TODO.md.
-Phase 1: Backend - Define core models
-- First: User model (with roles: normal, admin, etc. – JWT ready)
-- Create model files in back/models/ following Lesan patterns
-- Then: File, Tag, Report models
-- Follow Lesan relationship patterns from back/QWEN.md
+Phase 1: Backend - Next steps in order:
+1. **Create Report model** (highest priority - core feature)
+   - title, description, attachments relation (multiple files), tags relation (multiple), location (GeoJSON Point or address), status enum, createdBy (relation to user), date, extra minor fields
+   - Follow Lesan patterns from existing models
+2. **Implement Report CRUD acts** (add, get, gets, update, remove, count)
+3. **Create Dockerfile for back**
+4. Fix bugs noted in TODO.md if time permits
 
-**Backend Structure So Far**:
-- ✅ deno.json, deps.ts (Lesan v0.1.26), mod.ts
-- ✅ src/mod.ts (entry point for schemas, models, functions)
-- ✅ models/, uploads/, utils/ folders created
+**Backend Structure Summary**:
+- ✅ 6 models: User, File, Province, City, Tag, Category
+- ✅ 38 acts: auth, user management, CRUD for geo/tags/categories, file upload
+- ✅ JWT auth with roles (Ghost, Manager, Editor, Ordinary)
+- ✅ GeoJSON support with 2dsphere indexes
+- ✅ Type declarations generated
+- ❌ Report model missing (core feature!)
+- ❌ No Dockerfile
