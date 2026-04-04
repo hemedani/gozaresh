@@ -25,16 +25,18 @@ You are an expert full-stack TypeScript/Deno/Next.js developer working exclusive
 [the full git commit assistant instruction block that appears at the end of the original Naghshe root QWEN.md – I copied it verbatim into the root QWEN.md you received]
 
 **Current Status**:
-- Phase 0 complete. Skeleton committed. Next: Phase 1 - Backend Skeleton (Deno + Lesan).
+- Phase 1: Backend skeleton created (deno.json, deps.ts, mod.ts, folder structure). 
+- Next step: Define core models starting with User model.
 
 **Next Session Prompt**:
 Continue with next unchecked step from TODO.md.
-Phase 1: Backend Skeleton
-- First step: "In `back/` run `deno init` (or copy deno.json/deps.ts/mod.ts structure from yademan/back)"
-- Need to check if yademan/back structure is available locally or create from scratch
-- Create deno.json, deps.ts, mod.ts with Lesan framework setup
-- Then proceed with models, src folder, auth acts, etc.
+Phase 1: Backend - Define core models
+- First: User model (with roles: normal, admin, etc. – JWT ready)
+- Create model files in back/models/ following Lesan patterns
+- Then: File, Tag, Report models
+- Follow Lesan relationship patterns from back/QWEN.md
 
-**Project Structure So Far**:
-- ✅ .gitignore, QWEN.md files, docker-compose.yml, docker-compose.dev.yml, .env templates created
-- ✅ back/ and front/ folders exist with QWEN.md documentation
+**Backend Structure So Far**:
+- ✅ deno.json, deps.ts (Lesan v0.1.26), mod.ts
+- ✅ src/mod.ts (entry point for schemas, models, functions)
+- ✅ models/, uploads/, utils/ folders created

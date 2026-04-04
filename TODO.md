@@ -24,11 +24,11 @@
 - [ ] Commit the skeleton with proper gitmoji commit (use the rule in QWEN.md)
 
 ## Phase 1: Backend Skeleton (Deno + Lesan)
-- [ ] In `back/` run `deno init` (or copy deno.json/deps.ts/mod.ts structure from yademan/back)
-- [ ] Install Lesan framework via deps.ts (exact version used in yademan)
-- [ ] Create `back/models/` folder + basic model utilities
-- [ ] Create `back/src/` folder + mod.ts entry point
-- [ ] Create `back/uploads/` folder for attachments
+- [x] In `back/` run `deno init` (or copy deno.json/deps.ts/mod.ts structure from yademan/back)
+- [x] Install Lesan framework via deps.ts (exact version used in yademan)
+- [x] Create `back/models/` folder + basic model utilities
+- [x] Create `back/src/` folder + mod.ts entry point
+- [x] Create `back/uploads/` folder for attachments
 - [ ] Define core models (one small step each):
   - [ ] User model (with roles: normal, admin, etc. – JWT ready)
   - [ ] File model (for attachments)
