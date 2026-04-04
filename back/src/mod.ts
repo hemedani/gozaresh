@@ -1,13 +1,17 @@
-// This file is the main entry point for setting up schemas, models, and functions
+import { fileSetup } from "./file/mod.ts";
+import { userSetup } from "./user/mod.ts";
+import { citySetup } from "./city/mod.ts";
+import { provinceSetup } from "./province/mod.ts";
+import { tagSetup } from "./tag/mod.ts";
+import { categorySetup } from "./category/mod.ts";
+import { reportSetup } from "./report/mod.ts";
 
-export const setSchemas = () => {
-  // TODO: Import and call schema setters
-};
-
-export const setModels = () => {
-  // TODO: Import and call model setters
-};
-
-export const setFunctions = () => {
-  // TODO: Import and call function/act setters
+export const functionsSetup = () => {
+  citySetup();
+  fileSetup();
+  provinceSetup();
+  userSetup();
+  tagSetup();
+  categorySetup();
+  reportSetup();
 };

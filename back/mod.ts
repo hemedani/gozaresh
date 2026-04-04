@@ -1,49 +1,52 @@
-import { runServer, coreApp } from "./deps.ts";
+import { lesan, MongoClient } from "@deps";
+import {
+  categories,
+  cities,
+  files,
+  provinces,
+  reports,
+  tags,
+  users,
+} from "@model";
+import { functionsSetup } from "./src/mod.ts";
 
-// Import schemas
-import { setSchemas } from "./src/mod.ts";
-
-// Import models
-import { setModels } from "./src/mod.ts";
-
-// Import functions/acts
-import { setFunctions } from "./src/mod.ts";
-
-// Environment variables
-const ENV = Deno.env.get("ENV") || "development";
-const APP_PORT = Number(Deno.env.get("APP_PORT")) || 1405;
 const MONGO_URI = Deno.env.get("MONGO_URI") || "mongodb://127.0.0.1:27017/";
+const APP_PORT = Deno.env.get("APP_PORT") || 1406;
+const ENV = Deno.env.get("ENV") || "development";
 
-// Initialize the application
-const init = async () => {
-  // Set database connection
-  coreApp.odm.setDb(MONGO_URI, "gozarish");
+export const coreApp = lesan();
+const client = await new MongoClient(MONGO_URI).connect();
+const db = client.db("gozaresh");
+coreApp.odm.setDb(db);
 
-  // Setup schemas
-  setSchemas();
+export const file = files();
+export const user = users();
+export const province = provinces();
+export const city = cities();
+export const tag = tags();
+export const category = categories();
+export const report = reports();
 
-  // Setup models
-  setModels();
+export const { setAct, setService, getAtcsWithServices } = coreApp.acts;
 
-  // Setup functions/acts
-  setFunctions();
+export const { selectStruct, getSchemas } = coreApp.schemas;
 
-  // Start server
-  await runServer({
-    port: APP_PORT,
-    coreApp,
-    playground: true,
-    staticPath: "./uploads",
-    cors: {
-      origin: ["*"],
-      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "token"],
-    },
-  });
+functionsSetup();
 
-  console.log(`🚀 Gozarish Backend running on port ${APP_PORT}`);
-  console.log(`📊 Environment: ${ENV}`);
-  console.log(`🎮 Playground: http://localhost:${APP_PORT}/playground`);
-};
+console.log(`🚀 Gozarish Backend running on port ${APP_PORT}`);
+console.log(`📊 Environment: ${ENV}`);
 
-init();
+coreApp.runServer({
+  port: Number(APP_PORT),
+  typeGeneration: true,
+  playground: true,
+  staticPath: ["/uploads"],
+  cors: [
+    "http://localhost:3000",
+    "http://localhost:3005",
+    "http://194.5.192.166:3005",
+    "http://localhost:4000",
+    "http://http://185.204.170.27:4000",
+    "http://http://185.204.170.27:3005",
+  ],
+});

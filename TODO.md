@@ -36,7 +36,7 @@
   - [x] Province model (GeoJSON MultiPolygon area + Point center, 2dsphere indexes)
   - [x] City model (with province relation, GeoJSON, 2dsphere indexes)
   - [x] Category model (with registrar relation, color, icon)
-  - [ ] Report model (title, description, attachments relation, tags relation, location (GeoJSON or address), status, createdBy, date, extra minor fields)
+  - [x] Report model (title, description, attachments relation (multiple), tags relation (multiple), location (GeoJSON Point), status enum, priority, reporter relation, category relation)
   - [ ] Comments model
   - [ ] Places model
   - [ ] City Zones model
@@ -44,7 +44,11 @@
   - [x] user.login, user.registerUser, user.tempUser, user.getMe
   - [x] user.getUser, user.getUsers, user.addUser, user.updateUser, user.updateUserRelations, user.removeUser, user.countUsers, user.dashboardStatistic
 - [x] Implement CRUD acts for Province, City, Tag, Category (add, get, gets, update, remove, count)
-- [ ] Implement Report CRUD acts (create with file upload, get, gets, update, delete)
+- [x] Implement Report CRUD acts (add, get, gets, update, updateRelations, remove, count)
+  - [x] report.add (with attachments, tags, category relations)
+  - [x] report.get, report.gets (with status/category/tag filters)
+  - [x] report.update (pure fields), report.updateRelations (relations with replace)
+  - [x] report.remove, report.count
 - [x] Add file upload endpoint + static serving (file.uploadFile, file.getFiles)
 - [x] Add CORS, MongoDB connection (CORS configured with multiple origins, static file serving)
 - [x] Generate declarations/ for frontend type safety (declarations/selectInp.ts – 2128 lines)

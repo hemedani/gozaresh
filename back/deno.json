@@ -17,6 +17,12 @@
       "tags": ["recommended"]
     }
   },
+  "imports": {
+    "@da/bcrypt": "jsr:@da/bcrypt@^1.0.1",
+    "@deps": "./deps.ts",
+    "@lib": "./utils/mod.ts",
+    "@model": "./models/mod.ts"
+  },
   "compilerOptions": {
     "strict": true
   }

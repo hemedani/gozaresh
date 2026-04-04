@@ -25,28 +25,24 @@ You are an expert full-stack TypeScript/Deno/Next.js developer working exclusive
 [the full git commit assistant instruction block that appears at the end of the original Naghshe root QWEN.md – I copied it verbatim into the root QWEN.md you received]
 
 **Current Status**:
-- Phase 1: Backend is ~80% complete. Extensive review done.
-- 38 acts implemented across 6 schemas (user, file, province, city, tag, category)
-- Full auth system (JWT, bcrypt, role-based access)
-- Generated TypeScript declarations (2128 lines)
-- **Missing**: Report model (core feature), Dockerfile
-- **Bugs found**: See TODO.md "Backend Audit Notes" section
+- Phase 1: Backend ~90% complete. Report model + full CRUD implemented.
+- 7 models: User, File, Province, City, Tag, Category, **Report**
+- 45 acts total (38 existing + 7 new report acts)
+- **Next**: Dockerfile for back, then Phase 2 Frontend
 
 **Next Session Prompt**:
 Continue with next unchecked step from TODO.md.
-Phase 1: Backend - Next steps in order:
-1. **Create Report model** (highest priority - core feature)
-   - title, description, attachments relation (multiple files), tags relation (multiple), location (GeoJSON Point or address), status enum, createdBy (relation to user), date, extra minor fields
-   - Follow Lesan patterns from existing models
-2. **Implement Report CRUD acts** (add, get, gets, update, remove, count)
-3. **Create Dockerfile for back**
-4. Fix bugs noted in TODO.md if time permits
+Phase 1: Backend - Remaining items:
+1. Create Dockerfile for back
+2. Test backend locally with `deno task bc-dev`
+3. Fix bugs noted in TODO.md (optional)
 
-**Backend Structure Summary**:
-- ✅ 6 models: User, File, Province, City, Tag, Category
-- ✅ 38 acts: auth, user management, CRUD for geo/tags/categories, file upload
-- ✅ JWT auth with roles (Ghost, Manager, Editor, Ordinary)
-- ✅ GeoJSON support with 2dsphere indexes
-- ✅ Type declarations generated
-- ❌ Report model missing (core feature!)
-- ❌ No Dockerfile
+Then Phase 2: Frontend Skeleton (Next.js 16)
+
+**Report Model Summary**:
+- ✅ Model: title, description, location (GeoJSON Point), address, status, priority, createdAt, updatedAt
+- ✅ Relations: reporter (user), attachments (multiple files), tags (multiple), category (single)
+- ✅ Reverse relations: user.reports, tag.reports, category.reports
+- ✅ 7 acts: add, get, gets, update, updateRelations, remove, count
+- ✅ Auth: Ordinary users can add, Manager/Editor can manage
+- ✅ Filters: status, categoryId, tagId for listing
