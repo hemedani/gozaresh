@@ -66,6 +66,16 @@
 - [x] Create Dockerfile for front (multi-stage: dev + prod)
 - [x] Update docker-compose files for dev (direct port mapping: localhost:3000, localhost:1405)
 - [x] Setup shadcn/ui components library with RTL support
+  - [x] Configure components.json with RTL support
+  - [x] Create cn() utility function
+  - [x] Add base UI components: Button, Input, Textarea, Label, Card
+  - [x] Update globals.css with shadcn/ui theme variables
+
+**Session Notes (April 4, 2026)**:
+- ✅ Removed Traefik routing from docker-compose files
+- ✅ Replaced with direct port mapping (frontend: 3000, backend: 1405, mongo: 27017)
+- ✅ Set up shadcn/ui with full RTL support
+- ✅ Created frontend-specific TODO.md and CONTINUE.md in front/ folder
 
 ## Phase 3: Core User-Facing Pages (Multi-language)
 - [ ] Public landing page (simple, multi-lang)

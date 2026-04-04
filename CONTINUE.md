@@ -29,6 +29,12 @@ You are an expert full-stack TypeScript/Deno/Next.js developer working exclusive
 - **Remaining**: PWA setup (optional, can defer)
 - **Next**: Phase 3 - Core User-Facing Pages (complete login/register/new report pages)
 
+**Session Changes (April 4, 2026)**:
+- ✅ Removed Traefik from docker-compose.dev.yml
+- ✅ Set up shadcn/ui with RTL support (components.json, cn utility, base components)
+- ✅ Updated all documentation files
+- ✅ Created frontend-specific TODO.md and CONTINUE.md in front/ folder
+
 **Next Session Prompt**:
 Continue with next unchecked step from TODO.md.
 Phase 2 remaining:
