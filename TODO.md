@@ -37,9 +37,6 @@
   - [x] City model (with province relation, GeoJSON, 2dsphere indexes)
   - [x] Category model (with registrar relation, color, icon)
   - [x] Report model (title, description, attachments relation (multiple), tags relation (multiple), location (GeoJSON Point), status enum, priority, reporter relation, category relation)
-  - [ ] Comments model
-  - [ ] Places model
-  - [ ] City Zones model
 - [x] Implement auth acts (register/login + secure JWT with 90-day expiry, bcrypt, HS512)
   - [x] user.login, user.registerUser, user.tempUser, user.getMe
   - [x] user.getUser, user.getUsers, user.addUser, user.updateUser, user.updateUserRelations, user.removeUser, user.countUsers, user.dashboardStatistic
@@ -67,7 +64,8 @@
 - [x] Setup auth context + JWT cookie handling (server actions in actions/auth/)
 - [x] Create public/ assets and i18n folder
 - [x] Create Dockerfile for front (multi-stage: dev + prod)
-- [ ] Update docker-compose files for dev (Traefik routing: frontend.localhost, api.localhost)
+- [x] Update docker-compose files for dev (direct port mapping: localhost:3000, localhost:1405)
+- [x] Setup shadcn/ui components library with RTL support
 
 ## Phase 3: Core User-Facing Pages (Multi-language)
 - [ ] Public landing page (simple, multi-lang)

@@ -25,15 +25,14 @@ You are an expert full-stack TypeScript/Deno/Next.js developer working exclusive
 [the full git commit assistant instruction block that appears at the end of the original Naghshe root QWEN.md – I copied it verbatim into the root QWEN.md you received]
 
 **Current Status**:
-- Phase 2 Frontend: ~85% complete. Next.js 16 scaffolded, next-intl setup, auth + report pages created, Dockerfile done.
-- **Remaining**: PWA setup, update docker-compose files
+- Phase 2 Frontend: ~90% complete. Next.js 16 scaffolded, next-intl setup, auth + report pages created, Dockerfile done, shadcn/ui configured, Traefik removed (using direct port mapping).
+- **Remaining**: PWA setup (optional, can defer)
 - **Next**: Phase 3 - Core User-Facing Pages (complete login/register/new report pages)
 
 **Next Session Prompt**:
 Continue with next unchecked step from TODO.md.
 Phase 2 remaining:
-1. Update docker-compose files for dev (Traefik routing)
-2. PWA/dark theme polish (optional, can defer)
+1. PWA/dark theme polish (optional, can defer)
 
 Phase 3: Core User-Facing Pages
 - Complete login/register pages (already scaffolded, need polish)
@@ -49,3 +48,5 @@ Phase 3: Core User-Facing Pages
 - ✅ Login, Register, New Report pages scaffolded
 - ✅ Multi-stage Dockerfile (dev + prod)
 - ✅ Backend type declarations copied
+- ✅ shadcn/ui configured with RTL support
+- ✅ Docker Compose with direct port mapping (no Traefik)
