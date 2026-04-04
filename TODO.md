@@ -12,7 +12,7 @@
 
 ## Phase 0: Project Skeleton (Beginning – do these first)
 - [x] `git init` in root
-- [ ] Create `.gitignore` (standard for Deno + Next.js + Docker – ignore node_modules, .env*, uploads/, dist/, etc.)
+- [x] Create `.gitignore` (standard for Deno + Next.js + Docker – ignore node_modules, .env*, uploads/, dist/, etc.)
 - [ ] Paste the exact root `QWEN.md` content I provided below into `QWEN.md` (if not already done)
 - [ ] Create folder `back/` (if not already done)
 - [ ] Paste the exact `back/QWEN.md` content I provided into `back/QWEN.md` (if not already done)
