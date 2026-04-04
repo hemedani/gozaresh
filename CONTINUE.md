@@ -25,15 +25,16 @@ You are an expert full-stack TypeScript/Deno/Next.js developer working exclusive
 [the full git commit assistant instruction block that appears at the end of the original Naghshe root QWEN.md – I copied it verbatim into the root QWEN.md you received]
 
 **Current Status**:
-- Phase 0: `.gitignore` created. Next step: Verify QWEN.md files exist, then create skeleton files (docker-compose.yml, docker-compose.dev.yml, .env templates).
+- Phase 0 complete. Skeleton committed. Next: Phase 1 - Backend Skeleton (Deno + Lesan).
 
 **Next Session Prompt**:
 Continue with next unchecked step from TODO.md.
-Current step: "Paste the exact root `QWEN.md` content I provided below into `QWEN.md` (if not already done)"
-- Verify that QWEN.md, back/QWEN.md, and front/QWEN.md already exist and have content (they should from project setup).
-- If they exist, mark those steps as `[x]` and move to next: Create `back/` and `front/` folders if not already done.
-- Then create empty `docker-compose.dev.yml` and `docker-compose.yml`.
-- Create `.env.backend` and `.env.frontend` templates.
-- Commit the skeleton with proper gitmoji commit.
+Phase 1: Backend Skeleton
+- First step: "In `back/` run `deno init` (or copy deno.json/deps.ts/mod.ts structure from yademan/back)"
+- Need to check if yademan/back structure is available locally or create from scratch
+- Create deno.json, deps.ts, mod.ts with Lesan framework setup
+- Then proceed with models, src folder, auth acts, etc.
 
-**Important**: The project folders `back/` and `front/` already exist. Verify their contents before creating anything.
+**Project Structure So Far**:
+- ✅ .gitignore, QWEN.md files, docker-compose.yml, docker-compose.dev.yml, .env templates created
+- ✅ back/ and front/ folders exist with QWEN.md documentation
