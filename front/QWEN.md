@@ -1,6 +1,7 @@
 # Gozarish Frontend - Next.js Application
 
 ## Project Overview
+
 Gozarish frontend is a Next.js 16 application for a citizen report registration system. It features a simple, beautiful multi-language report submission page (title, attachments, description, tags, location + minor fields) and a full-featured advanced admin panel for managing reports and users.
 
 ### Key Features
@@ -48,6 +49,7 @@ pnpm start
 ### Environment Configuration
 
 Key variables:
+
 - `NEXT_PUBLIC_LESAN_URL` – Public backend API URL (client-side)
 - `LESAN_URL` – Internal backend URL (server-side)
 - `APP_PORT` – Application port (default: 3005 in Docker)
@@ -56,18 +58,167 @@ Key variables:
 
 ### Code Structure
 
-- `/src/app` — Next.js App Router (pages, layouts, server actions)
-- `/src/components` — Reusable components (atomic design: atoms → molecules → organisms)
-- `/src/components/ui` — shadcn/ui components
-- `/src/stores` — Zustand stores
-- `/src/types` — TypeScript definitions (including `/src/types/declarations` from backend)
-- `/messages` — Translation JSON files
-- `/i18n` — Internationalization config (`routing.ts`, `request.ts`)
-- `/public` — Static assets
+```
+front/
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── (routes)/           # Public routes with locale
+│   │   ├── admin/              # Admin panel (no locale)
+│   │   ├── actions/            # Server actions
+│   │   │   ├── auth/           # Auth server actions
+│   │   │   └── report/         # Report server actions
+│   │   └── globals.css         # Global styles + Tailwind
+│   ├── components/             # React components
+│   │   ├── ui/                 # shadcn/ui components
+│   │   ├── form/               # Reusable form components
+│   │   ├── layout/             # Layout components (Header, Footer, Sidebar)
+│   │   ├── providers/          # Context providers (Theme, Auth, etc.)
+│   │   ├── atoms/              # Atomic design - atoms
+│   │   ├── molecules/          # Atomic design - molecules
+│   │   └── organisms/          # Atomic design - organisms
+│   ├── stores/                 # Zustand stores
+│   │   └── authStore.ts        # Auth state
+│   ├── lib/                    # Utilities
+│   │   ├── utils.ts            # cn() function
+│   │   └── api.ts              # API utilities
+│   ├── types/                  # TypeScript types
+│   │   └── declarations/       # Backend-generated types
+│   └── hooks/                  # Custom React hooks
+├── messages/                   # next-intl translations
+│   ├── fa.json                 # Persian (RTL, default)
+│   └── en.json                 # English
+├── i18n/                       # Internationalization config
+├── public/                     # Static assets
+├── components.json             # shadcn/ui configuration
+├── next.config.ts              # Next.js configuration
+├── tailwind.config.ts          # Tailwind configuration
+└── TODO.md                     # This file's companion
+```
+
+### Available shadcn/UI Components
+
+The project has a comprehensive library of shadcn/ui components located in `/src/components/ui/`:
+
+#### Form Components
+
+- **Button** (`button.tsx`) - Primary action buttons with variants (default, destructive, outline, secondary, ghost, link)
+- **Input** (`input.tsx`) - Text input fields
+- **Textarea** (`textarea.tsx`) - Multi-line text input
+- **Label** (`label.tsx`) - Form labels
+- **Checkbox** (`checkbox.tsx`) - Checkbox inputs for multi-select
+- **Select** (`select.tsx`) - Dropdown menus for single selection
+- **Form** (`form.tsx`) - Complete form components integrating with React Hook Form:
+  - `Form` - FormProvider wrapper
+  - `FormField` - Individual form field with validation
+  - `FormItem` - Container for form elements
+  - `FormLabel` - Label with error styling
+  - `FormControl` - Wrapper for form controls
+  - `FormDescription` - Helper text
+  - `FormMessage` - Error messages
+
+#### Layout & Navigation Components
+
+- **Card** (`card.tsx`) - Card containers with header, content, footer
+- **Dialog** (`dialog.tsx`) - Modal dialogs:
+  - `Dialog`, `DialogTrigger`, `DialogContent`
+  - `DialogHeader`, `DialogFooter`, `DialogTitle`, `DialogDescription`
+- **Tabs** (`tabs.tsx`) - Tabbed interfaces:
+  - `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent`
+- **Table** (`table.tsx`) - Data tables:
+  - `Table`, `TableHeader`, `TableBody`, `TableFooter`
+  - `TableRow`, `TableHead`, `TableCell`, `TableCaption`
+- **Dropdown Menu** (`dropdown-menu.tsx`) - Context menus and action menus:
+  - `DropdownMenu`, `DropdownMenuTrigger`, `DropdownMenuContent`
+  - `DropdownMenuItem`, `DropdownMenuCheckboxItem`, `DropdownMenuRadioItem`
+  - `DropdownMenuLabel`, `DropdownMenuSeparator`, `DropdownMenuShortcut`
+- **Separator** (`separator.tsx`) - Visual dividers (horizontal/vertical)
+
+#### Feedback & Display Components
+
+- **Toast** (`toast.tsx`) - Notification toasts with `useToast` hook:
+  - `Toast`, `ToastProvider`, `ToastViewport`
+  - `ToastTitle`, `ToastDescription`, `ToastClose`, `ToastAction`
+  - Use via: `const { toast } = useToast(); toast({ title: "Success", description: "..." })`
+- **Toaster** (`toaster.tsx`) - Toast container (add to root layout)
+- **Badge** (`badge.tsx`) - Status indicators and tags (default, secondary, destructive, outline)
+- **Avatar** (`avatar.tsx`) - User profile images:
+  - `Avatar`, `AvatarImage`, `AvatarFallback`
+
+### Reusable Form Components
+
+Located in `/src/components/form/`, these components provide higher-level form functionality:
+
+- **FormInput** (`form-field.tsx`) - Input/Textarea with label and validation
+
+  ```tsx
+  <FormInput name="email" label="Email" type="email" placeholder="Enter email" />
+  <FormInput name="description" label="Description" multiline rows={4} />
+  ```
+
+- **FileUploadField** (`file-upload-field.tsx`) - File upload with image preview
+
+  ```tsx
+  <FileUploadField
+    label="Attachments"
+    maxFiles={10}
+    maxSize={10 * 1024 * 1024}
+    accept="image/*,.pdf"
+    value={files}
+    onChange={(files) => setFiles(files)}
+  />
+  ```
+
+- **TagSelector** (`tag-selector.tsx`) - Multi-select tags with chips and search
+
+  ```tsx
+  <TagSelector
+    label="Tags"
+    availableTags={tags}
+    selectedTags={selectedTags}
+    onChange={(tags) => setSelectedTags(tags)}
+    creatable={true}
+  />
+  ```
+
+- **LocationPicker** (`location-picker.tsx`) - Address input with map placeholder
+  ```tsx
+  <LocationPicker
+    label="Location"
+    value={location}
+    onChange={(loc) => setLocation(loc)}
+    showMap={true}
+  />
+  ```
+
+### Layout Components
+
+Located in `/src/components/layout/`:
+
+- **Header** (`header.tsx`) - Main site header with logo, navigation, language switcher, theme toggle, and user menu
+- **Footer** (`footer.tsx`) - Site footer with quick links and support information
+- **AdminSidebar** (`admin-sidebar.tsx`) - Collapsible sidebar for admin panel
+- **LanguageSwitcher** (`language-switcher.tsx`) - Dropdown for switching between 9 supported languages
+
+### Theme Configuration
+
+The app uses **next-themes** for seamless dark/light/system mode:
+
+- ThemeProvider is wrapped in root layout (`src/app/layout.tsx`)
+- Dark mode CSS variables defined in `globals.css` under `.dark` class
+- Theme toggle available via `useTheme()` hook from next-themes
+- System preference detection enabled by default
+- Smooth transitions between themes (0.3s ease)
+
+```tsx
+import { useTheme } from "next-themes";
+
+const { theme, setTheme } = useTheme();
+setTheme("dark"); // or 'light' or 'system'
+```
 
 ### Internationalization
 
-- The application supports **nine languages**: 
+- The application supports **nine languages**:
   - Persian (fa) – default locale
   - English (en)
   - Arabic (ar)
@@ -115,6 +266,7 @@ Key variables:
 - All components must be beautiful and professional in both LTR and RTL modes.
 
 #### Setup & Best Practices
+
 1. Configure `components.json` with `"rtl": true`.
 2. Global stylesheet includes Tailwind import and dark variant.
 3. Wrap app with `ThemeProvider` from next-themes.
@@ -170,4 +322,3 @@ if (result.success) {
 - Ghost user level has full admin access.
 - Keep the report submission page **simple and elegant**.
 - Do not run `pnpm dev` or build commands automatically — only suggest them.
-
