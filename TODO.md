@@ -52,7 +52,7 @@
 - [x] Add file upload endpoint + static serving (file.uploadFile, file.getFiles)
 - [x] Add CORS, MongoDB connection (CORS configured with multiple origins, static file serving)
 - [x] Generate declarations/ for frontend type safety (declarations/selectInp.ts – 2128 lines)
-- [ ] Create Dockerfile for back
+- [x] Create Dockerfile for back (multi-stage: development + production)
 - [ ] Test backend locally with `deno task bc-dev` (or equivalent)
 - [x] Add API playground access (playground: true in mod.ts)
 

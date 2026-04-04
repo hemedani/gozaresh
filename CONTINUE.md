@@ -25,24 +25,25 @@ You are an expert full-stack TypeScript/Deno/Next.js developer working exclusive
 [the full git commit assistant instruction block that appears at the end of the original Naghshe root QWEN.md – I copied it verbatim into the root QWEN.md you received]
 
 **Current Status**:
-- Phase 1: Backend ~90% complete. Report model + full CRUD implemented.
-- 7 models: User, File, Province, City, Tag, Category, **Report**
-- 45 acts total (38 existing + 7 new report acts)
-- **Next**: Dockerfile for back, then Phase 2 Frontend
+- Phase 1: Backend ~95% complete. Dockerfile created.
+- 7 models, 45 acts, multi-stage Dockerfile
+- **Next**: Phase 2 - Frontend Skeleton (Next.js 16)
 
 **Next Session Prompt**:
 Continue with next unchecked step from TODO.md.
-Phase 1: Backend - Remaining items:
-1. Create Dockerfile for back
-2. Test backend locally with `deno task bc-dev`
-3. Fix bugs noted in TODO.md (optional)
+Phase 2: Frontend Skeleton (Next.js 16)
+- First step: Check if front/ has Next.js app already or run `pnpm create next-app`
+- Install dependencies (next-intl, zustand, react-hook-form, zod, etc.)
+- Setup i18n (fa/en, RTL/LTR, middleware, routing)
+- Create folder structure: src/app, src/components, src/stores, src/actions, src/types/declarations
+- Setup auth context + JWT cookie handling
+- Create Dockerfile for front
+- Update docker-compose files
 
-Then Phase 2: Frontend Skeleton (Next.js 16)
-
-**Report Model Summary**:
-- ✅ Model: title, description, location (GeoJSON Point), address, status, priority, createdAt, updatedAt
-- ✅ Relations: reporter (user), attachments (multiple files), tags (multiple), category (single)
-- ✅ Reverse relations: user.reports, tag.reports, category.reports
-- ✅ 7 acts: add, get, gets, update, updateRelations, remove, count
-- ✅ Auth: Ordinary users can add, Manager/Editor can manage
-- ✅ Filters: status, categoryId, tagId for listing
+**Backend Summary** (Complete ✅):
+- 7 models: User, File, Province, City, Tag, Category, Report
+- 45 acts across all schemas
+- JWT auth, role-based access (Ghost, Manager, Editor, Ordinary)
+- GeoJSON support, file upload, CORS
+- Multi-stage Dockerfile (dev + prod)
+- Type declarations generated
