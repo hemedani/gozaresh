@@ -48,7 +48,7 @@ You are an expert full-stack TypeScript/Next.js 16 developer working exclusively
 
 - ✅ All shadcn/ui components (Dialog, Toast, Select, Checkbox, Tabs, Table, Dropdown Menu, Avatar, Badge, Form, etc.)
 - ✅ Reusable form components (FormInput, FileUploadField, TagSelector, LocationPicker)
-- ✅ Layout components (Header, Footer, AdminSidebar, LanguageSwitcher)
+- ✅ Layout components (Header, Footer, AdminSidebar, LanguageSwitcher, AdminLayoutShell)
 - ✅ Theme configuration (dark/light/system with smooth transitions)
 - ✅ Landing Page with hero section, features, how it works, trust section
 - ✅ Login/Register pages with shadcn/ui, Zod validation, toast notifications
@@ -57,6 +57,8 @@ You are an expert full-stack TypeScript/Next.js 16 developer working exclusively
 - ✅ Report Detail page with attachments, tags, status/priority badges
 - ✅ Toaster integrated into locale layout
 - ✅ Header & Footer on all public pages
+- ✅ Admin Layout with sidebar navigation and role-based access check
+- ✅ Admin Dashboard with statistics cards and layout
 
 **Frontend Structure**:
 
@@ -182,10 +184,8 @@ export default function LoginForm() {
 **Next Session Prompt**:
 Continue with **Phase 4: Admin Panel**. Start with:
 
-1. Create admin layout with sidebar navigation
-2. Admin dashboard with statistics cards
-3. Reports management table with filtering and actions
-4. Users management table
-5. Tags/Categories/Files management pages
+1. Reports management table with filtering and actions (`/admin/reports`)
+2. Users management table (`/admin/users`)
+3. Tags/Categories/Files management pages
 
 Follow the same patterns: one step at a time, update TODO.md, commit with Gitmoji.

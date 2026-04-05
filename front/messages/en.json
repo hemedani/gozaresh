@@ -22,7 +22,22 @@
     "next": "Next",
     "previous": "Previous",
     "required": "Required",
-    "optional": "Optional"
+    "optional": "Optional",
+    "characters": "characters",
+    "fileUpload": {
+      "browse": "Browse files"
+    },
+    "locationPicker": {
+      "currentLocation": "Current Location",
+      "mapDescription": "Click on the map to set location.",
+      "mapPlaceholder": "Map will be displayed here",
+      "placeholder": "Enter address or pick from map",
+      "useCurrent": "Use my location"
+    },
+    "tagSelector": {
+      "newTag": "Create new tag",
+      "search": "Search tags..."
+    }
   },
   "auth": {
     "loginTitle": "Login to your account",
@@ -42,7 +57,10 @@
     "emailInvalid": "Email is not valid",
     "passwordRequired": "Password is required",
     "firstNameRequired": "First name is required",
-    "lastNameRequired": "Last name is required"
+    "lastNameRequired": "Last name is required",
+    "loginDescription": "Enter your email and password to login.",
+    "registerDescription": "Fill in the form to create an account.",
+    "registerFailed": "Registration failed. Please try again."
   },
   "report": {
     "newReport": "New Report",
@@ -66,12 +84,98 @@
     "statusInReview": "In Review",
     "priorityLow": "Low",
     "priorityMedium": "Medium",
-    "priorityHigh": "High"
+    "priorityHigh": "High",
+    "myReports": "My Reports",
+    "myReportsDescription": "View and manage your submitted reports.",
+    "allStatuses": "All Statuses",
+    "filterByStatus": "Filter by status",
+    "createFirstReport": "Create your first report",
+    "noReports": "No reports found",
+    "noReportsDescription": "You haven't submitted any reports yet.",
+    "viewDetails": "View Details",
+    "next": "Next",
+    "previous": "Previous",
+    "attachmentsDescription": "Upload photos or documents.",
+    "descriptionPlaceholder": "Describe the issue in detail...",
+    "newReportDescription": "Fill out the form below to report a new issue.",
+    "reportTitlePlaceholder": "Brief title for the report",
+    "selectPriority": "Select Priority",
+    "backToReports": "Back to Reports",
+    "mapPlaceholder": "Map will be displayed here",
+    "reportNotFound": "Report not found",
+    "reportNotFoundDescription": "The report you are looking for does not exist or you do not have permission to view it."
   },
   "home": {
-    "title": "Citizen Report Registration System",
-    "subtitle": "Submit your report easily",
-    "ctaButton": "Submit New Report"
+    "title": "Citizen Report System",
+    "subtitle": "Report issues easily",
+    "ctaButton": "Submit Report",
+    "hero": {
+      "badge": "Version 1.0 is here",
+      "title": "Report Issues in Your City",
+      "description": "A fast and secure way to report citizen issues to the municipality.",
+      "ctaButton": "Get Started"
+    },
+    "features": {
+      "title": "Features",
+      "description": "Everything you need to report effectively.",
+      "secure": {
+        "title": "Secure",
+        "description": "Your data is protected."
+      },
+      "multilang": {
+        "title": "Multi-language",
+        "description": "Available in 9 languages."
+      },
+      "easy": {
+        "title": "Easy to use",
+        "description": "Simple and intuitive interface."
+      },
+      "private": {
+        "title": "Private",
+        "description": "Your privacy matters."
+      },
+      "fast": {
+        "title": "Fast",
+        "description": "Lightning fast performance."
+      },
+      "community": {
+        "title": "Community Driven",
+        "description": "Help your community."
+      }
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "description": "Three simple steps to make a difference."
+    },
+    "steps": {
+      "create": {
+        "title": "Create",
+        "description": "Create an account."
+      },
+      "submit": {
+        "title": "Submit",
+        "description": "Submit your report with photos."
+      },
+      "track": {
+        "title": "Track",
+        "description": "Track the status of your report."
+      }
+    },
+    "trust": {
+      "title": "Trusted by thousands",
+      "description": "Join our community of active citizens.",
+      "benefits": [
+        "Direct communication with officials",
+        "Transparent process",
+        "Fast resolution",
+        "Community impact"
+      ]
+    },
+    "cta": {
+      "title": "Ready to start?",
+      "description": "Create an account and submit your first report today.",
+      "button": "Sign Up Now"
+    }
   },
   "nav": {
     "home": "Home",
@@ -87,5 +191,54 @@
     "maxLength": "Maximum {max} characters allowed",
     "emailInvalid": "Email is not valid",
     "fileTooLarge": "File size should not exceed {max}"
+  },
+  "header": {
+    "appName": "Gozarish",
+    "adminPanel": "Admin Panel",
+    "myReports": "My Reports",
+    "newReport": "New Report",
+    "profile": "Profile",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode"
+  },
+  "footer": {
+    "appName": "Gozarish",
+    "description": "A fast and secure way to report citizen issues to the municipality.",
+    "quickLinks": "Quick Links",
+    "submitReport": "Submit Report",
+    "myReports": "My Reports",
+    "about": "About Us",
+    "contact": "Contact",
+    "support": "Support",
+    "help": "Help Center",
+    "faq": "FAQ",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "copyright": "© {year} Gozarish. All rights reserved."
+  },
+  "admin": {
+    "adminPanel": "Admin Panel",
+    "categories": "Categories",
+    "dashboard": "Dashboard",
+    "files": "Files",
+    "reports": "Reports",
+    "tags": "Tags",
+    "users": "Users",
+    "version": "Version",
+    "dashboardDescription": "Overview of the reporting system status",
+    "totalReports": "Total Reports",
+    "fromLastMonth": "from last month",
+    "pendingReports": "Pending Reports",
+    "approvedReports": "Approved Reports",
+    "totalUsers": "Total Users",
+    "sinceLastWeek": "since last week",
+    "overview": "Overview",
+    "chartPlaceholder": "Chart placeholder",
+    "recentReports": "Recent Reports",
+    "recentReportsDescription": "Latest reports submitted by users",
+    "noRecentReports": "No recent reports"
   }
 }

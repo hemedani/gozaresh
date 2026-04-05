@@ -121,16 +121,16 @@
 
 ## Phase 4: Admin Panel (`/admin/*` – no locale prefix)
 
-- [ ] **Admin Layout**
-  - [ ] Sidebar navigation (Dashboard, Reports, Users, Tags, Categories, Files)
-  - [ ] Admin header with user menu
-  - [ ] Role-based access check (redirect if not admin)
-  - [ ] Dark theme by default (optional toggle)
-- [ ] **Admin Dashboard** (`/admin/dashboard`)
-  - [ ] Statistics cards (total reports, users, pending reports, approved)
-  - [ ] Recent reports list
-  - [ ] Charts/graphs (reports over time, by category, by status)
-  - [ ] Quick actions (approve pending, view users, etc.)
+- [x] **Admin Layout**
+  - [x] Sidebar navigation (Dashboard, Reports, Users, Tags, Categories, Files)
+  - [x] Admin header with user menu
+  - [x] Role-based access check (redirect if not admin)
+  - [x] Dark theme by default (optional toggle)
+- [x] **Admin Dashboard** (`/admin/dashboard`)
+  - [x] Statistics cards (total reports, users, pending reports, approved)
+  - [x] Recent reports list
+  - [x] Charts/graphs (reports over time, by category, by status)
+  - [x] Quick actions (approve pending, view users, etc.)
 - [ ] **Reports Management** (`/admin/reports`)
   - [ ] Data table with all reports
   - [ ] Columns: title, reporter, category, status, priority, date, actions
