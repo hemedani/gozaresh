@@ -7,6 +7,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { login } from "@/app/actions/auth/actions";
 import { Link, useRouter } from "@/i18n/routing";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
 
 const loginSchema = z.object({
   email: z.string().email("auth.emailInvalid"),
@@ -18,92 +30,100 @@ type LoginFormData = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const t = useTranslations();
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormData>({
+  const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const onSubmit = async (data: LoginFormData) => {
     setLoading(true);
-    setError(null);
 
     const result = await login(data.email, data.password);
 
     if (result.success) {
+      toast({
+        title: t("common.success", "Success"),
+        description: t("auth.loginSuccess", "Logged in successfully"),
+      });
       router.push("/");
     } else {
-      setError(result.error || t("auth.invalidCredentials"));
+      toast({
+        variant: "destructive",
+        title: t("common.error", "Error"),
+        description: result.error || t("auth.invalidCredentials", "Invalid credentials"),
+      });
     }
     setLoading(false);
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-8 rounded-xl border p-8 shadow-sm">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold">{t("auth.loginTitle")}</h1>
-        </div>
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold text-center">
+            {t("auth.loginTitle", "Login")}
+          </CardTitle>
+          <CardDescription className="text-center">
+            {t("auth.loginDescription", "Enter your credentials to access your account")}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("auth.email", "Email")}</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="email"
+                        placeholder="email@example.com"
+                        disabled={loading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">
-              {t("auth.email")}
-            </label>
-            <input
-              {...register("email")}
-              type="email"
-              className="w-full rounded-md border px-3 py-2 text-sm"
-              placeholder="email@example.com"
-            />
-            {errors.email && (
-              <p className="text-sm text-destructive">
-                {t(errors.email.message as string)}
-              </p>
-            )}
-          </div>
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("auth.password", "Password")}</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="password" placeholder="••••••••" disabled={loading} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium">
-              {t("auth.password")}
-            </label>
-            <input
-              {...register("password")}
-              type="password"
-              className="w-full rounded-md border px-3 py-2 text-sm"
-            />
-            {errors.password && (
-              <p className="text-sm text-destructive">
-                {t(errors.password.message as string)}
-              </p>
-            )}
-          </div>
-
-          {error && (
-            <p className="text-sm text-destructive text-center">{error}</p>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
-          >
-            {loading ? t("common.loading") : t("auth.loginButton")}
-          </button>
-        </form>
-
-        <p className="text-center text-sm text-muted-foreground">
-          {t("auth.noAccount")}{" "}
-          <Link href="/auth/register" className="text-primary hover:underline">
-            {t("auth.registerButton")}
-          </Link>
-        </p>
-      </div>
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? t("common.loading", "Loading...") : t("auth.loginButton", "Login")}
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter className="flex flex-col space-y-4">
+          <p className="text-center text-sm text-muted-foreground">
+            {t("auth.noAccount", "Don't have an account?")}{" "}
+            <Link href="/auth/register" className="text-primary font-medium hover:underline">
+              {t("auth.registerButton", "Register")}
+            </Link>
+          </p>
+        </CardFooter>
+      </Card>
     </div>
   );
 }
