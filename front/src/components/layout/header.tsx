@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
@@ -24,6 +24,11 @@ export function Header() {
   const locale = useLocale();
   const { theme, setTheme } = useTheme();
   const { user, isAuthenticated, logout } = useAuthStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -72,9 +77,9 @@ export function Header() {
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
-            title={theme === 'dark' ? t('lightMode') : t('darkMode')}
+            title={mounted && theme === 'dark' ? t('lightMode') : t('darkMode')}
           >
-            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            {mounted ? (theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />) : <div className="h-5 w-5" />}
           </Button>
 
           {/* User menu */}
