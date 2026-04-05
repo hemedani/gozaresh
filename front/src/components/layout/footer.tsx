@@ -2,10 +2,11 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 export function Footer() {
   const t = useTranslations('footer');
+  const locale = useLocale();
 
   return (
     <footer className="border-t bg-background">
@@ -30,7 +31,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/reports/new"
+                  href={`/${locale}/reports/new`}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t('submitReport')}
@@ -38,7 +39,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/reports"
+                  href={`/${locale}/reports`}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t('myReports')}
@@ -46,7 +47,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/about"
+                  href={`/${locale}/about`}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t('about')}
@@ -54,7 +55,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href={`/${locale}/contact`}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t('contact')}
@@ -69,7 +70,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/privacy"
+                  href={`/${locale}/privacy`}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t('privacyPolicy')}
@@ -77,7 +78,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/terms"
+                  href={`/${locale}/terms`}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t('termsOfService')}
@@ -85,7 +86,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/faq"
+                  href={`/${locale}/faq`}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t('faq')}
@@ -93,7 +94,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/help"
+                  href={`/${locale}/help`}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t('help')}

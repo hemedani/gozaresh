@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Moon, Sun, Menu, User, LogOut } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
@@ -21,6 +21,7 @@ import { LanguageSwitcher } from './language-switcher';
 export function Header() {
   const t = useTranslations('header');
   const pathname = usePathname();
+  const locale = useLocale();
   const { theme, setTheme } = useTheme();
   const { user, isAuthenticated, logout } = useAuthStore();
 
@@ -36,7 +37,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Logo and brand */}
-        <Link href="/" className="flex items-center gap-2">
+        <Link href={`/${locale}`} className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-sm">G</span>
           </div>
@@ -47,13 +48,13 @@ export function Header() {
         {!pathname.startsWith('/admin') && isAuthenticated && (
           <nav className="hidden md:flex items-center gap-6">
             <Link
-              href="/reports"
+              href={`/${locale}/reports`}
               className="text-sm font-medium hover:text-primary transition-colors"
             >
               {t('myReports')}
             </Link>
             <Link
-              href="/reports/new"
+              href={`/${locale}/reports/new`}
               className="text-sm font-medium hover:text-primary transition-colors"
             >
               {t('newReport')}
@@ -104,7 +105,7 @@ export function Header() {
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuItem asChild>
-                  <Link href="/profile">{t('profile')}</Link>
+                  <Link href={`/${locale}/profile`}>{t('profile')}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
@@ -118,12 +119,12 @@ export function Header() {
             !pathname.includes('/login') &&
             !pathname.includes('/register') && (
               <div className="flex gap-2">
-                <Button variant="ghost" asChild>
-                  <Link href="/login">{t('login')}</Link>
-                </Button>
-                <Button asChild>
-                  <Link href="/register">{t('register')}</Link>
-                </Button>
+                <Link href={`/${locale}/login`}>
+                  <Button variant="ghost" className="w-full cursor-pointer">{t('login')}</Button>
+                </Link>
+                <Link href={`/${locale}/register`}>
+                  <Button className="w-full cursor-pointer">{t('register')}</Button>
+                </Link>
               </div>
             )
           )}
