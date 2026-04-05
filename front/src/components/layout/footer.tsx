@@ -17,26 +17,23 @@ export function Footer() {
               <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-sm">G</span>
               </div>
-              <span className="font-bold text-xl">{t('appName', 'Gozarish')}</span>
+              <span className="font-bold text-xl">{t('appName')}</span>
             </div>
             <p className="text-sm text-muted-foreground max-w-md">
-              {t(
-                'description',
-                'A citizen report registration system for submitting reports about public issues securely and anonymously.'
-              )}
+              {t('description')}
             </p>
           </div>
 
           {/* Quick links */}
           <div>
-            <h3 className="text-sm font-semibold mb-3">{t('quickLinks', 'Quick Links')}</h3>
+            <h3 className="text-sm font-semibold mb-3">{t('quickLinks')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/reports/new"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t('submitReport', 'Submit Report')}
+                  {t('submitReport')}
                 </Link>
               </li>
               <li>
@@ -44,7 +41,7 @@ export function Footer() {
                   href="/reports"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t('myReports', 'My Reports')}
+                  {t('myReports')}
                 </Link>
               </li>
               <li>
@@ -52,7 +49,7 @@ export function Footer() {
                   href="/about"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t('about', 'About')}
+                  {t('about')}
                 </Link>
               </li>
               <li>
@@ -60,7 +57,7 @@ export function Footer() {
                   href="/contact"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t('contact', 'Contact')}
+                  {t('contact')}
                 </Link>
               </li>
             </ul>
@@ -68,14 +65,14 @@ export function Footer() {
 
           {/* Legal and support */}
           <div>
-            <h3 className="text-sm font-semibold mb-3">{t('support', 'Support')}</h3>
+            <h3 className="text-sm font-semibold mb-3">{t('support')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/privacy"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t('privacyPolicy', 'Privacy Policy')}
+                  {t('privacyPolicy')}
                 </Link>
               </li>
               <li>
@@ -83,7 +80,7 @@ export function Footer() {
                   href="/terms"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t('termsOfService', 'Terms of Service')}
+                  {t('termsOfService')}
                 </Link>
               </li>
               <li>
@@ -91,7 +88,7 @@ export function Footer() {
                   href="/faq"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t('faq', 'FAQ')}
+                  {t('faq')}
                 </Link>
               </li>
               <li>
@@ -99,7 +96,7 @@ export function Footer() {
                   href="/help"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t('help', 'Help Center')}
+                  {t('help')}
                 </Link>
               </li>
             </ul>
@@ -109,7 +106,7 @@ export function Footer() {
         {/* Copyright */}
         <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground">
           <p>
-            {t('copyright', '© {year} Gozarish. All rights reserved.', {
+            {t('copyright', {
               year: new Date().getFullYear(),
             })}
           </p>

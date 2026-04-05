@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { login } from "@/app/actions/auth/actions";
+import { register as registerUser } from "@/app/actions/auth/actions";
 import { Link, useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,43 +20,47 @@ import {
 } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 
-const loginSchema = z.object({
+const registerSchema = z.object({
+  first_name: z.string().min(1, "auth.firstNameRequired"),
+  last_name: z.string().min(1, "auth.lastNameRequired"),
   email: z.string().email("auth.emailInvalid"),
-  password: z.string().min(1, "auth.passwordRequired"),
+  password: z.string().min(6, "validation.minLength"),
 });
 
-type LoginFormData = z.infer<typeof loginSchema>;
+type RegisterFormData = z.infer<typeof registerSchema>;
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const t = useTranslations();
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: RegisterFormData) => {
     setLoading(true);
 
-    const result = await login(data.email, data.password);
+    const result = await registerUser(data.first_name, data.last_name, data.email, data.password);
 
     if (result.success) {
       toast({
-        title: t("common.success", "Success"),
-        description: t("auth.loginSuccess", "Logged in successfully"),
+        title: t("common.success"),
+        description: t("auth.registerSuccess"),
       });
-      router.push("/");
+      router.push("/auth/login");
     } else {
       toast({
         variant: "destructive",
-        title: t("common.error", "Error"),
-        description: result.error || t("auth.invalidCredentials", "Invalid credentials"),
+        title: t("common.error"),
+        description: result.error || t("auth.registerFailed"),
       });
     }
     setLoading(false);
@@ -67,21 +71,51 @@ export default function LoginPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            {t("auth.loginTitle", "Login")}
+            {t("auth.registerTitle")}
           </CardTitle>
           <CardDescription className="text-center">
-            {t("auth.loginDescription", "Enter your credentials to access your account")}
+            {t("auth.registerDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="first_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t("auth.firstName")}</FormLabel>
+                      <FormControl>
+                        <Input {...field} disabled={loading} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="last_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t("auth.lastName")}</FormLabel>
+                      <FormControl>
+                        <Input {...field} disabled={loading} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("auth.email", "Email")}</FormLabel>
+                    <FormLabel>{t("auth.email")}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -100,7 +134,7 @@ export default function LoginPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("auth.password", "Password")}</FormLabel>
+                    <FormLabel>{t("auth.password")}</FormLabel>
                     <FormControl>
                       <Input {...field} type="password" placeholder="••••••••" disabled={loading} />
                     </FormControl>
@@ -110,16 +144,16 @@ export default function LoginPage() {
               />
 
               <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? t("common.loading", "Loading...") : t("auth.loginButton", "Login")}
+                {loading ? t("common.loading") : t("auth.registerButton")}
               </Button>
             </form>
           </Form>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <p className="text-center text-sm text-muted-foreground">
-            {t("auth.noAccount", "Don't have an account?")}{" "}
-            <Link href="/auth/register" className="text-primary font-medium hover:underline">
-              {t("auth.registerButton", "Register")}
+            {t("auth.hasAccount")}{" "}
+            <Link href="/auth/login" className="text-primary font-medium hover:underline">
+              {t("auth.loginButton")}
             </Link>
           </p>
         </CardFooter>

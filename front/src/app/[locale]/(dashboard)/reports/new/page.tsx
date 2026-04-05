@@ -84,21 +84,21 @@ export default function NewReportPage() {
       priority: data.priority,
       tags: data.tags,
       category: data.category,
-      location: data.location,
-      attachments: data.attachments,
+      location: data.location ? { type: "Point", coordinates: [data.location.longitude || 0, data.location.latitude || 0] } : undefined,
+      attachments: data.attachments?.map(f => f.name),
     });
 
     if (result.success) {
       setSuccess(true);
       toast({
-        title: t("common.success", "Success"),
-        description: t("report.reportSubmitted", "Report submitted successfully"),
+        title: t("common.success"),
+        description: t("report.reportSubmitted"),
       });
     } else {
       toast({
         variant: "destructive",
-        title: t("common.error", "Error"),
-        description: result.error || t("report.reportFailed", "Failed to submit report"),
+        title: t("common.error"),
+        description: result.error || t("report.reportFailed"),
       });
     }
     setLoading(false);
@@ -112,17 +112,17 @@ export default function NewReportPage() {
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900">
               <CheckCircle2 className="h-10 w-10 text-green-600 dark:text-green-400" />
             </div>
-            <CardTitle className="text-center text-2xl">{t("common.success", "Success")}</CardTitle>
+            <CardTitle className="text-center text-2xl">{t("common.success")}</CardTitle>
             <CardDescription className="text-center">
-              {t("report.reportSubmitted", "Your report has been submitted successfully")}
+              {t("report.reportSubmitted")}
             </CardDescription>
           </CardHeader>
           <CardFooter className="flex justify-center gap-4">
             <Button variant="outline" asChild>
-              <Link href="/reports/my">{t("report.myReports", "My Reports")}</Link>
+              <Link href="/reports/my">{t("report.myReports")}</Link>
             </Button>
             <Button asChild>
-              <Link href="/">{t("common.back", "Back to Home")}</Link>
+              <Link href="/">{t("common.back")}</Link>
             </Button>
           </CardFooter>
         </Card>
@@ -134,12 +134,9 @@ export default function NewReportPage() {
     <div className="container mx-auto max-w-3xl px-4 py-8">
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">{t("report.newReport", "New Report")}</CardTitle>
+          <CardTitle className="text-2xl font-bold">{t("report.newReport")}</CardTitle>
           <CardDescription>
-            {t(
-              "report.newReportDescription",
-              "Fill in the details below to submit a new report. All fields marked with * are required.",
-            )}
+            {t("report.newReportDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -152,16 +149,13 @@ export default function NewReportPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      {t("report.reportTitle", "Report Title")}{" "}
+                      {t("report.reportTitle")}{" "}
                       <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder={t(
-                          "report.reportTitlePlaceholder",
-                          "Brief description of the issue",
-                        )}
+                        placeholder={t("report.reportTitlePlaceholder")}
                         disabled={loading}
                       />
                     </FormControl>
@@ -177,22 +171,19 @@ export default function NewReportPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      {t("report.description", "Description")}{" "}
+                      {t("report.description")}{" "}
                       <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Textarea
                         {...field}
-                        placeholder={t(
-                          "report.descriptionPlaceholder",
-                          "Provide detailed information about the issue",
-                        )}
+                        placeholder={t("report.descriptionPlaceholder")}
                         rows={5}
                         disabled={loading}
                       />
                     </FormControl>
                     <FormDescription>
-                      {field.value?.length || 0} / 1000 {t("common.characters", "characters")}
+                      {field.value?.length || 0} / 1000 {t("common.characters")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -205,7 +196,7 @@ export default function NewReportPage() {
                 name="priority"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("report.priority", "Priority")}</FormLabel>
+                    <FormLabel>{t("report.priority")}</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -213,13 +204,13 @@ export default function NewReportPage() {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={t("report.selectPriority", "Select priority")} />
+                          <SelectValue placeholder={t("report.selectPriority")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="Low">{t("report.priorityLow", "Low")}</SelectItem>
-                        <SelectItem value="Medium">{t("report.priorityMedium", "Medium")}</SelectItem>
-                        <SelectItem value="High">{t("report.priorityHigh", "High")}</SelectItem>
+                        <SelectItem value="Low">{t("report.priorityLow")}</SelectItem>
+                        <SelectItem value="Medium">{t("report.priorityMedium")}</SelectItem>
+                        <SelectItem value="High">{t("report.priorityHigh")}</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -234,7 +225,7 @@ export default function NewReportPage() {
                 render={({ field }) => (
                   <FormItem>
                     <TagSelector
-                      label={t("report.tags", "Tags")}
+                      label={t("report.tags")}
                       availableTags={[]}
                       selectedTags={(field.value || []).map((id) => ({ id, name: id }))}
                       onChange={(tags) => field.onChange(tags.map((t) => t.id))}
@@ -252,7 +243,7 @@ export default function NewReportPage() {
                 render={({ field }) => (
                   <FormItem>
                     <LocationPicker
-                      label={t("report.location", "Location")}
+                      label={t("report.location")}
                       value={field.value}
                       onChange={field.onChange}
                       showMap={false}
@@ -269,7 +260,7 @@ export default function NewReportPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FileUploadField
-                      label={t("report.attachments", "Attachments")}
+                      label={t("report.attachments")}
                       maxFiles={10}
                       maxSize={10 * 1024 * 1024}
                       accept="image/*,.pdf,.doc,.docx"
@@ -277,10 +268,7 @@ export default function NewReportPage() {
                       onChange={field.onChange}
                     />
                     <FormDescription>
-                      {t(
-                        "report.attachmentsDescription",
-                        "Upload images, PDFs, or documents (max 10MB each)",
-                      )}
+                      {t("report.attachmentsDescription")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -290,12 +278,12 @@ export default function NewReportPage() {
               {/* Actions */}
               <div className="flex gap-4">
                 <Button variant="outline" className="flex-1" asChild>
-                  <Link href="/">{t("common.cancel", "Cancel")}</Link>
+                  <Link href="/">{t("common.cancel")}</Link>
                 </Button>
                 <Button type="submit" className="flex-1" disabled={loading}>
                   {loading
-                    ? t("common.loading", "Loading...")
-                    : t("report.submitReport", "Submit Report")}
+                    ? t("common.loading")
+                    : t("report.submitReport")}
                 </Button>
               </div>
             </form>

@@ -1,37 +1,36 @@
 import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { Toaster } from "@/components/ui/toaster";
+import { routing } from "@/i18n/routing";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { Toaster } from "@/components/ui/toaster";
 
-export default async function LocaleLayout({
-  children,
-  params,
-}: {
+type LocaleLayoutProps = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
-}) {
+};
+
+export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as (typeof routing.locales)[number])) {
     notFound();
   }
 
-  const messages = await getMessages();
-  const isRTL = locale === "fa" || locale === "ar";
+  const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale} dir={isRTL ? "rtl" : "ltr"} suppressHydrationWarning>
-      <body className="min-h-screen">
-        <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <Toaster />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <div
+        className="min-h-screen flex flex-col"
+        dir={locale === "fa" || locale === "ar" ? "rtl" : "ltr"}
+      >
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+        <Toaster />
+      </div>
+    </NextIntlClientProvider>
   );
 }

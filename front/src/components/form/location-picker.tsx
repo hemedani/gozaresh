@@ -45,7 +45,7 @@ export function LocationPicker({
     // In production, use navigator.geolocation
     setTimeout(() => {
       const mockLocation: Location = {
-        address: address || t('locationPicker.currentLocation', 'Current Location'),
+        address: address || t('locationPicker.currentLocation'),
         latitude: 35.6892,
         longitude: 51.3890,
       };
@@ -67,7 +67,7 @@ export function LocationPicker({
             <MapPin className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="text"
-              placeholder={t('locationPicker.placeholder', 'Enter address or location')}
+              placeholder={t('locationPicker.placeholder')}
               value={address}
               onChange={handleAddressChange}
               className="ps-10"
@@ -79,7 +79,7 @@ export function LocationPicker({
             size="icon"
             onClick={handleUseCurrentLocation}
             disabled={isSearching}
-            title={t('locationPicker.useCurrent', 'Use current location')}
+            title={t('locationPicker.useCurrent')}
           >
             <Search className="h-4 w-4" />
           </Button>
@@ -90,10 +90,10 @@ export function LocationPicker({
           <div className="mt-4 border-2 border-dashed rounded-lg p-8 text-center bg-muted/20">
             <MapPin className="mx-auto h-12 w-12 text-muted-foreground mb-2" />
             <p className="text-sm text-muted-foreground">
-              {t('locationPicker.mapPlaceholder', 'Map will be displayed here')}
+              {t('locationPicker.mapPlaceholder')}
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              {t('locationPicker.mapDescription', 'Integrate with MapLibre GL for interactive map')}
+              {t('locationPicker.mapDescription')}
             </p>
           </div>
         )}

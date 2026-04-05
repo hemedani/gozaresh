@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { register as registerUser } from "@/app/actions/auth/actions";
+import { login } from "@/app/actions/auth/actions";
 import { Link, useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,47 +20,43 @@ import {
 } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 
-const registerSchema = z.object({
-  first_name: z.string().min(1, "auth.firstNameRequired"),
-  last_name: z.string().min(1, "auth.lastNameRequired"),
+const loginSchema = z.object({
   email: z.string().email("auth.emailInvalid"),
-  password: z.string().min(6, "validation.minLength"),
+  password: z.string().min(1, "auth.passwordRequired"),
 });
 
-type RegisterFormData = z.infer<typeof registerSchema>;
+type LoginFormData = z.infer<typeof loginSchema>;
 
-export default function RegisterPage() {
+export default function LoginPage() {
   const t = useTranslations();
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema),
+  const form = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (data: RegisterFormData) => {
+  const onSubmit = async (data: LoginFormData) => {
     setLoading(true);
 
-    const result = await registerUser(data.first_name, data.last_name, data.email, data.password);
+    const result = await login(data.email, data.password);
 
     if (result.success) {
       toast({
-        title: t("common.success", "Success"),
-        description: t("auth.registerSuccess", "Account created successfully"),
+        title: t("common.success"),
+        description: t("auth.loginSuccess"),
       });
-      router.push("/auth/login");
+      router.push("/");
     } else {
       toast({
         variant: "destructive",
-        title: t("common.error", "Error"),
-        description: result.error || t("auth.registerFailed", "Registration failed"),
+        title: t("common.error"),
+        description: result.error || t("auth.invalidCredentials"),
       });
     }
     setLoading(false);
@@ -71,51 +67,21 @@ export default function RegisterPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            {t("auth.registerTitle", "Create Account")}
+            {t("auth.loginTitle")}
           </CardTitle>
           <CardDescription className="text-center">
-            {t("auth.registerDescription", "Fill in your details to create a new account")}
+            {t("auth.loginDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="first_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("auth.firstName", "First Name")}</FormLabel>
-                      <FormControl>
-                        <Input {...field} disabled={loading} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="last_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("auth.lastName", "Last Name")}</FormLabel>
-                      <FormControl>
-                        <Input {...field} disabled={loading} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("auth.email", "Email")}</FormLabel>
+                    <FormLabel>{t("auth.email")}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -134,7 +100,7 @@ export default function RegisterPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("auth.password", "Password")}</FormLabel>
+                    <FormLabel>{t("auth.password")}</FormLabel>
                     <FormControl>
                       <Input {...field} type="password" placeholder="••••••••" disabled={loading} />
                     </FormControl>
@@ -144,16 +110,16 @@ export default function RegisterPage() {
               />
 
               <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? t("common.loading", "Loading...") : t("auth.registerButton", "Register")}
+                {loading ? t("common.loading") : t("auth.loginButton")}
               </Button>
             </form>
           </Form>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <p className="text-center text-sm text-muted-foreground">
-            {t("auth.hasAccount", "Already have an account?")}{" "}
-            <Link href="/auth/login" className="text-primary font-medium hover:underline">
-              {t("auth.loginButton", "Login")}
+            {t("auth.noAccount")}{" "}
+            <Link href="/auth/register" className="text-primary font-medium hover:underline">
+              {t("auth.registerButton")}
             </Link>
           </p>
         </CardFooter>

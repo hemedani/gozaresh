@@ -39,8 +39,8 @@ export default function MyReportsPage() {
       setLoading(true);
       const result = await getMyReports(page, 10);
       if (result.success && result.body) {
-        setReports(result.body.reports || []);
-        setTotalPages(result.body.totalPages || 1);
+        setReports((result.body as any).reports || []);
+        setTotalPages((result.body as any).totalPages || 1);
       }
       setLoading(false);
     };
@@ -84,7 +84,7 @@ export default function MyReportsPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">
-          <p className="text-muted-foreground">{t('common.loading', 'Loading...')}</p>
+          <p className="text-muted-foreground">{t('common.loading')}</p>
         </div>
       </div>
     );
@@ -95,15 +95,15 @@ export default function MyReportsPage() {
       {/* Header */}
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">{t('myReports', 'My Reports')}</h1>
+          <h1 className="text-3xl font-bold">{t('myReports')}</h1>
           <p className="text-muted-foreground">
-            {t('myReportsDescription', 'View and track all your submitted reports')}
+            {t('myReportsDescription')}
           </p>
         </div>
         <Button asChild>
           <Link href="/reports/new" className="gap-2">
             <Plus className="h-4 w-4" />
-            {t('newReport', 'New Report')}
+            {t('newReport')}
           </Link>
         </Button>
       </div>
@@ -112,17 +112,17 @@ export default function MyReportsPage() {
       <Card className="mb-6">
         <CardContent className="pt-6">
           <div className="flex items-center gap-4">
-            <label className="text-sm font-medium">{t('filterByStatus', 'Filter by status')}:</label>
+            <label className="text-sm font-medium">{t('filterByStatus')}:</label>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-[200px]">
-                <SelectValue placeholder={t('allStatuses', 'All statuses')} />
+                <SelectValue placeholder={t('allStatuses')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">{t('allStatuses', 'All statuses')}</SelectItem>
-                <SelectItem value="Pending">{t('statusPending', 'Pending')}</SelectItem>
-                <SelectItem value="InReview">{t('statusInReview', 'In Review')}</SelectItem>
-                <SelectItem value="Approved">{t('statusApproved', 'Approved')}</SelectItem>
-                <SelectItem value="Rejected">{t('statusRejected', 'Rejected')}</SelectItem>
+                <SelectItem value="all">{t('allStatuses')}</SelectItem>
+                <SelectItem value="Pending">{t('statusPending')}</SelectItem>
+                <SelectItem value="InReview">{t('statusInReview')}</SelectItem>
+                <SelectItem value="Approved">{t('statusApproved')}</SelectItem>
+                <SelectItem value="Rejected">{t('statusRejected')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -134,14 +134,14 @@ export default function MyReportsPage() {
         <Card>
           <CardHeader className="text-center">
             <FileText className="mx-auto mb-4 h-16 w-16 text-muted-foreground" />
-            <CardTitle>{t('noReports', 'No reports found')}</CardTitle>
+            <CardTitle>{t('noReports')}</CardTitle>
             <CardDescription>
-              {t('noReportsDescription', 'You haven\'t submitted any reports yet. Create your first report to get started.')}
+              {t('noReportsDescription')}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center pb-6">
             <Button asChild>
-              <Link href="/reports/new">{t('createFirstReport', 'Create Report')}</Link>
+              <Link href="/reports/new">{t('createFirstReport')}</Link>
             </Button>
           </CardContent>
         </Card>
@@ -154,10 +154,10 @@ export default function MyReportsPage() {
                   <div className="flex-1">
                     <div className="mb-2 flex flex-wrap items-center gap-2">
                       <Badge variant={getStatusColor(report.status)}>
-                        {t(`status${report.status}`, report.status)}
+                        {t(`status${report.status}`)}
                       </Badge>
                       <Badge variant={getPriorityColor(report.priority)}>
-                        {t(`priority${report.priority}`, report.priority)}
+                        {t(`priority${report.priority}`)}
                       </Badge>
                     </div>
                     <CardTitle className="text-xl">{report.title}</CardTitle>
@@ -175,7 +175,7 @@ export default function MyReportsPage() {
                 <div className="flex justify-end">
                   <Button variant="outline" size="sm" asChild>
                     <Link href={`/reports/${report._id}`}>
-                      {t('viewDetails', 'View Details')}
+                      {t('viewDetails')}
                     </Link>
                   </Button>
                 </div>
@@ -193,10 +193,10 @@ export default function MyReportsPage() {
                 disabled={page === 1}
               >
                 <ChevronLeft className="h-4 w-4" />
-                {t('previous', 'Previous')}
+                {t('previous')}
               </Button>
               <span className="text-sm text-muted-foreground">
-                {t('pageOf', 'Page {current} of {total}', { current: page, total: totalPages })}
+                {t('pageOf', { current: page, total: totalPages })}
               </span>
               <Button
                 variant="outline"
@@ -204,7 +204,7 @@ export default function MyReportsPage() {
                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}
               >
-                {t('next', 'Next')}
+                {t('next')}
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>

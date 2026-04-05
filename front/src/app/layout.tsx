@@ -1,6 +1,7 @@
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,14 +13,21 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const metadata: Metadata = {
+  title: "Gozarish",
+  description: "Citizen report registration system",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
+    <html lang="fa" dir="rtl" suppressHydrationWarning>
+      <body suppressHydrationWarning
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased min-h-screen`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

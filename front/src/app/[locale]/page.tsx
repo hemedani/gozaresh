@@ -14,69 +14,51 @@ export default function Home() {
   const features = [
     {
       icon: Shield,
-      title: t("features.secure.title", "Secure & Anonymous"),
-      description: t(
-        "features.secure.description",
-        "Your identity is protected. Submit reports securely without sharing personal information.",
-      ),
+      title: t("features.secure.title"),
+      description: t("features.secure.description"),
     },
     {
       icon: Globe,
-      title: t("features.multilang.title", "Multi-Language Support"),
-      description: t(
-        "features.multilang.description",
-        "Available in 9 languages including Persian, Arabic, English, Chinese, and more.",
-      ),
+      title: t("features.multilang.title"),
+      description: t("features.multilang.description"),
     },
     {
       icon: FileText,
-      title: t("features.easy.title", "Easy to Use"),
-      description: t(
-        "features.easy.description",
-        "Simple and intuitive interface. Submit reports with just a few clicks.",
-      ),
+      title: t("features.easy.title"),
+      description: t("features.easy.description"),
     },
     {
       icon: Lock,
-      title: t("features.private.title", "Privacy First"),
-      description: t(
-        "features.private.description",
-        "Your data is encrypted and stored securely. We respect your privacy.",
-      ),
+      title: t("features.private.title"),
+      description: t("features.private.description"),
     },
     {
       icon: Zap,
-      title: t("features.fast.title", "Fast & Reliable"),
-      description: t(
-        "features.fast.description",
-        "Built with modern technology for fast and reliable performance.",
-      ),
+      title: t("features.fast.title"),
+      description: t("features.fast.description"),
     },
     {
       icon: Users,
-      title: t("features.community.title", "Community Driven"),
-      description: t(
-        "features.community.description",
-        "Help improve your community by reporting issues that matter.",
-      ),
+      title: t("features.community.title"),
+      description: t("features.community.description"),
     },
   ];
 
   const steps = [
     {
       number: 1,
-      title: t("steps.create.title", "Create Account"),
-      description: t("steps.create.description", "Sign up for free in seconds"),
+      title: t("steps.create.title"),
+      description: t("steps.create.description"),
     },
     {
       number: 2,
-      title: t("steps.submit.title", "Submit Report"),
-      description: t("steps.submit.description", "Add details, photos, and location"),
+      title: t("steps.submit.title"),
+      description: t("steps.submit.description"),
     },
     {
       number: 3,
-      title: t("steps.track.title", "Track Status"),
-      description: t("steps.track.description", "Follow up on your reports"),
+      title: t("steps.track.title"),
+      description: t("steps.track.description"),
     },
   ];
 
@@ -87,25 +69,22 @@ export default function Home() {
         <div className="container px-4">
           <div className="mx-auto max-w-4xl text-center">
             <Badge variant="secondary" className="mb-4">
-              {t("hero.badge", "Citizen Report Platform")}
+              {t("hero.badge")}
             </Badge>
             <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-              {t("hero.title", "Report Issues in Your Community")}
+              {t("hero.title")}
             </h1>
             <p className="mb-8 text-lg text-muted-foreground md:text-xl">
-              {t(
-                "hero.description",
-                "A secure and simple platform for citizens to report issues, track progress, and make a difference.",
-              )}
+              {t("hero.description")}
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button size="lg" asChild className="gap-2">
                 <Link href="/auth/register">
-                  {t("hero.ctaButton", "Get Started")} <ArrowRight className="h-4 w-4" />
+                  {t("hero.ctaButton")} <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/auth/login">{nav("login", "Login")}</Link>
+                <Link href="/auth/login">{nav("login")}</Link>
               </Button>
             </div>
           </div>
@@ -120,13 +99,10 @@ export default function Home() {
         <div className="container px-4">
           <div className="mx-auto max-w-2xl text-center mb-16">
             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-              {t("features.title", "Why Choose Gozarish?")}
+              {t("features.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
-              {t(
-                "features.description",
-                "Built for citizens, by citizens. Simple, secure, and effective.",
-              )}
+              {t("features.description")}
             </p>
           </div>
 
@@ -151,13 +127,10 @@ export default function Home() {
         <div className="container px-4">
           <div className="mx-auto max-w-2xl text-center mb-16">
             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-              {t("howItWorks.title", "How It Works")}
+              {t("howItWorks.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
-              {t(
-                "howItWorks.description",
-                "Three simple steps to make a difference in your community",
-              )}
+              {t("howItWorks.description")}
             </p>
           </div>
 
@@ -183,17 +156,17 @@ export default function Home() {
         <div className="container px-4">
           <div className="mx-auto max-w-3xl rounded-xl border bg-card p-8 md:p-12">
             <div className="text-center mb-8">
-              <h2 className="mb-4 text-2xl font-bold">{t("trust.title", "Trusted by Citizens")}</h2>
+              <h2 className="mb-4 text-2xl font-bold">{t("trust.title")}</h2>
               <p className="text-muted-foreground">
-                {t("trust.description", "Join thousands of citizens making their voices heard")}
+                {t("trust.description")}
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                t("trust.benefits.0", "Anonymous reporting"),
-                t("trust.benefits.1", "Real-time tracking"),
-                t("trust.benefits.2", "Secure data encryption"),
-                t("trust.benefits.3", "Mobile friendly"),
+                t("trust.benefits.0"),
+                t("trust.benefits.1"),
+                t("trust.benefits.2"),
+                t("trust.benefits.3"),
               ].map((benefit, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <CheckCircle2 className="h-5 w-5 text-green-500" />
@@ -210,17 +183,14 @@ export default function Home() {
         <div className="container px-4">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-              {t("cta.title", "Ready to Make a Difference?")}
+              {t("cta.title")}
             </h2>
             <p className="mb-8 text-lg opacity-90">
-              {t(
-                "cta.description",
-                "Join our community and start reporting issues that matter to you.",
-              )}
+              {t("cta.description")}
             </p>
             <Button size="lg" variant="secondary" asChild className="gap-2">
               <Link href="/auth/register">
-                {t("cta.button", "Create Your Account")} <ArrowRight className="h-4 w-4" />
+                {t("cta.button")} <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           </div>

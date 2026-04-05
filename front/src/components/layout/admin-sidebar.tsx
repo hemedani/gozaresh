@@ -30,33 +30,33 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
 
   const navigation = [
     {
-      name: t('dashboard', 'Dashboard'),
+      name: t('dashboard'),
       href: '/admin/dashboard',
       icon: LayoutDashboard,
     },
     {
-      name: t('reports', 'Reports'),
+      name: t('reports'),
       href: '/admin/reports',
       icon: FileText,
     },
     {
-      name: t('users', 'Users'),
+      name: t('users'),
       href: '/admin/users',
       icon: Users,
       requiresLevel: 3,
     },
     {
-      name: t('tags', 'Tags'),
+      name: t('tags'),
       href: '/admin/tags',
       icon: Tags,
     },
     {
-      name: t('categories', 'Categories'),
+      name: t('categories'),
       href: '/admin/categories',
       icon: FolderOpen,
     },
     {
-      name: t('files', 'Files'),
+      name: t('files'),
       href: '/admin/files',
       icon: FileImage,
     },
@@ -64,7 +64,7 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
 
   // Filter navigation items based on user level
   const filteredNavigation = navigation.filter(
-    item => !item.requiresLevel || (user && user.level >= item.requiresLevel)
+    item => !item.requiresLevel || (user && ((user.level === "Ghost" ? 4 : user.level === "Manager" ? 3 : user.level === "Editor" ? 2 : 1) >= item.requiresLevel))
   );
 
   return (
@@ -81,7 +81,7 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
             <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">A</span>
             </div>
-            <span className="font-bold text-lg">{t('adminPanel', 'Admin')}</span>
+            <span className="font-bold text-lg">{t('adminPanel')}</span>
           </Link>
         )}
         <Button
@@ -124,7 +124,7 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
       {!collapsed && (
         <div className="border-t p-4">
           <div className="text-xs text-muted-foreground">
-            <p>{t('version', 'Version')} 0.1.0</p>
+            <p>{t('version')} 0.1.0</p>
           </div>
         </div>
       )}

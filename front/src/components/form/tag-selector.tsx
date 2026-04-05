@@ -100,7 +100,7 @@ export function TagSelector({
       {/* Search input */}
       <Input
         type="text"
-        placeholder={t('tagSelector.search', 'Search tags...')}
+        placeholder={t('tagSelector.search')}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
@@ -129,7 +129,7 @@ export function TagSelector({
         <div className="flex gap-2 mt-2">
           <Input
             type="text"
-            placeholder={t('tagSelector.newTag', 'New tag name...')}
+            placeholder={t('tagSelector.newTag')}
             value={newTagInput}
             onChange={(e) => setNewTagInput(e.target.value)}
             onKeyDown={handleKeyDown}

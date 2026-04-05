@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { useParams, Link } from '@/i18n/routing';
+import { Link } from '@/i18n/routing';
+import { useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -123,7 +124,7 @@ export default function ReportDetailPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">
-          <p className="text-muted-foreground">{t('common.loading', 'Loading...')}</p>
+          <p className="text-muted-foreground">{t('common.loading')}</p>
         </div>
       </div>
     );
@@ -134,14 +135,14 @@ export default function ReportDetailPage() {
       <div className="container mx-auto px-4 py-8">
         <Card>
           <CardHeader className="text-center">
-            <CardTitle>{t('reportNotFound', 'Report not found')}</CardTitle>
+            <CardTitle>{t('reportNotFound')}</CardTitle>
             <CardDescription>
-              {t('reportNotFoundDescription', 'The report you are looking for does not exist.')}
+              {t('reportNotFoundDescription')}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center pb-6">
             <Button asChild>
-              <Link href="/reports/my">{t('backToReports', 'Back to Reports')}</Link>
+              <Link href="/reports/my">{t('backToReports')}</Link>
             </Button>
           </CardContent>
         </Card>
@@ -155,7 +156,7 @@ export default function ReportDetailPage() {
       <Button variant="ghost" asChild className="mb-6">
         <Link href="/reports/my" className="gap-2">
           <ArrowLeft className="h-4 w-4" />
-          {t('backToReports', 'Back to Reports')}
+          {t('backToReports')}
         </Link>
       </Button>
 
@@ -164,10 +165,10 @@ export default function ReportDetailPage() {
         <CardHeader>
           <div className="mb-4 flex flex-wrap items-center gap-2">
             <Badge variant={getStatusColor(report.status)} className="text-sm">
-              {t(`status${report.status}`, report.status)}
+              {t(`status${report.status}`)}
             </Badge>
             <Badge variant={getPriorityColor(report.priority)} className="text-sm">
-              {t(`priority${report.priority}`, report.priority)}
+              {t(`priority${report.priority}`)}
             </Badge>
           </div>
           <CardTitle className="text-3xl">{report.title}</CardTitle>
@@ -189,7 +190,7 @@ export default function ReportDetailPage() {
       {/* Description */}
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle>{t('description', 'Description')}</CardTitle>
+          <CardTitle>{t('description')}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground whitespace-pre-wrap">{report.description}</p>
@@ -202,7 +203,7 @@ export default function ReportDetailPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <MapPin className="h-5 w-5" />
-              {t('location', 'Location')}
+              {t('location')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -210,7 +211,7 @@ export default function ReportDetailPage() {
             {/* Map placeholder */}
             <div className="mt-4 h-48 rounded-lg bg-muted flex items-center justify-center">
               <p className="text-sm text-muted-foreground">
-                {t('mapPlaceholder', 'Map will be displayed here')}
+                {t('mapPlaceholder')}
               </p>
             </div>
           </CardContent>
@@ -223,7 +224,7 @@ export default function ReportDetailPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Tag className="h-5 w-5" />
-              {t('tags', 'Tags')}
+              {t('tags')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -244,7 +245,7 @@ export default function ReportDetailPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Paperclip className="h-5 w-5" />
-              {t('attachments', 'Attachments')} ({report.attachments.length})
+              {t('attachments')} ({report.attachments.length})
             </CardTitle>
           </CardHeader>
           <CardContent>

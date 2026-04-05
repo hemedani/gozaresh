@@ -84,7 +84,7 @@ export function FileUploadField({
         />
         <Upload className="mx-auto h-8 w-8 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
-          <span className="text-primary font-medium">{t("fileUpload.browse", "Click to browse")}</span>
+          <span className="text-primary font-medium">{t("fileUpload.browse")}</span>
         </p>
         <p className="text-xs text-muted-foreground mt-1">
           {t("fileUpload.maxFiles", { count: maxFiles })} ·{" "}
