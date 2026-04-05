@@ -1,6 +1,7 @@
 You are an expert full-stack TypeScript/Next.js 16 developer working exclusively on the **Gozarish Frontend** (citizen report system).
 
 **Project Context**:
+
 - Read `front/QWEN.md` for complete frontend architecture, conventions, and tech stack.
 - Read root `QWEN.md`, `back/QWEN.md`, `TODO.md`, and `CONTINUE.md` for full project context.
 - This frontend must be 100% beautiful, accessible, and production-ready.
@@ -8,6 +9,7 @@ You are an expert full-stack TypeScript/Next.js 16 developer working exclusively
 - Goal: Secure login → multi-language report submission page → advanced admin panel.
 
 **Strict Rules**:
+
 - ALWAYS work **one tiny step at a time** from `TODO.md`. Never jump ahead.
 - After completing a step:
   1. Mark it `[x]` in `TODO.md` (add short note if needed).
@@ -25,6 +27,7 @@ You are an expert full-stack TypeScript/Next.js 16 developer working exclusively
 - Prioritize accessibility (WCAG AA minimum).
 
 **Component Usage**:
+
 - Use shadcn/ui components from `@/components/ui/` (Button, Input, Card, etc.)
 - Use the `cn()` utility from `@/lib/utils` for conditional class merging
 - All form components should be wrapped with shadcn/ui Form components
@@ -35,75 +38,67 @@ You are an expert full-stack TypeScript/Next.js 16 developer working exclusively
 [the full git commit assistant instruction block that appears at the end of the original Naghshe root QWEN.md]
 
 **Current Status**:
-- Phase 1 (Setup): ~95% complete
-- Phase 2 (Core UI Components): Just started (base components added, need more)
-- **Next**: Continue Phase 2 - Add more shadcn/ui components and create reusable form components
+
+- ✅ Phase 1 (Setup): 100% complete
+- ✅ Phase 2 (Core UI Components): 100% complete
+- ✅ Phase 3 (Public User Pages): ~95% complete (all pages built, translations pending)
+- **Next**: Phase 4 - Admin Panel (`/admin/*` routes)
 
 **What's Done**:
-- ✅ Next.js 16 + TypeScript + Tailwind v4
-- ✅ next-intl: fa/en with RTL support, middleware, routing
-- ✅ Zustand auth store + server actions (login, register, getMe, logout)
-- ✅ Report server actions (createReport, getMyReports)
-- ✅ Login, Register, New Report pages scaffolded
-- ✅ Multi-stage Dockerfile (dev + prod)
-- ✅ Backend type declarations copied
-- ✅ shadcn/ui configured with RTL support
-  - ✅ components.json with `"rtl": true`
-  - ✅ cn() utility function
-  - ✅ Base UI components: Button, Input, Textarea, Label, Card
-  - ✅ globals.css updated with theme variables
-- ✅ Docker Compose with direct port mapping (no Traefik)
 
-**Next Steps**:
-1. Add more shadcn/ui components (Dialog, Toast, Select, Checkbox, Tabs, Table, Dropdown Menu, Avatar, Badge, Form)
-2. Create reusable form components (FormField, FileUploadField, TagSelector, LocationPicker)
-3. Create layout components (Header, Footer, Sidebar, Navigation)
-4. Setup dark mode with next-themes
-5. Then move to Phase 3 (Public User Pages) - polish and complete login/register/new report pages
+- ✅ All shadcn/ui components (Dialog, Toast, Select, Checkbox, Tabs, Table, Dropdown Menu, Avatar, Badge, Form, etc.)
+- ✅ Reusable form components (FormInput, FileUploadField, TagSelector, LocationPicker)
+- ✅ Layout components (Header, Footer, AdminSidebar, LanguageSwitcher)
+- ✅ Theme configuration (dark/light/system with smooth transitions)
+- ✅ Landing Page with hero section, features, how it works, trust section
+- ✅ Login/Register pages with shadcn/ui, Zod validation, toast notifications
+- ✅ New Report page with all form fields, file upload, tags, location picker
+- ✅ My Reports page with status filtering, pagination, empty state
+- ✅ Report Detail page with attachments, tags, status/priority badges
+- ✅ Toaster integrated into locale layout
+- ✅ Header & Footer on all public pages
 
 **Frontend Structure**:
+
 ```
 front/
 ├── src/
-│   ├── app/                    # Next.js App Router
-│   │   ├── (routes)/           # Public routes with locale
-│   │   ├── admin/              # Admin panel (no locale)
-│   │   ├── actions/            # Server actions
-│   │   │   ├── auth/           # Auth server actions
-│   │   │   └── report/         # Report server actions
-│   │   └── globals.css         # Global styles + Tailwind
-│   ├── components/             # React components
-│   │   ├── ui/                 # shadcn/ui components
-│   │   ├── atoms/              # Atomic design - atoms
-│   │   ├── molecules/          # Atomic design - molecules
-│   │   └── organisms/          # Atomic design - organisms
-│   ├── stores/                 # Zustand stores
-│   │   └── authStore.ts        # Auth state
-│   ├── lib/                    # Utilities
-│   │   ├── utils.ts            # cn() function
-│   │   └── api.ts              # API utilities
-│   ├── types/                  # TypeScript types
-│   │   └── declarations/       # Backend-generated types
-│   └── hooks/                  # Custom React hooks
-├── messages/                   # next-intl translations
-│   ├── fa.json                 # Persian (RTL, default)
-│   └── en.json                 # English
-├── i18n/                       # Internationalization config
-├── public/                     # Static assets
-├── components.json             # shadcn/ui configuration
-├── next.config.ts              # Next.js configuration
-├── tailwind.config.ts          # Tailwind configuration
-└── TODO.md                     # This file's companion
+│   ├── app/
+│   │   ├── [locale]/              # Public routes with locale
+│   │   │   ├── page.tsx           # Landing page (beautiful, modern)
+│   │   │   └── layout.tsx         # Locale layout with Header, Footer, Toaster
+│   │   ├── (auth)/
+│   │   │   ├── login/page.tsx     # Login with shadcn/ui
+│   │   │   └── register/page.tsx  # Register with shadcn/ui
+│   │   ├── (dashboard)/
+│   │   │   └── reports/
+│   │   │       ├── new/page.tsx   # New report with all fields
+│   │   │       ├── my/page.tsx    # My reports with filtering
+│   │   │       └── [id]/page.tsx  # Report detail view
+│   │   ├── admin/                 # EMPTY - needs implementation
+│   │   └── actions/               # Server actions
+│   ├── components/
+│   │   ├── ui/                    # 15+ shadcn/ui components
+│   │   ├── form/                  # 4 reusable form components
+│   │   ├── layout/                # Header, Footer, AdminSidebar, LanguageSwitcher
+│   │   └── providers/             # ThemeProvider
+│   └── stores/
+│       └── authStore.ts           # Zustand auth state
+├── messages/
+│   ├── fa.json                    # Persian (RTL, default)
+│   └── en.json                    # English
+└── i18n/                          # next-intl config
 ```
 
 **Server Actions Pattern**:
 Always use this pattern for server actions:
+
 ```ts
 // src/app/actions/auth/login.ts
-'use server';
+"use server";
 
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function login(email: string, password: string) {
   // ... implementation
@@ -112,22 +107,15 @@ export async function login(email: string, password: string) {
 ```
 
 **Form Pattern** (React Hook Form + Zod + shadcn/ui):
-```tsx
-'use client';
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+```tsx
+"use client";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -166,7 +154,21 @@ export default function LoginForm() {
 }
 ```
 
+**Available UI Components** (all in `/src/components/ui/`):
+
+- **Form**: Button, Input, Textarea, Label, Checkbox, Select, Form (FormField, FormItem, FormLabel, FormControl, FormMessage)
+- **Layout**: Card, Dialog, Tabs, Table, Dropdown Menu, Separator
+- **Feedback**: Toast (with useToast hook), Badge, Avatar
+
+**Reusable Form Components** (in `/src/components/form/`):
+
+- FormInput - Input/Textarea with label and validation
+- FileUploadField - File upload with image preview
+- TagSelector - Multi-select tags with chips and search
+- LocationPicker - Address input with map placeholder
+
 **Important Reminders**:
+
 - Use types from `/src/types/declarations` for consistency with the backend
 - Ghost user level has full admin access
 - Keep the report submission page **simple and elegant**
@@ -178,4 +180,12 @@ export default function LoginForm() {
 - Follow accessibility best practices
 
 **Next Session Prompt**:
-Continue with next unchecked step from `TODO.md` (Phase 2 - Core UI Components).
+Continue with **Phase 4: Admin Panel**. Start with:
+
+1. Create admin layout with sidebar navigation
+2. Admin dashboard with statistics cards
+3. Reports management table with filtering and actions
+4. Users management table
+5. Tags/Categories/Files management pages
+
+Follow the same patterns: one step at a time, update TODO.md, commit with Gitmoji.

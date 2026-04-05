@@ -68,55 +68,55 @@
 
 ## Phase 3: Public User Pages (Multi-language)
 
-- [ ] **Landing Page** (`/[locale]/`)
-  - [ ] Hero section with app description
-  - [ ] Features overview (simple, secure, multi-language)
-  - [ ] Login/Register CTA buttons
-  - [ ] Beautiful, welcoming design
-- [ ] **Login Page** (`/[locale]/login`)
-  - [ ] Email + password form
-  - [ ] Zod validation
-  - [ ] Error handling (wrong credentials)
-  - [ ] Loading states
-  - [ ] Link to register page
-  - [ ] Redirect to home after login
-- [ ] **Register Page** (`/[locale]/register`)
-  - [ ] Name, email, password, confirm password form
-  - [ ] Zod validation (password strength, email format)
-  - [ ] Error handling (duplicate email)
-  - [ ] Loading states
-  - [ ] Link to login page
-  - [ ] Auto-login after registration
-- [ ] **Report Submission Page** (`/[locale]/reports/new`)
-  - [ ] Title field (required)
-  - [ ] Description textarea (required, with character count)
-  - [ ] File upload (multiple files, with preview, drag & drop)
-  - [ ] Tags multi-select (searchable, with chips)
-  - [ ] Category select (dropdown)
-  - [ ] Location picker (map with pin placement OR address input)
-  - [ ] Priority selector (low, medium, high)
-  - [ ] Status (auto-set to "pending")
-  - [ ] Zod validation for all fields
-  - [ ] Loading states during submission
-  - [ ] Success/error toasts
-  - [ ] Redirect to my reports after submission
-  - [ ] Simple, elegant, intuitive design
-- [ ] **My Reports Page** (`/[locale]/reports`)
-  - [ ] List of user's reports (cards or table)
-  - [ ] Each report shows: title, status badge, date, category
-  - [ ] Filter by status (pending, approved, rejected)
-  - [ ] Filter by category
-  - [ ] Pagination or infinite scroll
-  - [ ] Empty state (no reports yet)
-  - [ ] Link to create new report
-  - [ ] Click to view report details
-- [ ] **Report Detail Page** (`/[locale]/reports/[id]`)
-  - [ ] Full report information
-  - [ ] Attachments (downloadable, image preview)
-  - [ ] Tags displayed as badges
-  - [ ] Category, location, priority
-  - [ ] Status badge with color coding
-  - [ ] Submission date
+- [x] **Landing Page** (`/[locale]/`)
+  - [x] Hero section with app description
+  - [x] Features overview (simple, secure, multi-language)
+  - [x] Login/Register CTA buttons
+  - [x] Beautiful, welcoming design
+- [x] **Login Page** (`/[locale]/login`)
+  - [x] Email + password form
+  - [x] Zod validation
+  - [x] Error handling (wrong credentials)
+  - [x] Loading states
+  - [x] Link to register page
+  - [x] Redirect to home after login
+- [x] **Register Page** (`/[locale]/register`)
+  - [x] Name, email, password, confirm password form
+  - [x] Zod validation (password strength, email format)
+  - [x] Error handling (duplicate email)
+  - [x] Loading states
+  - [x] Link to login page
+  - [x] Auto-login after registration
+- [x] **Report Submission Page** (`/[locale]/reports/new`)
+  - [x] Title field (required)
+  - [x] Description textarea (required, with character count)
+  - [x] File upload (multiple files, with preview, drag & drop)
+  - [x] Tags multi-select (searchable, with chips)
+  - [x] Category select (dropdown)
+  - [x] Location picker (map with pin placement OR address input)
+  - [x] Priority selector (low, medium, high)
+  - [x] Status (auto-set to "pending")
+  - [x] Zod validation for all fields
+  - [x] Loading states during submission
+  - [x] Success/error toasts
+  - [x] Redirect to my reports after submission
+  - [x] Simple, elegant, intuitive design
+- [x] **My Reports Page** (`/[locale]/reports`)
+  - [x] List of user's reports (cards or table)
+  - [x] Each report shows: title, status badge, date, category
+  - [x] Filter by status (pending, approved, rejected)
+  - [x] Filter by category
+  - [x] Pagination or infinite scroll
+  - [x] Empty state (no reports yet)
+  - [x] Link to create new report
+  - [x] Click to view report details
+- [x] **Report Detail Page** (`/[locale]/reports/[id]`)
+  - [x] Full report information
+  - [x] Attachments (downloadable, image preview)
+  - [x] Tags displayed as badges
+  - [x] Category, location, priority
+  - [x] Status badge with color coding
+  - [x] Submission date
   - [ ] Comments/reviews section (if applicable)
 
 ## Phase 4: Admin Panel (`/admin/*` – no locale prefix)
