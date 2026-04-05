@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { Toaster } from "@/components/ui/toaster";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 
 export default async function LocaleLayout({
   children,
@@ -12,7 +15,7 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as "fa" | "en")) {
+  if (!routing.locales.includes(locale as any)) {
     notFound();
   }
 
@@ -20,10 +23,13 @@ export default async function LocaleLayout({
   const isRTL = locale === "fa" || locale === "ar";
 
   return (
-    <html lang={locale} dir={isRTL ? "rtl" : "ltr"}>
+    <html lang={locale} dir={isRTL ? "rtl" : "ltr"} suppressHydrationWarning>
       <body className="min-h-screen">
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <Toaster />
         </NextIntlClientProvider>
       </body>
     </html>
