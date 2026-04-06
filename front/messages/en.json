@@ -302,6 +302,18 @@
     "editRole": "Edit Role",
     "deactivate": "Deactivate",
     "address": "Address",
-    "deleteConfirm": "Are you sure you want to delete this user?"
+    "deleteConfirm": "Are you sure you want to delete this user?",
+    "tagsManagement": "Tags Management",
+    "tagsManagementDescription": "Manage tags for reports categorization",
+    "addTag": "Add Tag",
+    "addTagDescription": "Create a new tag for reports",
+    "tagFormComingSoon": "Tag form will be implemented here",
+    "searchTags": "Search tags...",
+    "noTags": "No tags found",
+    "color": "Color",
+    "icon": "Icon",
+    "deleteTagConfirm": "Are you sure you want to delete this tag?",
+    "tagDeleted": "Tag deleted successfully",
+    "failedToDeleteTag": "Failed to delete tag"
   }
 }

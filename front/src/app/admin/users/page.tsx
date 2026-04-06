@@ -48,8 +48,6 @@ export default async function AdminUsersPage({
     createdAt: 1,
   });
 
-  console.log({ response }, "from admin/users/page");
-
   let users: userSchema[] = [];
   let error: string | null = null;
   if (response?.success) {

@@ -297,6 +297,18 @@
     "editRole": "ویرایش نقش",
     "deactivate": "غیرفعال کردن",
     "address": "آدرس",
-    "deleteConfirm": "آیا از حذف این کاربر اطمینان دارید؟"
+    "deleteConfirm": "آیا از حذف این کاربر اطمینان دارید؟",
+    "tagsManagement": "مدیریت برچسب‌ها",
+    "tagsManagementDescription": "مدیریت برچسب‌ها برای دسته‌بندی گزارش‌ها",
+    "addTag": "افزودن برچسب",
+    "addTagDescription": "ایجاد برچسب جدید برای گزارش‌ها",
+    "tagFormComingSoon": "فرم برچسب در اینجا پیاده‌سازی خواهد شد",
+    "searchTags": "جستجوی برچسب‌ها...",
+    "noTags": "هیچ برچسبی یافت نشد",
+    "color": "رنگ",
+    "icon": "آیکون",
+    "deleteTagConfirm": "آیا از حذف این برچسب اطمینان دارید؟",
+    "tagDeleted": "برچسب با موفقیت حذف شد",
+    "failedToDeleteTag": "حذف برچسب ناموفق بود"
   }
 }
