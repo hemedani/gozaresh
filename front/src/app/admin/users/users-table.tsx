@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useEffect, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { removeUser } from "@/app/actions/user/removeUser";
@@ -18,11 +18,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function UsersTable({ users }: { users: any[] }) {
+export function UsersTable({ users, error }: { users: any[]; error?: string | null }) {
   const t = useTranslations("admin");
   const { toast } = useToast();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: t("error") || "Error",
+        description: error,
+      });
+    }
+  }, [error, toast, t]);
 
   const getLevelBadge = (level: string) => {
     switch (level) {
@@ -90,9 +100,7 @@ export function UsersTable({ users }: { users: any[] }) {
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{getLevelBadge(user.level)}</TableCell>
                   <TableCell>
-                    {user.createdAt
-                      ? new Date(user.createdAt).toLocaleDateString()
-                      : "-"}
+                    {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "-"}
                   </TableCell>
                   <TableCell className="text-right pr-4">
                     <DropdownMenu>

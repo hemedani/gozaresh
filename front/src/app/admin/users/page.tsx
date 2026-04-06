@@ -43,10 +43,11 @@ export default async function AdminUsersPage({
   });
 
   let users: any[] = [];
+  let error: string | null = null;
   if (response?.success) {
     users = response.body || [];
   } else {
-    // do notif or toaster things
+    error = response?.error || "Failed to fetch users";
   }
 
   return (
@@ -117,7 +118,7 @@ export default async function AdminUsersPage({
         </form>
       </div>
 
-      <UsersTable users={users} />
+      <UsersTable users={users} error={error} />
 
       <div className="flex items-center justify-end space-x-2 py-4">
         {page > 1 ? (
