@@ -277,6 +277,8 @@
     "reportsCount": "تعداد گزارش‌ها",
     "allLevels": "همه سطح‌ها",
     "searchUsers": "جستجوی کاربران...",
-    "search": "جستجو"
+    "search": "جستجو",
+    "email": "ایمیل",
+    "noUsers": "کاربری یافت نشد"
   }
 }

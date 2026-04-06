@@ -282,6 +282,8 @@
     "reportsCount": "Reports Count",
     "allLevels": "All Levels",
     "searchUsers": "Search users...",
-    "search": "Search"
+    "search": "Search",
+    "email": "Email",
+    "noUsers": "No users found"
   }
 }
