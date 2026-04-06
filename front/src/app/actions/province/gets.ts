@@ -17,6 +17,5 @@ export const gets = async (data: ReqType["main"]["province"]["gets"]["set"], get
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

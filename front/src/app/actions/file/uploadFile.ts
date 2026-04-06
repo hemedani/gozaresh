@@ -17,6 +17,5 @@ export const uploadFile = async (data: ReqType["main"]["file"]["uploadFile"]["se
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

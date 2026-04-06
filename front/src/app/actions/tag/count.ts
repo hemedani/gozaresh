@@ -17,6 +17,5 @@ export const count = async (data: ReqType["main"]["tag"]["count"]["set"], getSel
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

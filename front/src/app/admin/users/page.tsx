@@ -6,20 +6,31 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from "next/link";
 import { UsersTable } from "./users-table";
+import { AddUserModal } from "./add-user-modal";
 
 export default async function AdminUsersPage({
   searchParams,
 }: {
-  searchParams: { page?: string; search?: string; level?: string };
+  searchParams: {
+    page?: string;
+    search?: string;
+    level?: string;
+    sortBy?: string;
+    sortOrder?: string;
+  };
 }) {
   const t = await getTranslations("admin");
   const page = Number(searchParams.page) || 1;
   const search = searchParams.search || "";
   const level = searchParams.level || "all";
+  const sortBy = searchParams.sortBy || "createdAt";
+  const sortOrder = searchParams.sortOrder || "desc";
 
   const setQuery: any = { page, limit: 10 };
   if (search) setQuery.search = search;
   if (level !== "all") setQuery.levels = level;
+  setQuery.sortBy = sortBy;
+  setQuery.sortOrder = sortOrder;
 
   // Fetch users
   const response = await getUsers(setQuery, {
@@ -31,15 +42,25 @@ export default async function AdminUsersPage({
     createdAt: 1,
   });
 
-  const users = response?.list || [];
+  let users: any[] = [];
+  if (response?.success) {
+    users = response.body || [];
+  } else {
+    // do notif or toaster things
+  }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">{t("usersManagement") || "Users Management"}</h1>
-          <p className="text-muted-foreground">{t("usersManagementDescription") || "Manage user accounts and roles"}</p>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {t("usersManagement") || "Users Management"}
+          </h1>
+          <p className="text-muted-foreground">
+            {t("usersManagementDescription") || "Manage user accounts and roles"}
+          </p>
         </div>
+        <AddUserModal />
       </div>
 
       <div className="flex flex-col gap-4 mb-6">
@@ -67,6 +88,29 @@ export default async function AdminUsersPage({
               </SelectContent>
             </Select>
           </div>
+          <div className="w-full sm:w-48">
+            <Select name="sortBy" defaultValue={sortBy}>
+              <SelectTrigger>
+                <SelectValue placeholder={t("sortBy") || "Sort By"} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="createdAt">{t("date") || "Date"}</SelectItem>
+                <SelectItem value="first_name">{t("name") || "Name"}</SelectItem>
+                <SelectItem value="level">{t("level") || "Level"}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="w-full sm:w-48">
+            <Select name="sortOrder" defaultValue={sortOrder}>
+              <SelectTrigger>
+                <SelectValue placeholder={t("sortOrder") || "Order"} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="desc">{t("descending") || "Descending"}</SelectItem>
+                <SelectItem value="asc">{t("ascending") || "Ascending"}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <Button type="submit" variant="secondary">
             {t("search") || "Search"}
           </Button>
@@ -79,7 +123,7 @@ export default async function AdminUsersPage({
         {page > 1 ? (
           <Button variant="outline" size="sm" asChild>
             <Link
-              href={`/admin/users?page=${page - 1}${search ? `&search=${search}` : ""}${level !== "all" ? `&level=${level}` : ""}`}
+              href={`/admin/users?page=${page - 1}${search ? `&search=${search}` : ""}${level !== "all" ? `&level=${level}` : ""}&sortBy=${sortBy}&sortOrder=${sortOrder}`}
             >
               {t("previous") || "Previous"}
             </Link>
@@ -92,7 +136,7 @@ export default async function AdminUsersPage({
         {users.length >= 10 ? (
           <Button variant="outline" size="sm" asChild>
             <Link
-              href={`/admin/users?page=${page + 1}${search ? `&search=${search}` : ""}${level !== "all" ? `&level=${level}` : ""}`}
+              href={`/admin/users?page=${page + 1}${search ? `&search=${search}` : ""}${level !== "all" ? `&level=${level}` : ""}&sortBy=${sortBy}&sortOrder=${sortOrder}`}
             >
               {t("next") || "Next"}
             </Link>

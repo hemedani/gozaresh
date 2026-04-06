@@ -60,7 +60,7 @@ You are an expert full-stack TypeScript/Next.js 16 developer working exclusively
 - ✅ Admin Layout with sidebar navigation and role-based access check
 - ✅ Admin Dashboard with statistics cards and layout
 - ✅ Admin Reports Management fully completed with data table, filters, search, sorting, pagination, bulk actions, row actions, CSV export, and view details modal (`/admin/reports`)
-- ✅ Admin Users Management data table, filters, search, pagination, and row actions (`/admin/users`)
+- ✅ Admin Users Management fully completed with data table, filters, search, sorting, pagination, row actions, and add new user modal (`/admin/users`)
 
 **Frontend Structure**:
 
@@ -186,7 +186,6 @@ export default function LoginForm() {
 **Next Session Prompt**:
 Continue with **Phase 4: Admin Panel**. Start with:
 
-1. Add sorting and "Add new user" modal to the Users management table (`/admin/users`)
-2. Tags/Categories/Files management pages
+1. Tags/Categories/Files management pages
 
 Follow the same patterns: one step at a time, update TODO.md, commit with Gitmoji.

@@ -17,6 +17,5 @@ export const getFiles = async (data: ReqType["main"]["file"]["getFiles"]["set"],
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

@@ -40,7 +40,10 @@ export default async function AdminReportsPage({
 
   // Fetch categories for filter
   const categoriesResponse = await getCategories({ page: 1, limit: 100 }, { _id: 1, name: 1 });
-  const categories = categoriesResponse?.list || [];
+  let categories: any[] = [];
+  if (categoriesResponse?.success) {
+    categories = categoriesResponse.body.list || [];
+  }
 
   // Fetch reports
   const response = await getReports(setQuery, {
@@ -52,7 +55,10 @@ export default async function AdminReportsPage({
     category: { _id: 1, name: 1 },
   });
 
-  const reports = response?.list || [];
+  let reports: any[] = [];
+  if (response?.success) {
+    reports = response.body.list || [];
+  }
 
   return (
     <div className="space-y-6">

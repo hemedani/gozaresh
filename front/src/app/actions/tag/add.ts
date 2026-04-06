@@ -17,6 +17,5 @@ export const add = async (data: ReqType["main"]["tag"]["add"]["set"], getSelecti
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

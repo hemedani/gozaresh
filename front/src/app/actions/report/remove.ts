@@ -17,6 +17,5 @@ export const remove = async (data: ReqType["main"]["report"]["remove"]["set"], g
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

@@ -17,6 +17,5 @@ export const get = async (data: ReqType["main"]["report"]["get"]["set"], getSele
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

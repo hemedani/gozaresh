@@ -17,6 +17,5 @@ export const add = async (data: ReqType["main"]["city"]["add"]["set"], getSelect
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

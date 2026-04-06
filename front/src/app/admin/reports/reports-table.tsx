@@ -84,7 +84,7 @@ export function ReportsTable({ reports }: { reports: any[] }) {
   const updateStatus = async (id: string, status: "pending" | "approved" | "rejected") => {
     try {
       const res = await update({ _id: id, status }, { _id: 1 });
-      if (res) {
+      if (res?.success) {
         toast({
           title: t("success") || "Success",
           description: "Report status updated",
@@ -105,7 +105,7 @@ export function ReportsTable({ reports }: { reports: any[] }) {
   const deleteReport = async (id: string) => {
     try {
       const res = await remove({ _id: id }, { _id: 1 });
-      if (res) {
+      if (res?.success) {
         toast({
           title: t("success") || "Success",
           description: "Report deleted",

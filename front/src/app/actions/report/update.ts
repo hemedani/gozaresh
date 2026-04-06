@@ -17,6 +17,5 @@ export const update = async (data: ReqType["main"]["report"]["update"]["set"], g
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

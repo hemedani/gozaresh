@@ -17,6 +17,5 @@ export const addUser = async (data: ReqType["main"]["user"]["addUser"]["set"], g
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

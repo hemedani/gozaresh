@@ -17,6 +17,5 @@ export const tempUser = async (data: ReqType["main"]["user"]["tempUser"]["set"],
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

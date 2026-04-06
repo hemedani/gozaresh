@@ -17,6 +17,5 @@ export const remove = async (data: ReqType["main"]["city"]["remove"]["set"], get
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

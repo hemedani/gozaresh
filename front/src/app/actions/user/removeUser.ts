@@ -17,6 +17,5 @@ export const removeUser = async (data: ReqType["main"]["user"]["removeUser"]["se
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

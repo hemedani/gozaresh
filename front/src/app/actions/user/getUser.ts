@@ -17,6 +17,5 @@ export const getUser = async (data: ReqType["main"]["user"]["getUser"]["set"], g
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

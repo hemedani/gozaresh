@@ -17,6 +17,5 @@ export const countUsers = async (data: ReqType["main"]["user"]["countUsers"]["se
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

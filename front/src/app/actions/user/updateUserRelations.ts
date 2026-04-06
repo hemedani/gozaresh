@@ -17,6 +17,5 @@ export const updateUserRelations = async (data: ReqType["main"]["user"]["updateU
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

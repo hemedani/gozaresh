@@ -284,6 +284,16 @@
     "searchUsers": "Search users...",
     "search": "Search",
     "email": "Email",
-    "noUsers": "No users found"
+    "noUsers": "No users found",
+    "addUser": "Add User",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "fatherName": "Father Name",
+    "nationalNumber": "National Number",
+    "mobile": "Mobile",
+    "gender": "Gender",
+    "gender_Male": "Male",
+    "gender_Female": "Female",
+    "isVerified": "Is Verified"
   }
 }

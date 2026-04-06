@@ -147,10 +147,10 @@
   - [x] Columns: name, email, role, level, reports count, date, actions
   - [x] Filter by role/level
   - [x] Search by name or email
-  - [ ] Sort by any column
+  - [x] Sort by any column
   - [x] Pagination
   - [x] Actions: view, edit role/level, deactivate, delete
-  - [ ] Add new user modal
+  - [x] Add new user modal
 - [ ] **Tags Management** (`/admin/tags`)
   - [ ] List/grid of all tags
   - [ ] Columns: name, color, icon, usage count, actions

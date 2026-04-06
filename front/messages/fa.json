@@ -279,6 +279,16 @@
     "searchUsers": "جستجوی کاربران...",
     "search": "جستجو",
     "email": "ایمیل",
-    "noUsers": "کاربری یافت نشد"
+    "noUsers": "کاربری یافت نشد",
+    "addUser": "افزودن کاربر",
+    "firstName": "نام",
+    "lastName": "نام خانوادگی",
+    "fatherName": "نام پدر",
+    "nationalNumber": "کد ملی",
+    "mobile": "شماره موبایل",
+    "gender": "جنسیت",
+    "gender_Male": "مرد",
+    "gender_Female": "زن",
+    "isVerified": "تایید شده"
   }
 }

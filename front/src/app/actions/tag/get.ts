@@ -17,6 +17,5 @@ export const get = async (data: ReqType["main"]["tag"]["get"]["set"], getSelecti
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };

@@ -43,7 +43,7 @@ export function UsersTable({ users }: { users: any[] }) {
 
     try {
       const res = await removeUser({ _id: id }, { _id: 1 });
-      if (res) {
+      if (res?.success) {
         toast({
           title: t("success") || "Success",
           description: "User deleted successfully",
