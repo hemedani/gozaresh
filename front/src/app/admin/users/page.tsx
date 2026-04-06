@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Link from "next/link";
 import { UsersTable } from "./users-table";
 import { AddUserModal } from "./add-user-modal";
-import { userSchema } from "@/types/declarations";
+import { ReqType, userSchema } from "@/types/declarations";
 
 export default async function AdminUsersPage({
   searchParams,
@@ -27,9 +27,13 @@ export default async function AdminUsersPage({
   const sortBy = searchParams.sortBy || "createdAt";
   const sortOrder = searchParams.sortOrder || "desc";
 
-  const setQuery: any = { page, limit: 10 };
+  const setQuery: ReqType["main"]["user"]["getUsers"]["set"] & {
+    search?: string;
+    sortBy?: string;
+    sortOrder?: string;
+  } = { page, limit: 10 };
   if (search) setQuery.search = search;
-  if (level !== "all") setQuery.levels = level;
+  if (level !== "all") setQuery.levels = level as ReqType["main"]["user"]["getUsers"]["set"]["levels"];
   setQuery.sortBy = sortBy;
   setQuery.sortOrder = sortOrder;
 
