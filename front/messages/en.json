@@ -243,6 +243,7 @@
     "reportsManagement": "Reports Management",
     "reportsManagementDescription": "Manage and moderate citizen reports",
     "title": "Title",
+    "description": "Description",
     "category": "Category",
     "status": "Status",
     "priority": "Priority",

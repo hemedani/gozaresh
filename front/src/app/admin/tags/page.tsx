@@ -65,9 +65,9 @@ export default async function AdminTagsPage({
             {t("tagsManagementDescription") || "Manage tags for reports categorization"}
           </p>
         </div>
-        <Dialog>
+        <Dialog modal>
           <DialogTrigger asChild>
-            <Button>
+            <Button type="button">
               <Plus className="mr-2 h-4 w-4" />
               {t("addTag") || "Add Tag"}
             </Button>
