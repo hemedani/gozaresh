@@ -493,3 +493,882 @@ The trade-off is a minimal performance impact on create, update, and delete oper
 ### Philosophy
 
 Lesan's core philosophy centers on simplifying the client-server communication process, maximizing NoSQL database capabilities, and enabling scalable microservice architectures. It focuses on performance by embedding relationships within documents, reducing the number of database queries needed for complex data retrieval operations. The framework addresses traditional challenges with GraphQL and SQL by providing database-optimized filtering and embedded relationships that maintain efficiency even with deep nested data access patterns.
+
+---
+
+# Lesan Framework Architecture Guide
+
+## Project Structure
+
+```
+back/
+├── mod.ts                      # Main entry point - initializes Lesan, models, and server
+├── deps.ts                     # Centralized dependency imports
+├── deno.json                   # Deno configuration and import maps
+│
+├── models/                     # Data model definitions
+│   ├── mod.ts                  # Re-exports all models and utilities
+│   ├── [model].ts              # Individual model files (pure fields + relations)
+│   ├── excludes.ts             # Centralized field exclusion lists
+│   └── utils/
+│       ├── geoJSONStruct.ts    # GeoJSON validation schemas
+│       ├── pureLocation.ts     # Reusable location fields
+│       └── sharedRelations.ts  # Shared relation patterns
+│
+├── src/                        # API route implementations
+│   ├── mod.ts                  # Main setup function - calls all model setups
+│   └── [model]/
+│       ├── mod.ts              # Model setup - calls all action setups
+│       ├── [action]/
+│       │   ├── mod.ts          # Action setup (registers with Lesan)
+│       │   ├── [action].fn.ts  # Function implementation
+│       │   └── [action].val.ts # Validator definition
+│
+├── utils/                      # Shared utilities
+│   ├── mod.ts                  # Re-exports all utilities
+│   ├── grantAccess.ts          # Authorization middleware
+│   ├── setUser.ts              # User context extraction from JWT
+│   ├── setToken.ts             # JWT token parsing
+│   ├── context.ts              # TypeScript context type definitions
+│   ├── createUpdateAt.ts       # Timestamp fields mixin
+│   └── throwError.ts           # Error handling utility
+│
+├── uploads/                    # Static file uploads directory
+└── declarations/               # Auto-generated type declarations
+```
+
+---
+
+## Core Concepts
+
+### Lesan Application Initialization
+
+The main entry point (`mod.ts`) follows this pattern:
+
+```typescript
+import { lesan, MongoClient } from "@deps";
+import { categories, cities, files, provinces, reports, tags, users } from "@model";
+import { functionsSetup } from "./src/mod.ts";
+
+const MONGO_URI = Deno.env.get("MONGO_URI") || "mongodb://127.0.0.1:27017/";
+const APP_PORT = Deno.env.get("APP_PORT") || 1406;
+const ENV = Deno.env.get("ENV") || "development";
+
+// 1. Initialize Lesan
+export const coreApp = lesan();
+
+// 2. Connect to MongoDB
+const client = await new MongoClient(MONGO_URI).connect();
+const db = client.db("gozaresh");
+coreApp.odm.setDb(db);
+
+// 3. Register models (call model factory functions)
+export const file = files();
+export const user = users();
+export const province = provinces();
+export const city = cities();
+export const tag = tags();
+export const category = categories();
+export const report = reports();
+
+// 4. Export commonly used Lesan functions
+export const { setAct, setService, getAtcsWithServices } = coreApp.acts;
+export const { selectStruct, getSchemas } = coreApp.schemas;
+
+// 5. Setup all API routes
+functionsSetup();
+
+// 6. Start server
+coreApp.runServer({
+  port: Number(APP_PORT),
+  typeGeneration: true,      // Auto-generates TypeScript types
+  playground: true,           // Enable API playground
+  staticPath: ["/uploads"],   // Static file serving
+  cors: ["http://localhost:3000"],
+});
+```
+
+---
+
+## Model Definition Pattern
+
+Models are defined with three main components:
+1. **Pure fields** - Simple data fields with validation using Superstruct
+2. **Relations** - Relationships to other models
+3. **Model registration** - Calling `coreApp.odm.newModel()`
+
+### Complete Model Example
+
+```typescript
+// models/report.ts
+import {
+  defaulted,
+  enums,
+  optional,
+  type RelationDataType,
+  type RelationSortOrderType,
+  string,
+} from "@deps";
+import { coreApp } from "../mod.ts";
+import { createUpdateAt } from "@lib";
+import { user_excludes, file_excludes, shared_relation_excludes, comment_excludes } from "./excludes.ts";
+import { geoJSONStruct } from "./utils/geoJSONStruct.ts";
+
+// 1. Define enums for restricted values
+export const report_status_array = ["Pending", "Approved", "Rejected", "InReview"];
+export const report_status_emums = enums(report_status_array);
+
+// 2. Pure fields - basic data with validation
+export const report_pure = {
+  title: string(),
+  description: string(),
+  location: optional(geoJSONStruct("Point")),  // GeoJSON Point
+  address: optional(string()),
+  status: defaulted(report_status_emums, "Pending"),
+  priority: optional(enums(["Low", "Medium", "High"])),
+  ...createUpdateAt,  // Adds createdAt and updatedAt
+};
+
+// 3. Relations - connections to other models
+export const report_relations = {
+  reporter: {
+    schemaName: "user",
+    type: "single" as RelationDataType,
+    optional: false,
+    excludes: user_excludes,
+    relatedRelations: {
+      // Reverse relation - what appears on the user model
+      reports: {
+        type: "multiple" as RelationDataType,
+        limit: 100,
+        excludes: comment_excludes,
+        sort: {
+          field: "_id",
+          order: "desc" as RelationSortOrderType,
+        },
+      },
+    },
+  },
+  attachments: {
+    schemaName: "file",
+    type: "multiple" as RelationDataType,
+    optional: true,
+    excludes: file_excludes,
+    relatedRelations: {},  // No reverse relation
+  },
+  tags: {
+    schemaName: "tag",
+    type: "multiple" as RelationDataType,
+    optional: true,
+    excludes: shared_relation_excludes,
+    relatedRelations: {
+      reports: {
+        type: "multiple" as RelationDataType,
+        limit: 50,
+        excludes: comment_excludes,
+        sort: { field: "_id", order: "desc" as RelationSortOrderType },
+      },
+    },
+  },
+  category: {
+    schemaName: "category",
+    type: "single" as RelationDataType,
+    optional: true,
+    excludes: shared_relation_excludes,
+    relatedRelations: {
+      reports: {
+        type: "multiple" as RelationDataType,
+        limit: 50,
+        excludes: comment_excludes,
+        sort: { field: "_id", order: "desc" as RelationSortOrderType },
+      },
+    },
+  },
+};
+
+// 4. Register the model
+export const reports = () =>
+  coreApp.odm.newModel("report", report_pure, report_relations);
+
+// With indexes and excludes:
+export const users = () =>
+  coreApp.odm.newModel("user", user_pure, user_relations, {
+    createIndex: {
+      indexSpec: { "email": 1 },
+      options: { unique: true },
+    },
+    excludes: ["password"],  // Fields excluded from API responses
+  });
+```
+
+### Model Registration Options
+
+```typescript
+coreApp.odm.newModel(
+  "modelName",           // Model name (string)
+  pureFields,            // Object with field validations
+  relations,             // Object with relation definitions
+  {
+    // Optional configuration
+    createIndex: {
+      indexSpec: { "fieldName": 1, "geoField": "2dsphere" },
+      options: { unique: true },
+    },
+    excludes: ["sensitiveField1", "sensitiveField2"],  // Excluded from API responses
+  }
+);
+```
+
+---
+
+## Relationship System
+
+### Relation Types
+
+**Single Relation** (one-to-one or many-to-one):
+```typescript
+category: {
+  schemaName: "category",
+  type: "single" as RelationDataType,
+  optional: true,
+  excludes: shared_relation_excludes,
+  relatedRelations: {
+    // Reverse: what appears on category model
+    reports: {
+      type: "multiple" as RelationDataType,
+      limit: 50,
+      excludes: comment_excludes,
+      sort: { field: "_id", order: "desc" as RelationSortOrderType },
+    },
+  },
+}
+```
+
+**Multiple Relations** (one-to-many or many-to-many):
+```typescript
+attachments: {
+  schemaName: "file",
+  type: "multiple" as RelationDataType,
+  optional: true,
+  excludes: file_excludes,
+  relatedRelations: {},  // No reverse relation needed
+}
+```
+
+### Relation Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `schemaName` | string | Target model name |
+| `type` | RelationDataType | "single" or "multiple" |
+| `optional` | boolean | Whether relation is required |
+| `excludes` | string[] | Fields to exclude from response |
+| `relatedRelations` | object | Reverse relations created on target model |
+| `limit` | number | Max embedded docs (multiple relations) |
+| `sort` | object | Sort order for embedded docs |
+
+### Important Rules
+
+1. **Never manually update relationships** - Always use `addRelation()` and `removeRelation()`
+2. **Always use arrays for `_ids`** - Even for single relations: `_ids: [new ObjectId(id)]`
+3. **Use `replace: true` carefully** - Deletes existing relations before adding new ones
+4. **Separate pure updates from relation updates** - Use `findOneAndUpdate` for fields, `addRelation` for relations
+
+---
+
+## API Route Structure
+
+Each API action follows a consistent three-file pattern:
+
+### Directory Structure
+```
+src/[model]/[action]/
+├── mod.ts              # Action setup (registers with Lesan)
+├── [action].fn.ts      # Function implementation
+└── [action].val.ts     # Validator definition
+```
+
+### 1. Validator (`[action].val.ts`)
+Defines input validation and output projection:
+
+```typescript
+import { object, array, optional, string } from "@deps";
+import { selectStruct } from "../../../mod.ts";
+import { report_pure } from "@model";
+
+export const addValidator = () => {
+  // Extract fields that need special handling
+  const { location, attachments, tags, category, ...basePure } = report_pure as Record<string, unknown>;
+
+  return object({
+    set: object({
+      ...basePure,
+      // Override complex fields
+      location: optional(object({
+        type: string(),
+        coordinates: array(number()),
+      })),
+      attachments: optional(array(string())),
+      tags: optional(array(string())),
+      category: optional(string()),
+    }),
+    get: selectStruct("report", 1),  // Output projection with depth 1
+  });
+};
+```
+
+### 2. Function (`[action].fn.ts`)
+Implements the business logic:
+
+```typescript
+import { type ActFn, ObjectId } from "@deps";
+import { coreApp, report } from "../../../mod.ts";
+import type { MyContext } from "@lib";
+
+export const addFn: ActFn = async (body) => {
+  const { set, get } = body.details;
+  const { user }: MyContext = coreApp.contextFns.getContextModel() as MyContext;
+
+  // Extract relations from set
+  const { attachments, tags, category, ...rest } = set;
+
+  return await report.insertOne({
+    doc: rest,  // Pure fields
+    relations: {
+      reporter: { _ids: user._id },  // Auto-set from context
+      attachments: attachments ? {
+        _ids: attachments.map((id: string) => new ObjectId(id)),
+      } : undefined,
+      tags: tags ? {
+        _ids: tags.map((id: string) => new ObjectId(id)),
+        relatedRelations: {
+          reports: { replace: true },
+        },
+      } : undefined,
+      category: category ? {
+        _ids: new ObjectId(category),
+        relatedRelations: {
+          reports: { replace: true },
+        },
+      } : undefined,
+    },
+    projection: get,
+  });
+};
+```
+
+### 3. Setup (`mod.ts`)
+Registers the action with Lesan:
+
+```typescript
+import { grantAccess, setTokens, setUser } from "@lib";
+import { coreApp } from "../../../mod.ts";
+import { addFn } from "./add.fn.ts";
+import { addValidator } from "./add.val.ts";
+
+export const addSetup = () =>
+  coreApp.acts.setAct({
+    schema: "report",
+    fn: addFn,
+    actName: "add",
+    preAct: [
+      setTokens,           // Parse JWT tokens
+      setUser,             // Extract user from token
+      grantAccess({        // Authorization check
+        levels: ["Manager", "Editor", "Ordinary"],
+      }),
+    ],
+    validator: addValidator(),
+    validationRunType: "create",
+  });
+```
+
+---
+
+## Common CRUD Patterns
+
+### Add (Create)
+```typescript
+// Extract relations from set
+const { relationField, ...rest } = set;
+
+await model.insertOne({
+  doc: rest,
+  relations: {
+    relationField: {
+      _ids: [new ObjectId(relationField)],
+      relatedRelations: { reverseRelation: true },
+    },
+  },
+  projection: get,
+});
+```
+
+### Get (Read One)
+```typescript
+const { _id, get } = body.details;
+
+return await model.aggregation({
+  pipeline: [{ $match: { _id: new ObjectId(_id) } }],
+  projection: get,
+}).toArray();
+```
+
+### Gets (Read Many with Pagination)
+```typescript
+const { page, limit, ...filters } = body.details;
+const pipeline: Document[] = [];
+
+// Apply filters
+status && pipeline.push({ $match: { status } });
+categoryId && pipeline.push({ $match: { "category._id": categoryId } });
+tagId && pipeline.push({ $match: { "tags._id": tagId } });
+
+// Sort and paginate
+pipeline.push({ $sort: { _id: -1 } });
+pipeline.push({ $skip: (page - 1) * limit });
+pipeline.push({ $limit: limit });
+
+return await model.aggregation({ pipeline, projection: get }).toArray();
+```
+
+### Update (Pure Fields Only)
+```typescript
+const { _id, ...rest } = body.details;
+
+const pureStruct = object(model_pure);
+const updateObj: Partial<Infer<typeof pureStruct>> = {
+  updatedAt: new Date(),
+};
+
+// Conditionally update fields
+rest.title && (updateObj.title = rest.title);
+rest.description && (updateObj.description = rest.description);
+rest.status && (updateObj.status = rest.status);
+
+return await model.findOneAndUpdate({
+  filter: { _id: new ObjectId(_id as string) },
+  update: { $set: updateObj },
+  projection: get,
+});
+```
+
+### Update Relations (Separate Endpoint)
+```typescript
+// Use addRelation/removeRelation for relationship changes
+if (attachments) {
+  await model.addRelation({
+    filters: { _id: new ObjectId(_id) },
+    relations: {
+      attachments: {
+        _ids: attachments.map(id => new ObjectId(id)),
+      },
+    },
+    projection: get,
+    replace: true,  // Replaces existing relations
+  });
+}
+
+if (tags) {
+  await model.addRelation({
+    filters: { _id: new ObjectId(_id) },
+    relations: {
+      tags: {
+        _ids: tags.map(id => new ObjectId(id)),
+        relatedRelations: {
+          reports: { replace: true },
+        },
+      },
+    },
+    projection: get,
+    replace: true,
+  });
+}
+
+// Return updated document
+return await model.findOne({
+  filters: { _id: new ObjectId(_id) },
+  projection: get,
+});
+```
+
+### Remove (Delete)
+```typescript
+return await model.deleteOne({
+  filter: { _id: new ObjectId(_id) },
+  get,
+  // hardCascade: true,  // Optional: cascade delete related docs
+});
+```
+
+### Count
+```typescript
+const { filters } = body.details;
+return await model.countDocument({ filter: filters || {} });
+```
+
+---
+
+## Authorization & Context
+
+### User Context Type Definition
+```typescript
+// utils/context.ts
+import { type Infer, type LesanContenxt, object, type ObjectId } from "@deps";
+import { user_pure } from "../models/user.ts";
+
+type Merge<A, B> =
+  & { [K in keyof A]: K extends keyof B ? B[K] : A[K] }
+  & B extends infer O ? { [K in keyof O]: O[K] }
+  : never;
+
+const userPureObj = object(user_pure);
+type UserPure = Infer<typeof userPureObj>;
+
+export interface MyContext extends LesanContenxt {
+  user: Merge<{ _id: ObjectId }, Partial<UserPure>>;
+  isInFeatures: boolean;
+  isInLevels: boolean;
+}
+```
+
+### User Levels
+```typescript
+export const user_level_array = ["Ghost", "Manager", "Editor", "Ordinary"];
+export const user_level_emums = enums(user_level_array);
+```
+
+### Grant Access Middleware
+```typescript
+// utils/grantAccess.ts
+export const grantAccess = (
+  { levels, isOwn }: {
+    levels?: UserLevels[];
+    isOwn?: boolean;
+  },
+) => {
+  const checkAccess = () => {
+    const { user }: MyContext = coreApp.contextFns.getContextModel() as MyContext;
+
+    if (levels) {
+      const levelIsInUser = levels.some((inLevel) => user.level === inLevel);
+      if (levelIsInUser || user.level === "Ghost") {
+        coreApp.contextFns.setContext({ isInLevels: true });
+        return;
+      } else {
+        coreApp.contextFns.setContext({ isInLevels: false });
+        return throwError("You cant do this");
+      }
+    }
+
+    if (isOwn) {
+      return;
+    } else {
+      throwError("You cant do this");
+    }
+  };
+
+  return checkAccess;
+};
+```
+
+### Accessing User Context
+```typescript
+import type { MyContext } from "@lib";
+import { coreApp } from "../../../mod.ts";
+
+const { user }: MyContext = coreApp.contextFns.getContextModel() as MyContext;
+// user._id, user.level, user.email, etc.
+```
+
+### Set User Middleware
+```typescript
+// utils/setUser.ts
+export const setUser = async () => {
+  const { user: { _id } }: MyContext = coreApp.contextFns.getContextModel() as MyContext;
+
+  const userPureProjection = coreApp.schemas.createProjection("user", "Pure");
+
+  const foundedUser = await user.findOne({
+    filters: { _id: new ObjectId(_id) },
+    projection: userPureProjection,
+  });
+
+  !foundedUser && throwError("user not exist");
+
+  coreApp.contextFns.setContext({ user: foundedUser });
+};
+```
+
+---
+
+## Validation Patterns
+
+### Pure Fields with createUpdateAt
+```typescript
+// utils/createUpdateAt.ts
+import { date, defaulted, optional } from "@deps";
+
+export const createUpdateAt = {
+  createdAt: optional(defaulted(date(), () => new Date())),
+  updatedAt: optional(defaulted(date(), () => new Date())),
+};
+
+// Usage in models
+import { createUpdateAt } from "@lib";
+
+export const model_pure = {
+  name: string(),
+  description: optional(string()),
+  ...createUpdateAt,  // { createdAt: date(), updatedAt: date() }
+};
+```
+
+### GeoJSON Validation
+```typescript
+// models/utils/geoJSONStruct.ts
+import { array, literal, number, object, tuple } from "@deps";
+
+const Coordinate = tuple([number(), number()]);
+
+export const geoJSONStruct = (type: GeoJSONGeometryType) => object({
+  type: literal(type),
+  coordinates: getCoordinatesSchema(type),
+});
+
+// Usage in models
+location: optional(geoJSONStruct("Point")),
+// Types: "Point", "LineString", "Polygon", "MultiPoint", "MultiLineString", "MultiPolygon"
+```
+
+### SelectStruct for Projections
+```typescript
+import { selectStruct } from "../../../mod.ts";
+
+// Depth 1: Include immediate relations
+get: selectStruct("report", 1)
+
+// Depth 2: Include nested relations
+get: selectStruct("report", 2)
+
+// Custom depth per relation
+get: selectStruct("report", { reporter: 1, tags: 2 })
+```
+
+### Application-Level Filtering
+```typescript
+// ❌ Don't expose MongoDB operators
+{ $gte: date, $regex: pattern }
+
+// ✅ Use application-specific parameters
+{ status: "Approved", categoryId: id, tagId: id }
+```
+
+---
+
+## Excludes Pattern
+
+Centralized in `models/excludes.ts` to prevent circular dependencies:
+
+```typescript
+/**
+ * Centralized file for all model excludes to prevent circular dependencies
+ */
+
+// File model excludes
+export const file_excludes: (string)[] = ["createdAt", "updatedAt", "size"];
+
+// User model excludes
+export const user_excludes: (string)[] = [
+  "createdAt", "updatedAt", "father_name", "birth_date", "summary",
+];
+
+// Location model excludes
+export const location_excludes: (string)[] = ["area", "center"];
+
+// Shared relation model excludes
+export const shared_relation_excludes: (string)[] = [
+  "createdAt", "updatedAt", "description",
+];
+
+// Comment model excludes
+export const comment_excludes: (string)[] = ["createdAt", "updatedAt"];
+```
+
+---
+
+## Shared Utilities
+
+### createUpdateAt
+```typescript
+// utils/createUpdateAt.ts
+export const createUpdateAt = {
+  createdAt: optional(defaulted(date(), () => new Date())),
+  updatedAt: optional(defaulted(date(), () => new Date())),
+};
+```
+
+### Shared Relations
+```typescript
+// models/utils/sharedRelations.ts
+export const shared_relation_pure = {
+  name: string(),
+  description: string(),
+  color: optional(string()),  // E.g., "#FF5733"
+  icon: optional(string()),   // E.g., "museum-icon.svg"
+  ...createUpdateAt,
+};
+
+export const createSharedRelations = () => ({
+  registrar: {
+    schemaName: "user",
+    type: "single" as RelationDataType,
+    excludes: user_excludes,
+    optional: true,
+    relatedRelations: {},
+  },
+});
+```
+
+### Reusable Location Fields
+```typescript
+// models/utils/pureLocation.ts
+export const pure_location = {
+  name: string(),
+  english_name: string(),
+  area: geoJSONStruct("MultiPolygon"),
+  center: geoJSONStruct("Point"),
+  ...createUpdateAt,
+};
+
+// Usage in province/city models
+export const province_pure = { ...pure_location };
+```
+
+---
+
+## MongoDB Indexes
+
+### 2dsphere Indexes for GeoJSON
+```typescript
+coreApp.odm.newModel("province", province_pure, province_relations, {
+  createIndex: {
+    indexSpec: {
+      area: "2dsphere",
+      center_location: "2dsphere",
+    },
+  },
+});
+```
+
+### Unique Indexes
+```typescript
+coreApp.odm.newModel("user", user_pure, user_relations, {
+  createIndex: {
+    indexSpec: { "email": 1 },
+    options: { unique: true },
+  },
+  excludes: ["password"],
+});
+```
+
+---
+
+## API Request Format
+
+All API calls use POST with this structure:
+```json
+{
+  "service": "main",
+  "model": "report",
+  "act": "add",
+  "details": {
+    "set": { /* input data */ },
+    "get": { /* projection */ }
+  }
+}
+```
+
+---
+
+## Best Practices
+
+1. **Atomic Operations**: Keep actions focused - one action, one responsibility
+2. **Separate Concerns**: Pure field updates vs relation updates in different endpoints
+3. **Type Safety**: Use TypeScript types from Lesan (`ActFn`, `RelationDataType`, etc.)
+4. **Validation First**: Always define validators before implementing functions
+5. **Projection Control**: Use `selectStruct` to control response depth
+6. **Exclude Sensitive Data**: Use excludes arrays to prevent leaking sensitive fields
+7. **Middleware Chain**: Use `preAct` for auth, token parsing, and access control
+8. **Aggregation for Complex Queries**: Use MongoDB aggregation pipeline for filtering/sorting
+9. **Replace with Caution**: Only use `replace: true` when you intend to delete existing relations
+10. **Context for State**: Use `coreApp.contextFns.setContext()` to pass data between middleware and handlers
+11. **Centralize Excludes**: Use `models/excludes.ts` to prevent circular dependencies
+12. **Shared Patterns**: Extract common patterns to `models/utils/` (shared relations, location fields)
+
+---
+
+## Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `MONGO_URI` | `mongodb://127.0.0.1:27017/` | MongoDB connection string |
+| `APP_PORT` | `1406` | Server port |
+| `ENV` | `development` | Environment mode |
+
+---
+
+## Running the Application
+
+### Development
+```bash
+cd back/
+deno task bc-dev  # Auto-reload development
+```
+
+### Production
+```bash
+docker build --target production -t gozaresh-backend:production .
+# Or via docker-compose from project root
+docker-compose up --build
+```
+
+---
+
+## Key Lesan Functions Reference
+
+| Function | Purpose |
+|----------|---------|
+| `coreApp.odm.newModel()` | Create a new data model |
+| `coreApp.odm.setDb()` | Set the database connection |
+| `coreApp.acts.setAct()` | Register an API action |
+| `coreApp.schemas.selectStruct()` | Generate projection schema |
+| `coreApp.schemas.createProjection()` | Create projection for specific fields |
+| `model.insertOne()` | Create a document with relations |
+| `model.findOne()` | Read a single document |
+| `model.find()` | Read multiple documents |
+| `model.findOneAndUpdate()` | Update pure fields |
+| `model.deleteOne()` | Delete a document |
+| `model.countDocument()` | Count matching documents |
+| `model.aggregation()` | Run aggregation pipeline |
+| `model.addRelation()` | Add relationships |
+| `model.removeRelation()` | Remove relationships |
+| `coreApp.contextFns.getContextModel()` | Get request context |
+| `coreApp.contextFns.setContext()` | Set context data |
+
+---
+
+## Common TypeScript Types
+
+```typescript
+import {
+  ActFn,                    // Function type for API actions
+  RelationDataType,         // "single" | "multiple"
+  RelationSortOrderType,    // "asc" | "desc"
+  ObjectId,                 // MongoDB ObjectId
+  Infer,                    // Type inference from validators
+  Document,                 // MongoDB document type
+} from "@deps";
+
+import { MyContext } from "@lib";  // Custom context with user info
+```

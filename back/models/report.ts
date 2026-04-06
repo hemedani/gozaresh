@@ -96,4 +96,11 @@ export const report_relations = {
 };
 
 export const reports = () =>
-  coreApp.odm.newModel("report", report_pure, report_relations);
+  coreApp.odm.newModel("report", report_pure, report_relations, {
+    createIndex: {
+      indexSpec: {
+        title: "text",
+        description: "text",
+      },
+    },
+  });
