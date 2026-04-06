@@ -138,7 +138,7 @@
   - [x] Search by title or reporter
   - [x] Sort by any column
   - [x] Pagination
-  - [ ] Bulk actions (approve, reject, delete)
+  - [x] Bulk actions (approve, reject, delete)
   - [x] Row actions: view, edit, approve, reject, delete
   - [ ] Export to CSV/Excel
   - [ ] View report detail modal/page

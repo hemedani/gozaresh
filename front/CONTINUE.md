@@ -59,7 +59,7 @@ You are an expert full-stack TypeScript/Next.js 16 developer working exclusively
 - ✅ Header & Footer on all public pages
 - ✅ Admin Layout with sidebar navigation and role-based access check
 - ✅ Admin Dashboard with statistics cards and layout
-- ✅ Admin Reports Management data table, filters, search, sorting, pagination, and row actions (`/admin/reports`)
+- ✅ Admin Reports Management data table, filters, search, sorting, pagination, bulk actions, and row actions (`/admin/reports`)
 
 **Frontend Structure**:
 
@@ -185,7 +185,7 @@ export default function LoginForm() {
 **Next Session Prompt**:
 Continue with **Phase 4: Admin Panel**. Start with:
 
-1. Add bulk actions to the Reports management table (`/admin/reports`)
+1. Export to CSV/Excel and view report detail modal/page in Reports management (`/admin/reports`)
 2. Users management table (`/admin/users`)
 3. Tags/Categories/Files management pages
 
