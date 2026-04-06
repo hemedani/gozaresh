@@ -48,6 +48,8 @@
   - [x] Avatar (for user profiles)
   - [x] Badge (for tags, status indicators)
   - [x] Form (React Hook Form integration with shadcn/ui)
+  - [x] Popover (for emoji picker)
+  - [x] Emoji Picker (emoji-picker-react)
   - [ ] File Upload component
   - [ ] Loading/Spinner component
 - [x] Create reusable form components:

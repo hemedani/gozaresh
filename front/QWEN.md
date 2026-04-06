@@ -168,6 +168,8 @@ Located in `/src/components/form/`, these components provide higher-level form f
   />
   ```
 
+- **EmojiPicker** (`tag-form.tsx`) - Integrated `emoji-picker-react` via `next/dynamic` for icons
+
 - **TagSelector** (`tag-selector.tsx`) - Multi-select tags with chips and search
 
   ```tsx

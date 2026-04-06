@@ -46,8 +46,8 @@ You are an expert full-stack TypeScript/Next.js 16 developer working exclusively
 
 **What's Done**:
 
-- ✅ All shadcn/ui components (Dialog, Toast, Select, Checkbox, Tabs, Table, Dropdown Menu, Avatar, Badge, Form, etc.)
-- ✅ Reusable form components (FormInput, FileUploadField, TagSelector, LocationPicker)
+- ✅ All shadcn/ui components (Dialog, Toast, Select, Checkbox, Tabs, Table, Dropdown Menu, Avatar, Badge, Form, Popover, etc.)
+- ✅ Reusable form components (FormInput, FileUploadField, TagSelector, LocationPicker, EmojiPicker)
 - ✅ Layout components (Header, Footer, AdminSidebar, LanguageSwitcher, AdminLayoutShell)
 - ✅ Theme configuration (dark/light/system with smooth transitions)
 - ✅ Landing Page with hero section, features, how it works, trust section
@@ -162,7 +162,7 @@ export default function LoginForm() {
 **Available UI Components** (all in `/src/components/ui/`):
 
 - **Form**: Button, Input, Textarea, Label, Checkbox, Select, Form (FormField, FormItem, FormLabel, FormControl, FormMessage)
-- **Layout**: Card, Dialog, Tabs, Table, Dropdown Menu, Separator
+- **Layout**: Card, Dialog, Tabs, Table, Dropdown Menu, Popover, Separator
 - **Feedback**: Toast (with useToast hook), Badge, Avatar
 
 **Reusable Form Components** (in `/src/components/form/`):
@@ -170,6 +170,7 @@ export default function LoginForm() {
 - FormInput - Input/Textarea with label and validation
 - FileUploadField - File upload with image preview
 - TagSelector - Multi-select tags with chips and search
+- EmojiPicker - Emoji-picker-react integration for icons
 - LocationPicker - Address input with map placeholder
 
 **Important Reminders**:
