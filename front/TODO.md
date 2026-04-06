@@ -140,8 +140,8 @@
   - [x] Pagination
   - [x] Bulk actions (approve, reject, delete)
   - [x] Row actions: view, edit, approve, reject, delete
-  - [ ] Export to CSV/Excel
-  - [ ] View report detail modal/page
+  - [x] Export to CSV/Excel
+  - [x] View report detail modal/page
 - [ ] **Users Management** (`/admin/users`)
   - [ ] Data table with all users
   - [ ] Columns: name, email, role, level, reports count, date, actions

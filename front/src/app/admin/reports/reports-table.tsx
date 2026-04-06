@@ -1,19 +1,19 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { update } from "@/app/actions/report/update";
 import { remove } from "@/app/actions/report/remove";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -33,6 +33,41 @@ export function ReportsTable({ reports }: { reports: any[] }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [selectedReport, setSelectedReport] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openReportDetails = (report: any) => {
+    setSelectedReport(report);
+    setIsModalOpen(true);
+  };
+
+  const handleExportCSV = () => {
+    if (reports.length === 0) return;
+
+    const headers = ["ID", "Title", "Status", "Priority", "Category", "Date"];
+    const csvData = reports.map((r) => [
+      r._id,
+      r.title,
+      r.status,
+      r.priority,
+      r.category?.name || "",
+      r.createdAt ? new Date(r.createdAt).toLocaleDateString() : "",
+    ]);
+
+    const csvContent = [
+      headers.join(","),
+      ...csvData.map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",")),
+    ].join("\n");
+
+    const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `reports_export_${new Date().toISOString().split("T")[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const toggleAll = () => {
     if (selectedIds.length === reports.length && reports.length > 0) {
@@ -43,9 +78,7 @@ export function ReportsTable({ reports }: { reports: any[] }) {
   };
 
   const toggleOne = (id: string) => {
-    setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
+    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
   };
 
   const updateStatus = async (id: string, status: "pending" | "approved" | "rejected") => {
@@ -127,11 +160,15 @@ export function ReportsTable({ reports }: { reports: any[] }) {
 
   return (
     <div className="space-y-4">
+      <div className="flex justify-end">
+        <Button variant="outline" onClick={handleExportCSV} disabled={reports.length === 0}>
+          Export CSV
+        </Button>
+      </div>
+
       {selectedIds.length > 0 && (
         <div className="flex items-center gap-2 p-2 rounded-md bg-muted/50 border">
-          <span className="text-sm font-medium ml-2">
-            {selectedIds.length} selected
-          </span>
+          <span className="text-sm font-medium ml-2">{selectedIds.length} selected</span>
           <div className="flex-1" />
           <Button
             variant="outline"
@@ -151,12 +188,7 @@ export function ReportsTable({ reports }: { reports: any[] }) {
             <X className="mr-2 h-4 w-4 text-red-500" />
             {t("reject")}
           </Button>
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={handleBulkDelete}
-            disabled={isPending}
-          >
+          <Button variant="destructive" size="sm" onClick={handleBulkDelete} disabled={isPending}>
             <Trash2 className="mr-2 h-4 w-4" />
             {t("delete")}
           </Button>
@@ -169,9 +201,7 @@ export function ReportsTable({ reports }: { reports: any[] }) {
             <TableRow>
               <TableHead className="w-[40px] pl-4">
                 <Checkbox
-                  checked={
-                    reports.length > 0 && selectedIds.length === reports.length
-                  }
+                  checked={reports.length > 0 && selectedIds.length === reports.length}
                   onCheckedChange={toggleAll}
                   aria-label="Select all"
                 />
@@ -209,22 +239,18 @@ export function ReportsTable({ reports }: { reports: any[] }) {
                         report.status === "pending"
                           ? "outline"
                           : report.status === "approved"
-                          ? "default"
-                          : "destructive"
+                            ? "default"
+                            : "destructive"
                       }
                     >
                       {t(`status_${report.status || "pending"}`)}
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="secondary">
-                      {t(`priority_${report.priority || "low"}`)}
-                    </Badge>
+                    <Badge variant="secondary">{t(`priority_${report.priority || "low"}`)}</Badge>
                   </TableCell>
                   <TableCell>
-                    {report.createdAt
-                      ? new Date(report.createdAt).toLocaleDateString()
-                      : "-"}
+                    {report.createdAt ? new Date(report.createdAt).toLocaleDateString() : "-"}
                   </TableCell>
                   <TableCell className="text-right pr-4">
                     <DropdownMenu>
@@ -236,7 +262,7 @@ export function ReportsTable({ reports }: { reports: any[] }) {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => openReportDetails(report)}>
                           <Eye className="mr-2 h-4 w-4" />
                           {t("viewDetails")}
                         </DropdownMenuItem>
@@ -266,6 +292,57 @@ export function ReportsTable({ reports }: { reports: any[] }) {
           </TableBody>
         </Table>
       </div>
+
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>{t("viewDetails") || "Report Details"}</DialogTitle>
+            <DialogDescription>{selectedReport?._id}</DialogDescription>
+          </DialogHeader>
+          {selectedReport && (
+            <div className="space-y-4 mt-4">
+              <div>
+                <h4 className="text-sm font-medium text-muted-foreground">{t("title")}</h4>
+                <p>{selectedReport.title}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h4 className="text-sm font-medium text-muted-foreground">{t("category")}</h4>
+                  <p>{selectedReport.category?.name || "-"}</p>
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium text-muted-foreground">{t("date")}</h4>
+                  <p>
+                    {selectedReport.createdAt
+                      ? new Date(selectedReport.createdAt).toLocaleDateString()
+                      : "-"}
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium text-muted-foreground">{t("status")}</h4>
+                  <Badge
+                    variant={
+                      selectedReport.status === "pending"
+                        ? "outline"
+                        : selectedReport.status === "approved"
+                          ? "default"
+                          : "destructive"
+                    }
+                  >
+                    {t(`status_${selectedReport.status || "pending"}`)}
+                  </Badge>
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium text-muted-foreground">{t("priority")}</h4>
+                  <Badge variant="secondary">
+                    {t(`priority_${selectedReport.priority || "low"}`)}
+                  </Badge>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
