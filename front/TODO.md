@@ -134,10 +134,10 @@
 - [ ] **Reports Management** (`/admin/reports`)
   - [x] Data table with all reports
   - [x] Columns: title, reporter, category, status, priority, date, actions
-  - [ ] Filter by status, category, priority, date range
-  - [ ] Search by title or reporter
+  - [x] Filter by status, category, priority, date range
+  - [x] Search by title or reporter
   - [ ] Sort by any column
-  - [ ] Pagination
+  - [x] Pagination
   - [ ] Bulk actions (approve, reject, delete)
   - [x] Row actions: view, edit, approve, reject, delete
   - [ ] Export to CSV/Excel
