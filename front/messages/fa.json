@@ -256,6 +256,9 @@
     "viewDetails": "مشاهده جزئیات",
     "approve": "تایید",
     "reject": "رد کردن",
-    "delete": "حذف"
+    "delete": "حذف",
+    "allStatuses": "همه وضعیت‌ها",
+    "previous": "قبلی",
+    "next": "بعدی"
   }
 }

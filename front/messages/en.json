@@ -261,6 +261,9 @@
     "viewDetails": "View Details",
     "approve": "Approve",
     "reject": "Reject",
-    "delete": "Delete"
+    "delete": "Delete",
+    "allStatuses": "All Statuses",
+    "previous": "Previous",
+    "next": "Next"
   }
 }
