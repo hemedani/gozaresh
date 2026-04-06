@@ -136,7 +136,7 @@
   - [x] Columns: title, reporter, category, status, priority, date, actions
   - [x] Filter by status, category, priority, date range
   - [x] Search by title or reporter
-  - [ ] Sort by any column
+  - [x] Sort by any column
   - [x] Pagination
   - [ ] Bulk actions (approve, reject, delete)
   - [x] Row actions: view, edit, approve, reject, delete

@@ -264,6 +264,11 @@
     "delete": "Delete",
     "allStatuses": "All Statuses",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "allCategories": "All Categories",
+    "sortBy": "Sort By",
+    "sortOrder": "Sort Order",
+    "descending": "Descending",
+    "ascending": "Ascending"
   }
 }

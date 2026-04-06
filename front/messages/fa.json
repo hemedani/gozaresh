@@ -259,6 +259,11 @@
     "delete": "حذف",
     "allStatuses": "همه وضعیت‌ها",
     "previous": "قبلی",
-    "next": "بعدی"
+    "next": "بعدی",
+    "allCategories": "همه دسته‌بندی‌ها",
+    "sortBy": "مرتب‌سازی بر اساس",
+    "sortOrder": "ترتیب",
+    "descending": "نزولی",
+    "ascending": "صعودی"
   }
 }

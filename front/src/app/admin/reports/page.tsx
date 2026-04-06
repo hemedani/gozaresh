@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { gets as getReports } from "@/app/actions/report/gets";
+import { gets as getCategories } from "@/app/actions/category/gets";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,18 +20,36 @@ import Link from "next/link";
 export default async function AdminReportsPage({
   searchParams,
 }: {
-  searchParams: { page?: string; search?: string; status?: string; priority?: string };
+  searchParams: {
+    page?: string;
+    search?: string;
+    status?: string;
+    priority?: string;
+    category?: string;
+    sortBy?: string;
+    sortOrder?: string;
+  };
 }) {
   const t = await getTranslations("admin");
   const page = Number(searchParams.page) || 1;
   const search = searchParams.search || "";
   const status = searchParams.status || "all";
   const priority = searchParams.priority || "all";
+  const category = searchParams.category || "all";
+  const sortBy = searchParams.sortBy || "createdAt";
+  const sortOrder = searchParams.sortOrder || "desc";
 
   const setQuery: any = { page, limit: 10 };
   if (search) setQuery.search = search;
   if (status !== "all") setQuery.status = status;
   if (priority !== "all") setQuery.priority = priority;
+  if (category !== "all") setQuery.categoryIds = [category];
+  setQuery.sortBy = sortBy;
+  setQuery.sortOrder = sortOrder;
+
+  // Fetch categories for filter
+  const categoriesResponse = await getCategories({ page: 1, limit: 100 }, { _id: 1, name: 1 });
+  const categories = categoriesResponse?.list || [];
 
   // Fetch reports
   const response = await getReports(setQuery, {
@@ -53,11 +72,8 @@ export default async function AdminReportsPage({
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 mb-6">
-        <form
-          method="GET"
-          className="flex flex-col sm:flex-row gap-4 w-full items-start sm:items-center"
-        >
+      <div className="flex flex-col gap-4 mb-6">
+        <form method="GET" className="flex flex-wrap gap-4 w-full items-start sm:items-center">
           <div className="relative w-full sm:w-64">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
@@ -90,6 +106,45 @@ export default async function AdminReportsPage({
                 <SelectItem value="low">{t("priority_low")}</SelectItem>
                 <SelectItem value="medium">{t("priority_medium")}</SelectItem>
                 <SelectItem value="high">{t("priority_high")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="w-full sm:w-48">
+            <Select name="category" defaultValue={category}>
+              <SelectTrigger>
+                <SelectValue placeholder={t("category")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t("allCategories") || "All Categories"}</SelectItem>
+                {categories.map((cat: any) => (
+                  <SelectItem key={cat._id} value={cat._id}>
+                    {cat.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="w-full sm:w-48">
+            <Select name="sortBy" defaultValue={sortBy}>
+              <SelectTrigger>
+                <SelectValue placeholder={t("sortBy") || "Sort By"} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="createdAt">{t("date")}</SelectItem>
+                <SelectItem value="title">{t("title")}</SelectItem>
+                <SelectItem value="status">{t("status")}</SelectItem>
+                <SelectItem value="priority">{t("priority")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="w-full sm:w-48">
+            <Select name="sortOrder" defaultValue={sortOrder}>
+              <SelectTrigger>
+                <SelectValue placeholder={t("sortOrder") || "Order"} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="desc">{t("descending") || "Descending"}</SelectItem>
+                <SelectItem value="asc">{t("ascending") || "Ascending"}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -184,7 +239,7 @@ export default async function AdminReportsPage({
         {page > 1 ? (
           <Button variant="outline" size="sm" asChild>
             <Link
-              href={`/admin/reports?page=${page - 1}${search ? `&search=${search}` : ""}${status !== "all" ? `&status=${status}` : ""}${priority !== "all" ? `&priority=${priority}` : ""}`}
+              href={`/admin/reports?page=${page - 1}${search ? `&search=${search}` : ""}${status !== "all" ? `&status=${status}` : ""}${priority !== "all" ? `&priority=${priority}` : ""}${category !== "all" ? `&category=${category}` : ""}&sortBy=${sortBy}&sortOrder=${sortOrder}`}
             >
               {t("previous") || "Previous"}
             </Link>
@@ -197,7 +252,7 @@ export default async function AdminReportsPage({
         {reports.length >= 10 ? (
           <Button variant="outline" size="sm" asChild>
             <Link
-              href={`/admin/reports?page=${page + 1}${search ? `&search=${search}` : ""}${status !== "all" ? `&status=${status}` : ""}${priority !== "all" ? `&priority=${priority}` : ""}`}
+              href={`/admin/reports?page=${page + 1}${search ? `&search=${search}` : ""}${status !== "all" ? `&status=${status}` : ""}${priority !== "all" ? `&priority=${priority}` : ""}${category !== "all" ? `&category=${category}` : ""}&sortBy=${sortBy}&sortOrder=${sortOrder}`}
             >
               {t("next") || "Next"}
             </Link>
