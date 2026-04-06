@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import {
   Dialog,
   DialogContent,
@@ -27,7 +27,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function ReportsTable({ reports }: { reports: any[] }) {
+export function ReportsTable({ reports, error }: { reports: any[]; error?: string | null }) {
   const t = useTranslations("admin");
   const { toast } = useToast();
   const router = useRouter();
@@ -35,6 +35,16 @@ export function ReportsTable({ reports }: { reports: any[] }) {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedReport, setSelectedReport] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: t("error") || "Error",
+        description: error,
+      });
+    }
+  }, [error, toast, t]);
 
   const openReportDetails = (report: any) => {
     setSelectedReport(report);

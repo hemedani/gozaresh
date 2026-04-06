@@ -47,12 +47,14 @@ export default async function AdminUsersPage({
     createdAt: 1,
   });
 
+  console.log({ response }, "from admin/users/page");
+
   let users: userSchema[] = [];
   let error: string | null = null;
   if (response?.success) {
     users = response.body || [];
   } else {
-    error = response?.error || "Failed to fetch users";
+    error = response?.error || response?.body?.message || "Failed to fetch users";
   }
 
   return (

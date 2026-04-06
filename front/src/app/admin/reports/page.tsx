@@ -56,8 +56,11 @@ export default async function AdminReportsPage({
   });
 
   let reports: any[] = [];
+  let error: string | null = null;
   if (response?.success) {
     reports = response.body.list || [];
+  } else {
+    error = response?.error || response?.body?.message || "Failed to fetch reports";
   }
 
   return (
@@ -151,7 +154,7 @@ export default async function AdminReportsPage({
         </form>
       </div>
 
-      <ReportsTable reports={reports} />
+      <ReportsTable reports={reports} error={error} />
 
       <div className="flex items-center justify-end space-x-2 py-4">
         {page > 1 ? (
