@@ -22,8 +22,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <NextIntlClientProvider messages={messages} locale="fa">
-      <AdminLayoutShell>{children}</AdminLayoutShell>
       <Toaster />
+      <AdminLayoutShell>{children}</AdminLayoutShell>
     </NextIntlClientProvider>
   );
 }

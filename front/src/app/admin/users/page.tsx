@@ -12,20 +12,21 @@ import { ReqType, userSchema } from "@/types/declarations";
 export default async function AdminUsersPage({
   searchParams,
 }: {
-  searchParams: {
+  searchParams: Promise<{
     page?: string;
     search?: string;
     level?: string;
     sortBy?: string;
     sortOrder?: string;
-  };
+  }>;
 }) {
+  const resolvedSearchParams = await searchParams;
   const t = await getTranslations("admin");
-  const page = Number(searchParams.page) || 1;
-  const search = searchParams.search || "";
-  const level = searchParams.level || "all";
-  const sortBy = searchParams.sortBy || "createdAt";
-  const sortOrder = searchParams.sortOrder || "desc";
+  const page = Number(resolvedSearchParams.page) || 1;
+  const search = resolvedSearchParams.search || "";
+  const level = resolvedSearchParams.level || "all";
+  const sortBy = resolvedSearchParams.sortBy || "createdAt";
+  const sortOrder = resolvedSearchParams.sortOrder || "desc";
 
   const setQuery: ReqType["main"]["user"]["getUsers"]["set"] & {
     search?: string;

@@ -53,7 +53,7 @@ export function UsersTable({ users, error }: { users: userSchema[]; error?: stri
     if (!confirm(t("deleteConfirm") || "Are you sure you want to delete this user?")) return;
 
     try {
-      const res = await removeUser({ _id: id }, { _id: 1 });
+      const res = await removeUser({ _id: id }, { success: 1 });
       if (res?.success) {
         toast({
           title: t("success") || "Success",
@@ -63,7 +63,7 @@ export function UsersTable({ users, error }: { users: userSchema[]; error?: stri
           router.refresh();
         });
       }
-    } catch (error) {
+    } catch (_error) {
       toast({
         variant: "destructive",
         title: t("error") || "Error",
@@ -129,7 +129,7 @@ export function UsersTable({ users, error }: { users: userSchema[]; error?: stri
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                           className="text-destructive"
-                          onClick={() => deleteUserAction(user._id)}
+                          onClick={() => deleteUserAction(user._id!)}
                           disabled={isPending}
                         >
                           <Trash2 className="mr-2 h-4 w-4" />

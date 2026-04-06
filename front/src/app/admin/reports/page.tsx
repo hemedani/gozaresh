@@ -11,7 +11,7 @@ import { ReportsTable } from "./reports-table";
 export default async function AdminReportsPage({
   searchParams,
 }: {
-  searchParams: {
+  searchParams: Promise<{
     page?: string;
     search?: string;
     status?: string;
@@ -19,16 +19,17 @@ export default async function AdminReportsPage({
     category?: string;
     sortBy?: string;
     sortOrder?: string;
-  };
+  }>;
 }) {
+  const resolvedSearchParams = await searchParams;
   const t = await getTranslations("admin");
-  const page = Number(searchParams.page) || 1;
-  const search = searchParams.search || "";
-  const status = searchParams.status || "all";
-  const priority = searchParams.priority || "all";
-  const category = searchParams.category || "all";
-  const sortBy = searchParams.sortBy || "createdAt";
-  const sortOrder = searchParams.sortOrder || "desc";
+  const page = Number(resolvedSearchParams.page) || 1;
+  const search = resolvedSearchParams.search || "";
+  const status = resolvedSearchParams.status || "all";
+  const priority = resolvedSearchParams.priority || "all";
+  const category = resolvedSearchParams.category || "all";
+  const sortBy = resolvedSearchParams.sortBy || "createdAt";
+  const sortOrder = resolvedSearchParams.sortOrder || "desc";
 
   const setQuery: any = { page, limit: 10 };
   if (search) setQuery.search = search;
