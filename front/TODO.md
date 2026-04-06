@@ -142,14 +142,14 @@
   - [x] Row actions: view, edit, approve, reject, delete
   - [x] Export to CSV/Excel
   - [x] View report detail modal/page
-- [ ] **Users Management** (`/admin/users`)
-  - [ ] Data table with all users
-  - [ ] Columns: name, email, role, level, reports count, date, actions
-  - [ ] Filter by role/level
-  - [ ] Search by name or email
+- [x] **Users Management** (`/admin/users`)
+  - [x] Data table with all users
+  - [x] Columns: name, email, role, level, reports count, date, actions
+  - [x] Filter by role/level
+  - [x] Search by name or email
   - [ ] Sort by any column
-  - [ ] Pagination
-  - [ ] Actions: view, edit role/level, deactivate, delete
+  - [x] Pagination
+  - [x] Actions: view, edit role/level, deactivate, delete
   - [ ] Add new user modal
 - [ ] **Tags Management** (`/admin/tags`)
   - [ ] List/grid of all tags

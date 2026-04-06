@@ -264,6 +264,18 @@
     "sortBy": "مرتب‌سازی بر اساس",
     "sortOrder": "ترتیب",
     "descending": "نزولی",
-    "ascending": "صعودی"
+    "ascending": "صعودی",
+    "usersManagement": "مدیریت کاربران",
+    "usersManagementDescription": "مدیریت حساب‌ها و نقش‌های کاربری",
+    "name": "نام",
+    "role": "نقش",
+    "level": "سطح",
+    "level_Ghost": "شبح (مدیر کل)",
+    "level_Manager": "مدیر",
+    "level_Editor": "ویرایشگر",
+    "level_Ordinary": "کاربر عادی",
+    "reportsCount": "تعداد گزارش‌ها",
+    "allLevels": "همه سطح‌ها",
+    "searchUsers": "جستجوی کاربران..."
   }
 }

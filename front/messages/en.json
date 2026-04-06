@@ -269,6 +269,18 @@
     "sortBy": "Sort By",
     "sortOrder": "Sort Order",
     "descending": "Descending",
-    "ascending": "Ascending"
+    "ascending": "Ascending",
+    "usersManagement": "Users Management",
+    "usersManagementDescription": "Manage user accounts and roles",
+    "name": "Name",
+    "role": "Role",
+    "level": "Level",
+    "level_Ghost": "Ghost (Super Admin)",
+    "level_Manager": "Manager",
+    "level_Editor": "Editor",
+    "level_Ordinary": "Ordinary User",
+    "reportsCount": "Reports Count",
+    "allLevels": "All Levels",
+    "searchUsers": "Search users..."
   }
 }
