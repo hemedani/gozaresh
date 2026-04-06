@@ -300,6 +300,7 @@
     "error": "Error",
     "success": "Success",
     "editRole": "Edit Role",
-    "deactivate": "Deactivate"
+    "deactivate": "Deactivate",
+    "address": "Address"
   }
 }

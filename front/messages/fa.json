@@ -295,6 +295,7 @@
     "error": "خطا",
     "success": "موفقیت",
     "editRole": "ویرایش نقش",
-    "deactivate": "غیرفعال کردن"
+    "deactivate": "غیرفعال کردن",
+    "address": "آدرس"
   }
 }
