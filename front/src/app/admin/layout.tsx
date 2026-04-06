@@ -3,6 +3,7 @@ import { getMe } from "@/app/actions/user/getMe";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { AdminLayoutShell } from "@/components/layout/admin-layout-shell";
+import { Toaster } from "@/components/ui/toaster";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const { success, body: user } = await getMe();
@@ -22,6 +23,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <NextIntlClientProvider messages={messages} locale="fa">
       <AdminLayoutShell>{children}</AdminLayoutShell>
+      <Toaster />
     </NextIntlClientProvider>
   );
 }
