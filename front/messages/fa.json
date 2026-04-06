@@ -296,6 +296,7 @@
     "success": "موفقیت",
     "editRole": "ویرایش نقش",
     "deactivate": "غیرفعال کردن",
-    "address": "آدرس"
+    "address": "آدرس",
+    "deleteConfirm": "آیا از حذف این کاربر اطمینان دارید؟"
   }
 }
