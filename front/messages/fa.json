@@ -291,6 +291,8 @@
     "gender_Female": "زن",
     "isVerified": "تایید شده",
     "cancel": "انصراف",
-    "submit": "ارسال"
+    "submit": "ارسال",
+    "error": "خطا",
+    "success": "موفقیت"
   }
 }

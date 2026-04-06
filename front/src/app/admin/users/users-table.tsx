@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { removeUser } from "@/app/actions/user/removeUser";
 import { useToast } from "@/components/ui/use-toast";
+import { userSchema } from "@/types/declarations";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,7 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function UsersTable({ users, error }: { users: any[]; error?: string | null }) {
+export function UsersTable({ users, error }: { users: userSchema[]; error?: string | null }) {
   const t = useTranslations("admin");
   const { toast } = useToast();
   const router = useRouter();
@@ -92,7 +93,7 @@ export function UsersTable({ users, error }: { users: any[]; error?: string | nu
                 </TableCell>
               </TableRow>
             ) : (
-              users.map((user: any) => (
+              users.map((user: userSchema) => (
                 <TableRow key={user._id}>
                   <TableCell className="font-medium">
                     {user.first_name} {user.last_name}

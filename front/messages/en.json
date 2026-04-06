@@ -296,6 +296,8 @@
     "gender_Female": "Female",
     "isVerified": "Is Verified",
     "cancel": "Cancel",
-    "submit": "Submit"
+    "submit": "Submit",
+    "error": "Error",
+    "success": "Success"
   }
 }

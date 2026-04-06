@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Link from "next/link";
 import { UsersTable } from "./users-table";
 import { AddUserModal } from "./add-user-modal";
+import { userSchema } from "@/types/declarations";
 
 export default async function AdminUsersPage({
   searchParams,
@@ -42,7 +43,7 @@ export default async function AdminUsersPage({
     createdAt: 1,
   });
 
-  let users: any[] = [];
+  let users: userSchema[] = [];
   let error: string | null = null;
   if (response?.success) {
     users = response.body || [];
