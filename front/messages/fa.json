@@ -301,6 +301,8 @@
     "deleteConfirm": "آیا از حذف این کاربر اطمینان دارید؟",
     "tagsManagement": "مدیریت برچسب‌ها",
     "tagsManagementDescription": "مدیریت برچسب‌ها برای دسته‌بندی گزارش‌ها",
+    "save": "ذخیره",
+    "cancel": "انصراف",
     "tagName": "نام برچسب",
     "enterTagName": "مثال: فوری",
     "enterTagDescription": "توضیح دهید که این برچسب برای چه استفاده می‌شود",
