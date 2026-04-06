@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { remove } from "@/app/actions/tag/remove";
@@ -18,12 +18,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { EditTagDialog } from "./edit-tag-dialog";
 
 export function TagsTable({ tags, error }: { tags: tagSchema[]; error?: string | null }) {
   const t = useTranslations("admin");
   const { toast } = useToast();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [editingTag, setEditingTag] = useState<tagSchema | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     if (error) {
@@ -56,6 +59,11 @@ export function TagsTable({ tags, error }: { tags: tagSchema[]; error?: string |
         description: t("failedToDeleteTag") || "Failed to delete tag",
       });
     }
+  };
+
+  const handleEditClick = (tag: tagSchema) => {
+    setEditingTag(tag);
+    setIsEditModalOpen(true);
   };
 
   return (
@@ -103,7 +111,7 @@ export function TagsTable({ tags, error }: { tags: tagSchema[]; error?: string |
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleEditClick(tag)}>
                           <Pencil className="mr-2 h-4 w-4" />
                           {t("edit")}
                         </DropdownMenuItem>
@@ -125,6 +133,8 @@ export function TagsTable({ tags, error }: { tags: tagSchema[]; error?: string |
           </TableBody>
         </Table>
       </div>
+
+      <EditTagDialog tag={editingTag} open={isEditModalOpen} onOpenChange={setIsEditModalOpen} />
     </div>
   );
 }

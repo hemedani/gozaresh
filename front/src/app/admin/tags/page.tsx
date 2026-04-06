@@ -1,19 +1,12 @@
 import { getTranslations } from "next-intl/server";
 import { gets } from "@/app/actions/tag/gets";
 import { Button } from "@/components/ui/button";
-import { Search, Plus } from "lucide-react";
+import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { TagsTable } from "./tags-table";
 import { ReqType, tagSchema } from "@/types/declarations";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { AddTagDialog } from "./add-tag-dialog";
 
 export default async function AdminTagsPage({
   searchParams,
@@ -65,27 +58,7 @@ export default async function AdminTagsPage({
             {t("tagsManagementDescription") || "Manage tags for reports categorization"}
           </p>
         </div>
-        <Dialog modal>
-          <DialogTrigger asChild>
-            <Button type="button">
-              <Plus className="mr-2 h-4 w-4" />
-              {t("addTag") || "Add Tag"}
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{t("addTag") || "Add Tag"}</DialogTitle>
-              <DialogDescription>
-                {t("addTagDescription") || "Create a new tag for reports"}
-              </DialogDescription>
-            </DialogHeader>
-            <div className="py-4">
-              <p className="text-sm text-muted-foreground">
-                {t("tagFormComingSoon") || "Tag form will be implemented here"}
-              </p>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <AddTagDialog />
       </div>
 
       <div className="flex flex-col gap-4 mb-6">

@@ -151,15 +151,15 @@
   - [x] Pagination
   - [x] Actions: view, edit role/level, deactivate, delete
   - [x] Add new user modal
-- [ ] **Tags Management** (`/admin/tags`)
+- [x] **Tags Management** (`/admin/tags`)
   - [x] List/grid of all tags
   - [x] Columns: name, color, icon, description, actions
   - [x] Search by tag name
   - [x] Sort by any column
   - [x] Pagination
   - [x] Delete tag (with confirmation)
-  - [ ] Add new tag (name, color picker, icon selector)
-  - [ ] Edit tag
+  - [x] Add new tag (name, color picker, icon selector)
+  - [x] Edit tag
 - [ ] **Categories Management** (`/admin/categories`)
   - [ ] List/grid of all categories
   - [ ] Columns: name, color, icon, usage count, actions

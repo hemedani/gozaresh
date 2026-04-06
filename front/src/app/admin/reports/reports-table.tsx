@@ -91,7 +91,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
     setSelectedIds((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
   };
 
-  const updateStatus = async (id: string, status: "pending" | "approved" | "rejected") => {
+  const updateStatus = async (id: string, status: "Pending" | "Approved" | "Rejected") => {
     try {
       const res = await update({ _id: id, status }, { _id: 1 });
       if (res?.success) {
@@ -133,7 +133,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
     }
   };
 
-  const handleBulkUpdate = async (status: "pending" | "approved" | "rejected") => {
+  const handleBulkUpdate = async (status: "Pending" | "Approved" | "Rejected") => {
     if (!selectedIds.length) return;
 
     // Process sequentially to avoid rate limiting/overloading if there are many
@@ -183,7 +183,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
           <Button
             variant="outline"
             size="sm"
-            onClick={() => handleBulkUpdate("approved")}
+            onClick={() => handleBulkUpdate("Approved")}
             disabled={isPending}
           >
             <Check className="mr-2 h-4 w-4 text-green-500" />
@@ -192,7 +192,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
           <Button
             variant="outline"
             size="sm"
-            onClick={() => handleBulkUpdate("rejected")}
+            onClick={() => handleBulkUpdate("Rejected")}
             disabled={isPending}
           >
             <X className="mr-2 h-4 w-4 text-red-500" />
@@ -277,11 +277,11 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
                           {t("viewDetails")}
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={() => updateStatus(report._id, "approved")}>
+                        <DropdownMenuItem onClick={() => updateStatus(report._id, "Approved")}>
                           <Check className="mr-2 h-4 w-4" />
                           {t("approve")}
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => updateStatus(report._id, "rejected")}>
+                        <DropdownMenuItem onClick={() => updateStatus(report._id, "Rejected")}>
                           <X className="mr-2 h-4 w-4" />
                           {t("reject")}
                         </DropdownMenuItem>
