@@ -281,6 +281,7 @@
     "level_Ordinary": "Ordinary User",
     "reportsCount": "Reports Count",
     "allLevels": "All Levels",
-    "searchUsers": "Search users..."
+    "searchUsers": "Search users...",
+    "search": "Search"
   }
 }
