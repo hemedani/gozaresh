@@ -164,12 +164,7 @@
     "trust": {
       "title": "مورد اعتماد هزاران نفر",
       "description": "به جامعه شهروندان فعال ما بپیوندید.",
-      "benefits": [
-        "ارتباط مستقیم با مسئولین",
-        "روند شفاف",
-        "رسیدگی سریع",
-        "تأثیر در جامعه"
-      ]
+      "benefits": ["ارتباط مستقیم با مسئولین", "روند شفاف", "رسیدگی سریع", "تأثیر در جامعه"]
     },
     "cta": {
       "title": "آماده شروع هستید؟",
@@ -239,6 +234,28 @@
     "chartPlaceholder": "محل قرارگیری نمودار",
     "recentReports": "گزارش‌های اخیر",
     "recentReportsDescription": "آخرین گزارش‌های ثبت شده توسط کاربران",
-    "noRecentReports": "گزارش جدیدی وجود ندارد"
+    "noRecentReports": "گزارش جدیدی وجود ندارد",
+    "reportsManagement": "مدیریت گزارش‌ها",
+    "reportsManagementDescription": "مدیریت و بررسی گزارش‌های شهروندی",
+    "title": "عنوان",
+    "category": "دسته‌بندی",
+    "status": "وضعیت",
+    "priority": "اولویت",
+    "date": "تاریخ",
+    "actions": "عملیات",
+    "noReports": "هیچ گزارشی یافت نشد",
+    "status_pending": "در انتظار",
+    "status_approved": "تایید شده",
+    "status_rejected": "رد شده",
+    "priority_low": "کم",
+    "priority_medium": "متوسط",
+    "priority_high": "زیاد",
+    "searchPlaceholder": "جستجوی گزارش‌ها...",
+    "allPriorities": "همه اولویت‌ها",
+    "applyFilters": "اعمال فیلترها",
+    "viewDetails": "مشاهده جزئیات",
+    "approve": "تایید",
+    "reject": "رد کردن",
+    "delete": "حذف"
   }
 }
