@@ -158,7 +158,7 @@
   - [x] Sort by any column
   - [x] Pagination
   - [x] Delete tag (with confirmation)
-  - [x] Add new tag (name, color picker, icon selector)
+  - [x] Add new tag (name, color picker, emoji icon selector)
   - [x] Edit tag
 - [ ] **Categories Management** (`/admin/categories`)
   - [ ] List/grid of all categories

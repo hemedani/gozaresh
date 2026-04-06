@@ -4,20 +4,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useTranslations } from "next-intl";
-import { useTransition } from "react";
-import { Loader2 } from "lucide-react";
+import { useState, useTransition } from "react";
+import { Loader2, SmilePlus } from "lucide-react";
 import { tagSchema } from "@/types/declarations";
+import dynamic from "next/dynamic";
+
+const EmojiPicker = dynamic(() => import("emoji-picker-react"), { ssr: false });
 
 const tagFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -37,6 +34,7 @@ interface TagFormProps {
 export function TagForm({ initialData, onSubmit, onCancel }: TagFormProps) {
   const t = useTranslations("admin");
   const [isPending, startTransition] = useTransition();
+  const [iconOpen, setIconOpen] = useState(false);
 
   const form = useForm<TagFormValues>({
     resolver: zodResolver(tagFormSchema),
@@ -44,7 +42,7 @@ export function TagForm({ initialData, onSubmit, onCancel }: TagFormProps) {
       name: initialData?.name || "",
       description: initialData?.description || "",
       color: initialData?.color || "#3b82f6",
-      icon: initialData?.icon || "tag",
+      icon: initialData?.icon || "🏷️",
     },
   });
 
@@ -114,10 +112,33 @@ export function TagForm({ initialData, onSubmit, onCancel }: TagFormProps) {
             name="icon"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("iconName") || "Icon Name"}</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g. tag, alert-circle" {...field} />
-                </FormControl>
+                <FormLabel>{t("iconName") || "Icon"}</FormLabel>
+                <Popover open={iconOpen} onOpenChange={setIconOpen}>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className={`w-full justify-between font-normal ${!field.value ? "text-muted-foreground" : ""}`}
+                      >
+                        {field.value ? (
+                          <span className="text-xl leading-none">{field.value}</span>
+                        ) : (
+                          <span>{t("selectIcon") || "Select Icon"}</span>
+                        )}
+                        <SmilePlus className="h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start" side="top">
+                    <EmojiPicker
+                      onEmojiClick={(emojiData) => {
+                        field.onChange(emojiData.emoji);
+                        setIconOpen(false);
+                      }}
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}
