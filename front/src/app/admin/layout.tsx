@@ -1,14 +1,10 @@
 import { redirect } from "next/navigation";
-import { getMe } from "@/app/actions/auth/actions";
+import { getMe } from "@/app/actions/user/getMe";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { AdminLayoutShell } from "@/components/layout/admin-layout-shell";
 
-export default async function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const { success, body: user } = await getMe();
 
   if (!success || !user) {
@@ -25,9 +21,7 @@ export default async function AdminLayout({
 
   return (
     <NextIntlClientProvider messages={messages} locale="fa">
-      <AdminLayoutShell>
-        {children}
-      </AdminLayoutShell>
+      <AdminLayoutShell>{children}</AdminLayoutShell>
     </NextIntlClientProvider>
   );
 }

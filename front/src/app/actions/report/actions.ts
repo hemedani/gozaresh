@@ -1,6 +1,6 @@
 "use server";
 
-import { apiCall, getToken } from "@/lib/api";
+import { AppApi, getToken } from "@/lib/api";
 
 export async function createReport(data: {
   title: string;
@@ -19,20 +19,25 @@ export async function createReport(data: {
 
   const { tags, category, attachments, ...rest } = data;
 
-  const result = await apiCall("report", "add", {
-    set: {
-      ...rest,
-      tags: tags || [],
-      category: category || undefined,
-      attachments: attachments || [],
+  const result = await AppApi(undefined, token).send({
+    service: "main",
+    model: "report",
+    act: "add",
+    details: {
+      set: {
+        ...rest,
+        tags: tags || [],
+        category: category || undefined,
+        attachments: attachments || [],
+      },
+      get: {
+        _id: 1,
+        title: 1,
+        description: 1,
+        status: 1,
+      },
     },
-    get: {
-      _id: true,
-      title: true,
-      description: true,
-      status: true,
-    },
-  }, token);
+  });
 
   return result;
 }
@@ -43,17 +48,22 @@ export async function getMyReports(page = 1, limit = 10) {
     return { success: false, body: [] };
   }
 
-  const result = await apiCall("report", "gets", {
-    set: { page, limit },
-    get: {
-      _id: true,
-      title: true,
-      description: true,
-      status: true,
-      priority: true,
-      createdAt: true,
+  const result = await AppApi(undefined, token).send({
+    service: "main",
+    model: "report",
+    act: "gets",
+    details: {
+      set: { page, limit },
+      get: {
+        _id: 1,
+        title: 1,
+        description: 1,
+        status: 1,
+        priority: 1,
+        createdAt: 1,
+      },
     },
-  }, token);
+  });
 
   return result;
 }

@@ -1,0 +1,22 @@
+"use server";
+import { AppApi } from "@/lib/api";
+import { ReqType, DeepPartial } from "@/types/declarations";
+import { cookies } from "next/headers";
+
+export const countUsers = async (data: ReqType["main"]["user"]["countUsers"]["set"], getSelection?: DeepPartial<ReqType["main"]["user"]["countUsers"]["get"]>) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+  
+  const result = await AppApi(undefined, token).send({
+    service: "main",
+    model: "user",
+    act: "countUsers",
+    details: {
+      set: data,
+      get: getSelection || {},
+    },
+  });
+
+  if (result.success) return result.body;
+  return null;
+};

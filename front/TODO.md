@@ -132,14 +132,14 @@
   - [x] Charts/graphs (reports over time, by category, by status)
   - [x] Quick actions (approve pending, view users, etc.)
 - [ ] **Reports Management** (`/admin/reports`)
-  - [ ] Data table with all reports
-  - [ ] Columns: title, reporter, category, status, priority, date, actions
+  - [x] Data table with all reports
+  - [x] Columns: title, reporter, category, status, priority, date, actions
   - [ ] Filter by status, category, priority, date range
   - [ ] Search by title or reporter
   - [ ] Sort by any column
   - [ ] Pagination
   - [ ] Bulk actions (approve, reject, delete)
-  - [ ] Row actions: view, edit, approve, reject, delete
+  - [x] Row actions: view, edit, approve, reject, delete
   - [ ] Export to CSV/Excel
   - [ ] View report detail modal/page
 - [ ] **Users Management** (`/admin/users`)

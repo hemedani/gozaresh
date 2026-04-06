@@ -5,8 +5,9 @@ import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { login } from "@/app/actions/auth/actions";
+import { login } from "@/app/actions/user/login";
 import { Link, useRouter } from "@/i18n/routing";
+import { useAuthStore } from "@/stores/authStore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -32,6 +33,7 @@ export default function LoginPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  const { setUser, setToken } = useAuthStore();
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -44,9 +46,15 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     setLoading(true);
 
-    const result = await login(data.email, data.password);
+    const result = await login({ email: data.email, password: data.password });
+
+    console.log({ result }, "inisde OnSubmit at Login page");
 
     if (result.success) {
+      if (result.user) {
+        setUser(result.user as any);
+        setToken("authenticated");
+      }
       toast({
         title: t("common.success"),
         description: t("auth.loginSuccess"),
@@ -66,12 +74,8 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">
-            {t("auth.loginTitle")}
-          </CardTitle>
-          <CardDescription className="text-center">
-            {t("auth.loginDescription")}
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold text-center">{t("auth.loginTitle")}</CardTitle>
+          <CardDescription className="text-center">{t("auth.loginDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>

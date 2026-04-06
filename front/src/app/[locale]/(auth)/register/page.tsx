@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { register as registerUser } from "@/app/actions/auth/actions";
+import { registerUser } from "@/app/actions/user/registerUser";
 import { Link, useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,7 +48,13 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterFormData) => {
     setLoading(true);
 
-    const result = await registerUser(data.first_name, data.last_name, data.email, data.password);
+    const result = await registerUser({
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: data.email,
+      password: data.password,
+      gender: "Male", // Default value required by backend schema
+    });
 
     if (result.success) {
       toast({
@@ -70,12 +76,8 @@ export default function RegisterPage() {
     <div className="flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">
-            {t("auth.registerTitle")}
-          </CardTitle>
-          <CardDescription className="text-center">
-            {t("auth.registerDescription")}
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold text-center">{t("auth.registerTitle")}</CardTitle>
+          <CardDescription className="text-center">{t("auth.registerDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
