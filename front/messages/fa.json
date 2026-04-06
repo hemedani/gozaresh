@@ -8,8 +8,6 @@
     "edit": "ویرایش",
     "delete": "حذف",
     "save": "ذخیره",
-    "delete": "حذف",
-    "edit": "ویرایش",
     "add": "افزودن",
     "search": "جستجو",
     "submit": "ارسال",
@@ -166,7 +164,12 @@
     "trust": {
       "title": "مورد اعتماد هزاران نفر",
       "description": "به جامعه شهروندان فعال ما بپیوندید.",
-      "benefits": ["ارتباط مستقیم با مسئولین", "روند شفاف", "رسیدگی سریع", "تأثیر در جامعه"]
+      "benefits": [
+        "ارتباط مستقیم با مسئولین",
+        "روند شفاف",
+        "رسیدگی سریع",
+        "تأثیر در جامعه"
+      ]
     },
     "cta": {
       "title": "آماده شروع هستید؟",
@@ -295,7 +298,6 @@
     "isVerified": "تایید شده",
     "cancel": "انصراف",
     "edit": "ویرایش",
-    "delete": "حذف",
     "submit": "ارسال",
     "error": "خطا",
     "success": "موفقیت",
@@ -306,9 +308,6 @@
     "tagsManagement": "مدیریت برچسب‌ها",
     "tagsManagementDescription": "مدیریت برچسب‌ها برای دسته‌بندی گزارش‌ها",
     "save": "ذخیره",
-    "cancel": "انصراف",
-    "edit": "ویرایش",
-    "delete": "حذف",
     "tagName": "نام برچسب",
     "enterTagName": "مثال: فوری",
     "enterTagDescription": "توضیح دهید که این برچسب برای چه استفاده می‌شود",
@@ -320,7 +319,7 @@
     "failedToUpdateTag": "بروزرسانی برچسب با خطا مواجه شد.",
     "deleteTagConfirm": "آیا از حذف این برچسب اطمینان دارید؟",
     "tagDeleted": "برچسب با موفقیت حذف شد",
-    "failedToDeleteTag": "حذف برچسب با خطا مواجه شد",
+    "failedToDeleteTag": "حذف برچسب ناموفق بود",
     "unexpectedError": "خطای غیرمنتظره‌ای رخ داد.",
     "addTag": "افزودن برچسب",
     "addTagDescription": "ایجاد برچسب جدید برای گزارش‌ها",
@@ -331,8 +330,23 @@
     "noTags": "هیچ برچسبی یافت نشد",
     "color": "رنگ",
     "icon": "آیکون",
-    "deleteTagConfirm": "آیا از حذف این برچسب اطمینان دارید؟",
-    "tagDeleted": "برچسب با موفقیت حذف شد",
-    "failedToDeleteTag": "حذف برچسب ناموفق بود"
+    "categoriesManagement": "مدیریت دسته‌بندی‌ها",
+    "categoriesManagementDescription": "مدیریت دسته‌بندی‌ها برای گزارش‌ها",
+    "categoryName": "نام دسته‌بندی",
+    "enterCategoryName": "مثال: زیرساخت",
+    "enterCategoryDescription": "توضیح دهید که این دسته‌بندی برای چه استفاده می‌شود",
+    "categoryCreated": "دسته‌بندی با موفقیت ایجاد شد.",
+    "failedToCreateCategory": "ایجاد دسته‌بندی با خطا مواجه شد.",
+    "categoryUpdated": "دسته‌بندی با موفقیت بروزرسانی شد.",
+    "failedToUpdateCategory": "بروزرسانی دسته‌بندی با خطا مواجه شد.",
+    "deleteCategoryConfirm": "آیا از حذف این دسته‌بندی اطمینان دارید؟",
+    "categoryDeleted": "دسته‌بندی با موفقیت حذف شد",
+    "failedToDeleteCategory": "حذف دسته‌بندی با خطا مواجه شد",
+    "addCategory": "افزودن دسته‌بندی",
+    "addCategoryDescription": "ایجاد دسته‌بندی جدید برای گزارش‌ها",
+    "editCategory": "ویرایش دسته‌بندی",
+    "editCategoryDescription": "بروزرسانی جزئیات این دسته‌بندی",
+    "searchCategories": "جستجوی دسته‌بندی‌ها...",
+    "noCategories": "هیچ دسته‌بندی یافت نشد"
   }
 }

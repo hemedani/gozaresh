@@ -162,12 +162,12 @@
   - [x] Delete tag (with confirmation)
   - [x] Add new tag (name, color picker, emoji icon selector)
   - [x] Edit tag
-- [ ] **Categories Management** (`/admin/categories`)
-  - [ ] List/grid of all categories
-  - [ ] Columns: name, color, icon, usage count, actions
-  - [ ] Add new category (name, color picker, icon selector)
-  - [ ] Edit category
-  - [ ] Delete category (with confirmation)
+- [x] **Categories Management** (`/admin/categories`)
+  - [x] List/grid of all categories
+  - [x] Columns: name, color, icon, description, actions
+  - [x] Add new category (name, color picker, emoji icon selector)
+  - [x] Edit category
+  - [x] Delete category (with confirmation)
 - [ ] **Files Management** (`/admin/files`)
   - [ ] List of all uploaded files
   - [ ] Columns: filename, type, size, uploaded by, date, actions
