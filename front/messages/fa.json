@@ -293,6 +293,8 @@
     "cancel": "انصراف",
     "submit": "ارسال",
     "error": "خطا",
-    "success": "موفقیت"
+    "success": "موفقیت",
+    "editRole": "ویرایش نقش",
+    "deactivate": "غیرفعال کردن"
   }
 }
