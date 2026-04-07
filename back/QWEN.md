@@ -390,6 +390,96 @@ const getEntities: ActFn = async (body) => {
 - Can be used instead of find and findOne
 - Automatically creates lookup, unwind and projection pipelines based on client's get input
 
+### MongoDB Text Indexes and Full-Text Search
+
+#### Creating Text Indexes
+
+Text indexes enable full-text search capabilities on model fields. Define them in the model configuration:
+
+```typescript
+export const categories = () =>
+  coreApp.odm.newModel(
+    "category",
+    shared_relation_pure,
+    createSharedRelations(),
+    {
+      createIndex: {
+        indexSpec: {
+          name: "text",
+          description: "text",
+        },
+      },
+    },
+  );
+```
+
+**Important Notes:**
+- Text indexes support multiple fields in a single index
+- Only one text index per collection is allowed
+- Common fields to index: `name`, `description`, `title`, or any searchable text content
+
+#### Full-Text Search in Gets Functions
+
+Pattern for implementing text search with relevance scoring:
+
+```typescript
+const pipeline: Document[] = [];
+
+// 1. Text search using MongoDB text index
+search &&
+  pipeline.push({
+    $match: { $text: { $search: search } },
+  });
+
+// 2. Add text search score for sorting if search term exists
+if (search && (!sortBy || sortBy === "relevance")) {
+  pipeline.push({
+    $addFields: {
+      textScore: { $meta: "textScore" },
+    },
+  });
+}
+
+// 3. Sorting
+const sortField = sortBy === "relevance" ? "textScore" : (sortBy || "_id");
+const sortDirection = sortOrder === "asc" ? 1 : -1;
+pipeline.push({ $sort: { [sortField]: sortDirection } });
+
+// 4. Pagination
+const calculatedSkip = skip ?? limit * (page - 1);
+pipeline.push({ $skip: calculatedSkip });
+pipeline.push({ $limit: limit });
+```
+
+#### Search and Sort Validator Pattern
+
+```typescript
+import { enums, object, optional, string } from "@deps";
+import { selectStruct } from "../../../mod.ts";
+import { pagination } from "@lib";
+
+export const getsValidator = () => {
+  return object({
+    set: object({
+      ...pagination,
+      // Text search
+      search: optional(string()),
+      // Sort options
+      sortBy: optional(enums(["createdAt", "updatedAt", "name"])),
+      sortOrder: optional(enums(["asc", "desc"])),
+    }),
+    get: selectStruct("category", 2),
+  });
+};
+```
+
+**Common sortBy values:**
+- `createdAt`, `updatedAt` - Timestamp fields
+- `name`, `title` - Text fields
+- `relevance` - Special value for text search score sorting
+- `status`, `priority` - Status/priority fields
+
+
 ### Update and Delete Operations
 
 #### findOneAndUpdate Function
@@ -1305,6 +1395,9 @@ All API calls use POST with this structure:
 10. **Context for State**: Use `coreApp.contextFns.setContext()` to pass data between middleware and handlers
 11. **Centralize Excludes**: Use `models/excludes.ts` to prevent circular dependencies
 12. **Shared Patterns**: Extract common patterns to `models/utils/` (shared relations, location fields)
+13. **Reusable Pagination**: Use the `pagination` utility from `@lib` instead of manually defining page/limit/skip
+14. **Text Search**: Use MongoDB text indexes for full-text search instead of regex patterns for better performance
+15. **Search Relevance**: When implementing text search, add `textScore` field and allow sorting by relevance
 
 ---
 
