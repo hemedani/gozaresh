@@ -4,7 +4,19 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
-import { Moon, Sun, Menu, User, LogOut } from "lucide-react";
+import {
+  Moon,
+  Sun,
+  Menu,
+  User,
+  LogOut,
+  LayoutDashboard,
+  FileText,
+  Users,
+  Tags,
+  FolderOpen,
+  FileImage,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,9 +30,11 @@ import { Badge } from "@/components/ui/badge";
 import { useAuthStore } from "@/stores/authStore";
 import { logout as logoutAction } from "@/app/actions/user/logout";
 import { LanguageSwitcher } from "./language-switcher";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 export function Header() {
   const t = useTranslations("header");
+  const tAdmin = useTranslations("admin");
   const pathname = usePathname();
   const locale = useLocale();
   const { theme, setTheme } = useTheme();
@@ -156,9 +170,121 @@ export function Header() {
           )}
 
           {/* Mobile menu button */}
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <Menu className="h-5 w-5" />
-          </Button>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side={locale === "fa" || locale === "ar" ? "right" : "left"}>
+              <SheetHeader>
+                <SheetTitle className="text-start">{t("appName")}</SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col gap-4 mt-6">
+                {isAuthenticated && (
+                  <nav className="flex flex-col gap-4">
+                    {pathname.startsWith("/admin") ? (
+                      <>
+                        <Link
+                          href="/admin/dashboard"
+                          className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
+                        >
+                          <LayoutDashboard className="h-4 w-4" />
+                          <span>{tAdmin("dashboard")}</span>
+                        </Link>
+                        <Link
+                          href="/admin/reports"
+                          className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
+                        >
+                          <FileText className="h-4 w-4" />
+                          <span>{tAdmin("reports")}</span>
+                        </Link>
+                        {(user.level === "Ghost"
+                          ? 4
+                          : user.level === "Manager"
+                            ? 3
+                            : user.level === "Editor"
+                              ? 2
+                              : 1) >= 3 && (
+                          <Link
+                            href="/admin/users"
+                            className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
+                          >
+                            <Users className="h-4 w-4" />
+                            <span>{tAdmin("users")}</span>
+                          </Link>
+                        )}
+                        <Link
+                          href="/admin/tags"
+                          className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
+                        >
+                          <Tags className="h-4 w-4" />
+                          <span>{tAdmin("tags")}</span>
+                        </Link>
+                        <Link
+                          href="/admin/categories"
+                          className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
+                        >
+                          <FolderOpen className="h-4 w-4" />
+                          <span>{tAdmin("categories")}</span>
+                        </Link>
+                        <Link
+                          href="/admin/files"
+                          className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
+                        >
+                          <FileImage className="h-4 w-4" />
+                          <span>{tAdmin("files")}</span>
+                        </Link>
+                        <div className="my-2 h-px bg-muted" />
+                        <Link
+                          href={`/${locale}/reports`}
+                          className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
+                        >
+                          {t("myReports")}
+                        </Link>
+                        <Link
+                          href={`/${locale}/reports/new`}
+                          className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
+                        >
+                          {t("newReport")}
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          href={`/${locale}/reports`}
+                          className="text-sm font-medium hover:text-primary transition-colors"
+                        >
+                          {t("myReports")}
+                        </Link>
+                        <Link
+                          href={`/${locale}/reports/new`}
+                          className="text-sm font-medium hover:text-primary transition-colors"
+                        >
+                          {t("newReport")}
+                        </Link>
+                      </>
+                    )}
+                  </nav>
+                )}
+                {!isAuthenticated &&
+                  !pathname.startsWith("/admin") &&
+                  !pathname.includes("/login") &&
+                  !pathname.includes("/register") && (
+                    <div className="flex flex-col gap-2 mt-4">
+                      <Link href={`/${locale}/login`}>
+                        <Button variant="outline" className="w-full">
+                          {t("login")}
+                        </Button>
+                      </Link>
+                      <Link href={`/${locale}/register`}>
+                        <Button className="w-full">{t("register")}</Button>
+                      </Link>
+                    </div>
+                  )}
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
