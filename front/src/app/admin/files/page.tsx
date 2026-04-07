@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { getFiles } from "@/app/actions/file/getFiles";
+import { gets } from "@/app/actions/file/gets";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -23,16 +23,13 @@ export default async function AdminFilesPage({
   const search = resolvedSearchParams.search || "";
   const typeFilter = resolvedSearchParams.type as "image" | "video" | "doc" | "all" | undefined;
 
-  const setQuery: ReqType["main"]["file"]["getFiles"]["set"] = { page, limit: 20 };
+  const setQuery: ReqType["main"]["file"]["gets"]["set"] = { page, limit: 20 };
   if (search) {
-    setQuery.name = search;
-  }
-  if (typeFilter && typeFilter !== "all") {
-    setQuery.type = typeFilter;
+    setQuery.search = search;
   }
 
   // Fetch files
-  const response = await getFiles(setQuery, {
+  const response = await gets(setQuery, {
     _id: 1,
     name: 1,
     mimType: 1,

@@ -644,12 +644,137 @@ export type ReqType = {
     file: {
 
 
-      getFiles: {
+      get: {
         set: {
-          page: number;
-          limit: number;
-          name?: string;
-          type?: ("image" | "video" | "doc");
+          _id: string;
+        };
+        get: {
+          _id?: (0 | 1);
+          name?: (0 | 1);
+          mimType?: (0 | 1);
+          size?: (0 | 1);
+          alt_text?: (0 | 1);
+          createdAt?: (0 | 1);
+          updatedAt?: (0 | 1);
+          uploader?: {
+            _id?: (0 | 1);
+            first_name?: (0 | 1);
+            last_name?: (0 | 1);
+            gender?: (0 | 1);
+            address?: (0 | 1);
+            level?: (0 | 1);
+            email?: (0 | 1);
+            is_verified?: (0 | 1);
+            avatar?: {
+              _id?: (0 | 1);
+              name?: (0 | 1);
+              mimType?: (0 | 1);
+              alt_text?: (0 | 1);
+            };
+            national_card?: {
+              _id?: (0 | 1);
+              name?: (0 | 1);
+              mimType?: (0 | 1);
+              alt_text?: (0 | 1);
+            };
+            province?: {
+              _id?: (0 | 1);
+              name?: (0 | 1);
+              english_name?: (0 | 1);
+              createdAt?: (0 | 1);
+              updatedAt?: (0 | 1);
+            };
+            city?: {
+              _id?: (0 | 1);
+              name?: (0 | 1);
+              english_name?: (0 | 1);
+              createdAt?: (0 | 1);
+              updatedAt?: (0 | 1);
+            };
+            reports?: {
+              _id?: (0 | 1);
+              title?: (0 | 1);
+              description?: (0 | 1);
+              location?: (0 | 1);
+              address?: (0 | 1);
+              status?: (0 | 1);
+              priority?: (0 | 1);
+            };
+          };
+        };
+      };
+
+
+      gets: {
+        set: {
+          page?: number;
+          limit?: number;
+          skip?: number;
+          search?: string;
+          sortBy?: ("createdAt" | "updatedAt" | "name");
+          sortOrder?: ("asc" | "desc");
+        };
+        get: {
+          _id?: (0 | 1);
+          name?: (0 | 1);
+          mimType?: (0 | 1);
+          size?: (0 | 1);
+          alt_text?: (0 | 1);
+          createdAt?: (0 | 1);
+          updatedAt?: (0 | 1);
+          uploader?: {
+            _id?: (0 | 1);
+            first_name?: (0 | 1);
+            last_name?: (0 | 1);
+            gender?: (0 | 1);
+            address?: (0 | 1);
+            level?: (0 | 1);
+            email?: (0 | 1);
+            is_verified?: (0 | 1);
+            avatar?: {
+              _id?: (0 | 1);
+              name?: (0 | 1);
+              mimType?: (0 | 1);
+              alt_text?: (0 | 1);
+            };
+            national_card?: {
+              _id?: (0 | 1);
+              name?: (0 | 1);
+              mimType?: (0 | 1);
+              alt_text?: (0 | 1);
+            };
+            province?: {
+              _id?: (0 | 1);
+              name?: (0 | 1);
+              english_name?: (0 | 1);
+              createdAt?: (0 | 1);
+              updatedAt?: (0 | 1);
+            };
+            city?: {
+              _id?: (0 | 1);
+              name?: (0 | 1);
+              english_name?: (0 | 1);
+              createdAt?: (0 | 1);
+              updatedAt?: (0 | 1);
+            };
+            reports?: {
+              _id?: (0 | 1);
+              title?: (0 | 1);
+              description?: (0 | 1);
+              location?: (0 | 1);
+              address?: (0 | 1);
+              status?: (0 | 1);
+              priority?: (0 | 1);
+            };
+          };
+        };
+      };
+
+
+      update: {
+        set: {
+          _id: string;
+          alt_text?: string;
         };
         get: {
           _id?: (0 | 1);
@@ -1725,9 +1850,16 @@ export type ReqType = {
 
       getUsers: {
         set: {
-          levels?: ("Ghost" | "Manager" | "Editor" | "Ordinary");
-          page: number;
-          limit: number;
+          page?: number;
+          limit?: number;
+          skip?: number;
+          search?: string;
+          level?: ("Ghost" | "Manager" | "Editor" | "Ordinary");
+          levels?: ("Ghost" | "Manager" | "Editor" | "Ordinary")[];
+          isVerified?: ("true" | "false" | "all");
+          gender?: ("Male" | "Female");
+          sortBy?: ("createdAt" | "updatedAt" | "first_name" | "last_name" | "email" | "level");
+          sortOrder?: ("asc" | "desc");
         };
         get: {
           _id?: (0 | 1);
@@ -2153,9 +2285,12 @@ export type ReqType = {
 
       gets: {
         set: {
-          page: number;
-          limit: number;
-          name?: string;
+          page?: number;
+          limit?: number;
+          skip?: number;
+          search?: string;
+          sortBy?: ("createdAt" | "updatedAt" | "name");
+          sortOrder?: ("asc" | "desc");
         };
         get: {
           _id?: (0 | 1);
@@ -2455,9 +2590,12 @@ export type ReqType = {
 
       gets: {
         set: {
-          page: number;
-          limit: number;
-          name?: string;
+          page?: number;
+          limit?: number;
+          skip?: number;
+          search?: string;
+          sortBy?: ("createdAt" | "updatedAt" | "name");
+          sortOrder?: ("asc" | "desc");
         };
         get: {
           _id?: (0 | 1);

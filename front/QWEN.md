@@ -379,12 +379,11 @@ export const <actionName> = async (
     act: "<action>",
     details: {
       set: data,
-      get: (getSelection || {}) as any,
+      get: getSelection || {},
     },
   });
 
-  if (result.success) return result.body;
-  return null;
+  return result;
 };
 ```
 
@@ -617,14 +616,25 @@ All Lesan actions return a standardized response:
 
 **Standard Action Return:**
 
-- On success: Returns `result.body` (the data)
-- On failure: Returns `null`
-
-**Custom Action Return:**
-Some custom actions may return the full response object:
+All standard actions now return the full response object from Lesan:
 
 ```ts
 return result; // { success: boolean, body: data }
+```
+
+This allows callers to check `result.success` and access `result.body` as needed, providing more flexibility for error handling.
+
+**Usage Pattern:**
+
+```ts
+const result = await add({ name: "Test" }, { _id: 1, name: 1 });
+
+if (result.success) {
+  const data = result.body;
+  // Handle success
+} else {
+  // Handle failure
+}
 ```
 
 ### Usage Examples
@@ -638,7 +648,8 @@ import { gets } from "@/app/actions/category/gets";
 // Server Component
 export default async function CategoriesPage() {
   // Fetch all categories
-  const categories = await gets({ page: 1, limit: 100 }, { _id: 1, name: 1, color: 1 });
+  const result = await gets({ page: 1, limit: 100 }, { _id: 1, name: 1, color: 1 });
+  const categories = result.success ? result.body : [];
 
   return (
     <ul>
@@ -661,7 +672,7 @@ async function createCategory(formData: FormData) {
     { _id: 1, name: 1 },
   );
 
-  if (result) {
+  if (result.success) {
     redirect("/categories");
   }
 }
@@ -673,7 +684,7 @@ async function createCategory(formData: FormData) {
 import { update } from "@/app/actions/report/update";
 
 async function updateReport(reportId: string) {
-  const updatedReport = await update(
+  const result = await update(
     {
       _id: reportId,
       status: "completed",
@@ -695,15 +706,18 @@ async function updateReport(reportId: string) {
     },
   );
 
-  console.log(updatedReport);
-  // {
-  //   _id: "...",
-  //   title: "...",
-  //   status: "completed",
-  //   priority: "high",
-  //   category: { _id: "...", name: "Technology" },
-  //   tags: [{ _id: "...", name: "Urgent" }]
-  // }
+  if (result.success) {
+    const updatedReport = result.body;
+    console.log(updatedReport);
+    // {
+    //   _id: "...",
+    //   title: "...",
+    //   status: "completed",
+    //   priority: "high",
+    //   category: { _id: "...", name: "Technology" },
+    //   tags: [{ _id: "...", name: "Urgent" }]
+    // }
+  }
 }
 ```
 
@@ -714,8 +728,10 @@ import { gets } from "@/app/actions/user/gets";
 import { count } from "@/app/actions/user/count";
 
 export default async function UsersList({ page = 1, limit = 20 }) {
-  const totalUsers = await count({}, { count: 1 });
-  const users = await gets(
+  const totalResult = await count({}, { count: 1 });
+  const totalUsers = totalResult.success ? totalResult.body : null;
+  
+  const usersResult = await gets(
     { page, limit },
     {
       _id: 1,
@@ -725,6 +741,7 @@ export default async function UsersList({ page = 1, limit = 20 }) {
       is_verified: 1,
     },
   );
+  const users = usersResult.success ? usersResult.body : [];
 
   const totalPages = Math.ceil((totalUsers?.count || 0) / limit);
 

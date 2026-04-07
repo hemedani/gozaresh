@@ -61,9 +61,9 @@ You are an expert full-stack TypeScript/Next.js 16 developer working exclusively
 - ✅ Admin Dashboard with statistics cards and layout
 - ✅ Admin Reports Management fully completed with data table, filters, search, sorting, pagination, bulk actions, row actions, CSV export, and view details modal (`/admin/reports`)
 - ✅ Admin Users Management fully completed with data table, filters, search, sorting, pagination, row actions, and add new user modal (`/admin/users`)
-- ✅ Admin Tags Management fully completed with data table, search, pagination, row actions, add/edit tag modal, and integrated emoji picker (`/admin/tags`)
-- ✅ Admin Categories Management fully completed (`/admin/categories`)
-- ✅ Admin Files Management partially completed with data table, filters, search, and preview (`/admin/files`)
+- ✅ Admin Tags Management fully completed with data table, backend search/sort, pagination, row actions, add/edit tag modal, and integrated emoji picker (`/admin/tags`)
+- ✅ Admin Categories Management fully completed with backend search/sort (`/admin/categories`)
+- ✅ Admin Files Management partially completed with data table, filters, backend text search, sorting, and preview (`/admin/files`)
 
 **Frontend Structure**:
 

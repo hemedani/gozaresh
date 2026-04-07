@@ -25,9 +25,14 @@ export default async function AdminCategoriesPage({
   const sortBy = resolvedSearchParams.sortBy || "createdAt";
   const sortOrder = resolvedSearchParams.sortOrder || "desc";
 
-  const setQuery: ReqType["main"]["category"]["gets"]["set"] = { page, limit: 20 };
+  const setQuery: ReqType["main"]["category"]["gets"]["set"] = {
+    page,
+    limit: 20,
+    sortBy: sortBy as "createdAt" | "updatedAt" | "name",
+    sortOrder: sortOrder as "asc" | "desc",
+  };
   if (search) {
-    (setQuery as any).filter = { name: { $regex: search, $options: "i" } };
+    setQuery.search = search;
   }
 
   // Fetch categories

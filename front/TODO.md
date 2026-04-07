@@ -172,7 +172,8 @@
   - [x] List of all uploaded files
   - [x] Columns: filename, type, size, uploaded by, date, actions
   - [x] Filter by type (images, videos, docs)
-  - [x] Search by filename
+  - [x] Search by filename (Backend text search integrated)
+  - [x] Sort by any column (Backend sorting integrated)
   - [ ] Delete file (with confirmation)
   - [x] Preview images/videos
 
