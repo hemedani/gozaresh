@@ -168,13 +168,13 @@
   - [x] Add new category (name, color picker, emoji icon selector)
   - [x] Edit category
   - [x] Delete category (with confirmation)
-- [ ] **Files Management** (`/admin/files`)
-  - [ ] List of all uploaded files
-  - [ ] Columns: filename, type, size, uploaded by, date, actions
-  - [ ] Filter by type (images, videos, docs)
-  - [ ] Search by filename
+- [x] **Files Management** (`/admin/files`)
+  - [x] List of all uploaded files
+  - [x] Columns: filename, type, size, uploaded by, date, actions
+  - [x] Filter by type (images, videos, docs)
+  - [x] Search by filename
   - [ ] Delete file (with confirmation)
-  - [ ] Preview images/videos
+  - [x] Preview images/videos
 
 ## Phase 5: Internationalization (Complete all 9 languages)
 
