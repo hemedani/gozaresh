@@ -1,23 +1,44 @@
-import type { ActFn } from "@deps";
+import type { ActFn, Document } from "@deps";
 import { category } from "../../../mod.ts";
 
 export const getsFn: ActFn = async (body) => {
 	const {
-		set: { page, limit, name },
+		set: {
+			page,
+			limit,
+			skip,
+			search,
+			sortBy,
+			sortOrder,
+		},
 		get,
 	} = body.details;
 
-	const pipeline = [];
+	const pipeline: Document[] = [];
 
-	name &&
+	// Text search using MongoDB text index
+	search &&
 		pipeline.push({
-			$match: {
-				name: { $regex: new RegExp(name, "i") },
-			},
+			$match: { $text: { $search: search } },
 		});
 
-	pipeline.push({ $sort: { _id: -1 } });
-	pipeline.push({ $skip: (page - 1) * limit });
+	// Add text search score for sorting if search term exists
+	if (search && (!sortBy || sortBy === "relevance")) {
+		pipeline.push({
+			$addFields: {
+				textScore: { $meta: "textScore" },
+			},
+		});
+	}
+
+	// Sorting
+	const sortField = sortBy === "relevance" ? "textScore" : (sortBy || "_id");
+	const sortDirection = sortOrder === "asc" ? 1 : -1;
+	pipeline.push({ $sort: { [sortField]: sortDirection } });
+
+	// Pagination
+	const calculatedSkip = skip ?? limit * (page - 1);
+	pipeline.push({ $skip: calculatedSkip });
 	pipeline.push({ $limit: limit });
 
 	return await category
