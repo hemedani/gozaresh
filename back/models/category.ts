@@ -9,4 +9,12 @@ export const categories = () =>
 		"category",
 		shared_relation_pure,
 		createSharedRelations(),
+		{
+			createIndex: {
+				indexSpec: {
+					name: "text",
+					description: "text",
+				},
+			},
+		},
 	);

@@ -38,4 +38,16 @@ export const file_relations = {
 };
 
 export const files = () =>
-	coreApp.odm.newModel("file", pure_file, file_relations);
+	coreApp.odm.newModel(
+		"file",
+		pure_file,
+		file_relations,
+		{
+			createIndex: {
+				indexSpec: {
+					name: "text",
+					alt_text: "text",
+				},
+			},
+		},
+	);

@@ -9,4 +9,12 @@ export const tags = () =>
 		"tag",
 		shared_relation_pure,
 		createSharedRelations(),
+		{
+			createIndex: {
+				indexSpec: {
+					name: "text",
+					description: "text",
+				},
+			},
+		},
 	);
