@@ -182,7 +182,7 @@
 - [ ] Add translation files for all languages:
   - [ ] fa.json (Persian – default, RTL) ✅ started
   - [ ] en.json (English – LTR) ✅ started
-  - [ ] ar.json (Arabic – RTL)
+  - [x] ar.json (Arabic – RTL) ✅
   - [ ] zh.json (Chinese – LTR)
   - [ ] pt.json (Portuguese – LTR)
   - [ ] es.json (Spanish – LTR)
