@@ -76,7 +76,7 @@ export function CategoriesTable({ categories, error }: { categories: categorySch
               <TableHead>{t("color") || "Color"}</TableHead>
               <TableHead>{t("icon") || "Icon"}</TableHead>
               <TableHead>{t("description") || "Description"}</TableHead>
-              <TableHead className="text-right pr-4">{t("actions")}</TableHead>
+              <TableHead className="text-end pe-4">{t("actions")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -101,7 +101,7 @@ export function CategoriesTable({ categories, error }: { categories: categorySch
                   </TableCell>
                   <TableCell>{category.icon || "-"}</TableCell>
                   <TableCell className="max-w-md truncate">{category.description || "-"}</TableCell>
-                  <TableCell className="text-right pr-4">
+                  <TableCell className="text-end pe-4">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
@@ -112,7 +112,7 @@ export function CategoriesTable({ categories, error }: { categories: categorySch
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
                         <DropdownMenuItem onClick={() => handleEditClick(category)}>
-                          <Pencil className="mr-2 h-4 w-4" />
+                          <Pencil className="me-2 h-4 w-4" />
                           {t("edit")}
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
@@ -121,7 +121,7 @@ export function CategoriesTable({ categories, error }: { categories: categorySch
                           onClick={() => deleteCategoryAction(category._id!)}
                           disabled={isPending}
                         >
-                          <Trash2 className="mr-2 h-4 w-4" />
+                          <Trash2 className="me-2 h-4 w-4" />
                           {t("delete")}
                         </DropdownMenuItem>
                       </DropdownMenuContent>

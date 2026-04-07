@@ -72,12 +72,12 @@ export default async function AdminUsersPage({
       <div className="flex flex-col gap-4 mb-6">
         <form method="GET" className="flex flex-wrap gap-4 w-full items-start sm:items-center">
           <div className="relative w-full sm:w-64">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute start-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               name="search"
               placeholder={t("searchUsers") || "Search users..."}
               defaultValue={search}
-              className="pl-8"
+              className="ps-8"
             />
           </div>
           <div className="w-full sm:w-48">

@@ -24,7 +24,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     <NextIntlClientProvider locale={locale} messages={messages}>
       <div
         className="min-h-screen flex flex-col"
-        dir={locale === "fa" || locale === "ar" ? "rtl" : "ltr"}
+        
       >
         <Header />
         <main className="flex-1">{children}</main>

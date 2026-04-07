@@ -82,7 +82,7 @@ export function UsersTable({ users, error }: { users: userSchema[]; error?: stri
               <TableHead>{t("email") || "Email"}</TableHead>
               <TableHead>{t("level")}</TableHead>
               <TableHead>{t("date")}</TableHead>
-              <TableHead className="text-right pr-4">{t("actions")}</TableHead>
+              <TableHead className="text-end pe-4">{t("actions")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -103,7 +103,7 @@ export function UsersTable({ users, error }: { users: userSchema[]; error?: stri
                   <TableCell>
                     {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "-"}
                   </TableCell>
-                  <TableCell className="text-right pr-4">
+                  <TableCell className="text-end pe-4">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
@@ -114,16 +114,16 @@ export function UsersTable({ users, error }: { users: userSchema[]; error?: stri
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
                         <DropdownMenuItem>
-                          <Eye className="mr-2 h-4 w-4" />
+                          <Eye className="me-2 h-4 w-4" />
                           {t("viewDetails")}
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
-                          <Shield className="mr-2 h-4 w-4" />
+                          <Shield className="me-2 h-4 w-4" />
                           {t("editRole") || "Edit Role"}
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                          <Ban className="mr-2 h-4 w-4" />
+                          <Ban className="me-2 h-4 w-4" />
                           {t("deactivate") || "Deactivate"}
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
@@ -132,7 +132,7 @@ export function UsersTable({ users, error }: { users: userSchema[]; error?: stri
                           onClick={() => deleteUserAction(user._id!)}
                           disabled={isPending}
                         >
-                          <Trash2 className="mr-2 h-4 w-4" />
+                          <Trash2 className="me-2 h-4 w-4" />
                           {t("delete")}
                         </DropdownMenuItem>
                       </DropdownMenuContent>

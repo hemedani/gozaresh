@@ -69,7 +69,7 @@ export default function AdminDashboardPage() {
           <CardHeader>
             <CardTitle>{t("overview")}</CardTitle>
           </CardHeader>
-          <CardContent className="pl-2">
+          <CardContent className="ps-2">
             <div className="flex h-[350px] items-center justify-center rounded-md border border-dashed text-sm text-muted-foreground">
               {t("chartPlaceholder")}
             </div>

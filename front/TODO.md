@@ -204,7 +204,7 @@
   - [x] Table headers
   - [x] Modal titles and content
 - [x] Language switcher component (header/footer)
-- [ ] Test RTL layouts thoroughly (fa, ar)
+- [x] Test RTL layouts thoroughly (fa, ar)
 - [ ] Test LTR layouts thoroughly (en, zh, pt, es, nl, tr, ru)
 
 ## Phase 6: PWA & Polish

@@ -102,7 +102,7 @@ export function AddUserModal() {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button>
-          <Plus className="mr-2 h-4 w-4" />
+          <Plus className="me-2 h-4 w-4" />
           {t("addUser") || "Add User"}
         </Button>
       </DialogTrigger>

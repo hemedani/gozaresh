@@ -103,7 +103,7 @@ export function FilesTable({ files, error }: FilesTableProps) {
             <TableHead>{t("size") || "Size"}</TableHead>
             <TableHead>{t("uploadedBy") || "Uploaded By"}</TableHead>
             <TableHead>{t("date") || "Date"}</TableHead>
-            <TableHead className="text-right">{t("actions") || "Actions"}</TableHead>
+            <TableHead className="text-end">{t("actions") || "Actions"}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -132,7 +132,7 @@ export function FilesTable({ files, error }: FilesTableProps) {
               <TableCell className="whitespace-nowrap text-muted-foreground">
                 {file.createdAt ? format(new Date(file.createdAt), "yyyy/MM/dd") : "-"}
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-end">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="h-8 w-8 p-0">
@@ -146,14 +146,14 @@ export function FilesTable({ files, error }: FilesTableProps) {
                       onClick={() => window.open(`/api/files/${file._id}`, "_blank")}
                       className="cursor-pointer"
                     >
-                      <Eye className="mr-2 h-4 w-4" />
+                      <Eye className="me-2 h-4 w-4" />
                       {t("view") || "View"}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       className="text-destructive focus:text-destructive cursor-pointer"
                       onClick={() => alert("Delete functionality not implemented yet")}
                     >
-                      <Trash2 className="mr-2 h-4 w-4" />
+                      <Trash2 className="me-2 h-4 w-4" />
                       {t("delete") || "Delete"}
                     </DropdownMenuItem>
                   </DropdownMenuContent>

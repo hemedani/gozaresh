@@ -178,7 +178,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
 
       {selectedIds.length > 0 && (
         <div className="flex items-center gap-2 p-2 rounded-md bg-muted/50 border">
-          <span className="text-sm font-medium ml-2">{selectedIds.length} selected</span>
+          <span className="text-sm font-medium ms-2">{selectedIds.length} selected</span>
           <div className="flex-1" />
           <Button
             variant="outline"
@@ -186,7 +186,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
             onClick={() => handleBulkUpdate("Approved")}
             disabled={isPending}
           >
-            <Check className="mr-2 h-4 w-4 text-green-500" />
+            <Check className="me-2 h-4 w-4 text-green-500" />
             {t("approve")}
           </Button>
           <Button
@@ -195,11 +195,11 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
             onClick={() => handleBulkUpdate("Rejected")}
             disabled={isPending}
           >
-            <X className="mr-2 h-4 w-4 text-red-500" />
+            <X className="me-2 h-4 w-4 text-red-500" />
             {t("reject")}
           </Button>
           <Button variant="destructive" size="sm" onClick={handleBulkDelete} disabled={isPending}>
-            <Trash2 className="mr-2 h-4 w-4" />
+            <Trash2 className="me-2 h-4 w-4" />
             {t("delete")}
           </Button>
         </div>
@@ -209,7 +209,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[40px] pl-4">
+              <TableHead className="w-[40px] ps-4">
                 <Checkbox
                   checked={reports.length > 0 && selectedIds.length === reports.length}
                   onCheckedChange={toggleAll}
@@ -221,7 +221,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
               <TableHead>{t("status")}</TableHead>
               <TableHead>{t("priority")}</TableHead>
               <TableHead>{t("date")}</TableHead>
-              <TableHead className="text-right pr-4">{t("actions")}</TableHead>
+              <TableHead className="text-end pe-4">{t("actions")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -234,7 +234,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
             ) : (
               reports.map((report: any) => (
                 <TableRow key={report._id}>
-                  <TableCell className="pl-4">
+                  <TableCell className="ps-4">
                     <Checkbox
                       checked={selectedIds.includes(report._id)}
                       onCheckedChange={() => toggleOne(report._id)}
@@ -262,7 +262,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
                   <TableCell>
                     {report.createdAt ? new Date(report.createdAt).toLocaleDateString() : "-"}
                   </TableCell>
-                  <TableCell className="text-right pr-4">
+                  <TableCell className="text-end pe-4">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
@@ -273,16 +273,16 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
                         <DropdownMenuItem onClick={() => openReportDetails(report)}>
-                          <Eye className="mr-2 h-4 w-4" />
+                          <Eye className="me-2 h-4 w-4" />
                           {t("viewDetails")}
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={() => updateStatus(report._id, "Approved")}>
-                          <Check className="mr-2 h-4 w-4" />
+                          <Check className="me-2 h-4 w-4" />
                           {t("approve")}
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => updateStatus(report._id, "Rejected")}>
-                          <X className="mr-2 h-4 w-4" />
+                          <X className="me-2 h-4 w-4" />
                           {t("reject")}
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
@@ -290,7 +290,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
                           className="text-destructive"
                           onClick={() => deleteReport(report._id)}
                         >
-                          <Trash2 className="mr-2 h-4 w-4" />
+                          <Trash2 className="me-2 h-4 w-4" />
                           {t("delete")}
                         </DropdownMenuItem>
                       </DropdownMenuContent>

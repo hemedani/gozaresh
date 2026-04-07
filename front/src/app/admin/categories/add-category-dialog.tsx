@@ -55,7 +55,7 @@ export function AddCategoryDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button type="button">
-          <Plus className="mr-2 h-4 w-4" />
+          <Plus className="me-2 h-4 w-4" />
           {t("addCategory") || "Add Category"}
         </Button>
       </DialogTrigger>
