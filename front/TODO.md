@@ -180,15 +180,15 @@
 ## Phase 5: Internationalization (Complete all 9 languages)
 
 - [ ] Add translation files for all languages:
-  - [ ] fa.json (Persian – default, RTL) ✅ started
-  - [ ] en.json (English – LTR) ✅ started
+  - [x] fa.json (Persian – default, RTL) ✅ started
+  - [x] en.json (English – LTR) ✅ started
   - [x] ar.json (Arabic – RTL) ✅
-  - [ ] zh.json (Chinese – LTR)
-  - [ ] pt.json (Portuguese – LTR)
-  - [ ] es.json (Spanish – LTR)
-  - [ ] nl.json (Dutch – LTR)
-  - [ ] tr.json (Turkish – LTR)
-  - [ ] ru.json (Russian – LTR)
+  - [x] zh.json (Chinese – LTR) ✅
+  - [x] pt.json (Portuguese – LTR) ✅
+  - [x] es.json (Spanish – LTR) ✅
+  - [x] nl.json (Dutch – LTR) ✅
+  - [x] tr.json (Turkish – LTR) ✅
+  - [x] ru.json (Russian – LTR) ✅
 - [ ] Translate all pages:
   - [ ] Landing page
   - [ ] Login/Register pages
