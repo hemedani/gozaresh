@@ -164,7 +164,12 @@
     "trust": {
       "title": "موثوق به من قبل الآلاف",
       "description": "انضم إلى مجتمعنا من المواطنين النشطين.",
-      "benefits": ["التواصل المباشر مع المسؤولين", "عملية شفافة", "حل سريع", "تأثير مجتمعي"]
+      "benefits": [
+        "التواصل المباشر مع المسؤولين",
+        "عملية شفافة",
+        "حل سريع",
+        "تأثير مجتمعي"
+      ]
     },
     "cta": {
       "title": "هل أنت مستعد للبدء؟",
@@ -342,6 +347,15 @@
     "editCategory": "تعديل الفئة",
     "editCategoryDescription": "تحديث تفاصيل هذه الفئة",
     "searchCategories": "البحث في الفئات...",
-    "noCategories": "لم يتم العثور على فئات"
+    "noCategories": "لم يتم العثور على فئات",
+    "filesManagement": "Files Management",
+    "filesManagementDescription": "View and manage uploaded files",
+    "searchFiles": "Search files...",
+    "allTypes": "All Types",
+    "images": "Images",
+    "videos": "Videos",
+    "documents": "Documents",
+    "filter": "Filter",
+    "noFilesFound": "No files found"
   }
 }

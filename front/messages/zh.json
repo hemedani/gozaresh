@@ -164,7 +164,12 @@
     "trust": {
       "title": "深受成千上万人的信任",
       "description": "加入我们活跃市民的社区。",
-      "benefits": ["与政府官员直接沟通", "透明的处理流程", "快速的解决方案", "产生社区影响"]
+      "benefits": [
+        "与政府官员直接沟通",
+        "透明的处理流程",
+        "快速的解决方案",
+        "产生社区影响"
+      ]
     },
     "cta": {
       "title": "准备好开始了吗？",
@@ -342,6 +347,15 @@
     "editCategory": "编辑类别",
     "editCategoryDescription": "更新此类别的详细信息",
     "searchCategories": "搜索类别...",
-    "noCategories": "未找到类别"
+    "noCategories": "未找到类别",
+    "filesManagement": "Files Management",
+    "filesManagementDescription": "View and manage uploaded files",
+    "searchFiles": "Search files...",
+    "allTypes": "All Types",
+    "images": "Images",
+    "videos": "Videos",
+    "documents": "Documents",
+    "filter": "Filter",
+    "noFilesFound": "No files found"
   }
 }

@@ -203,7 +203,7 @@
   - [x] Toast notifications
   - [x] Table headers
   - [x] Modal titles and content
-- [ ] Language switcher component (header/footer)
+- [x] Language switcher component (header/footer)
 - [ ] Test RTL layouts thoroughly (fa, ar)
 - [ ] Test LTR layouts thoroughly (en, zh, pt, es, nl, tr, ru)
 

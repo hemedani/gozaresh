@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
+import { LanguageSwitcher } from './language-switcher';
 
 export function Footer() {
   const t = useTranslations('footer');
@@ -105,13 +106,17 @@ export function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground">
+        <div className="mt-8 pt-6 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
           <p>
             {t('copyright', {
               year: new Date().getFullYear(),
             })}
           </p>
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+          </div>
         </div>
+        
       </div>
     </footer>
   );

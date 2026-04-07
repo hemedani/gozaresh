@@ -164,7 +164,12 @@
     "trust": {
       "title": "Binlerce kişi tarafından güveniliyor",
       "description": "Aktif vatandaşlardan oluşan topluluğumuza katılın.",
-      "benefits": ["Yetkililerle doğrudan iletişim", "Şeffaf süreç", "Hızlı çözüm", "Toplumsal etki"]
+      "benefits": [
+        "Yetkililerle doğrudan iletişim",
+        "Şeffaf süreç",
+        "Hızlı çözüm",
+        "Toplumsal etki"
+      ]
     },
     "cta": {
       "title": "Başlamaya hazır mısınız?",
@@ -342,6 +347,15 @@
     "editCategory": "Kategoriyi Düzenle",
     "editCategoryDescription": "Bu kategorinin detaylarını güncelleyin",
     "searchCategories": "Kategorilerde ara...",
-    "noCategories": "Kategori bulunamadı"
+    "noCategories": "Kategori bulunamadı",
+    "filesManagement": "Files Management",
+    "filesManagementDescription": "View and manage uploaded files",
+    "searchFiles": "Search files...",
+    "allTypes": "All Types",
+    "images": "Images",
+    "videos": "Videos",
+    "documents": "Documents",
+    "filter": "Filter",
+    "noFilesFound": "No files found"
   }
 }

@@ -347,6 +347,15 @@
     "editCategory": "Editar Categoría",
     "editCategoryDescription": "Actualizar los detalles de esta categoría",
     "searchCategories": "Buscar categorías...",
-    "noCategories": "No se encontraron categorías"
+    "noCategories": "No se encontraron categorías",
+    "filesManagement": "Files Management",
+    "filesManagementDescription": "View and manage uploaded files",
+    "searchFiles": "Search files...",
+    "allTypes": "All Types",
+    "images": "Images",
+    "videos": "Videos",
+    "documents": "Documents",
+    "filter": "Filter",
+    "noFilesFound": "No files found"
   }
 }

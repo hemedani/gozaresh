@@ -347,6 +347,15 @@
     "editCategory": "ویرایش دسته‌بندی",
     "editCategoryDescription": "بروزرسانی جزئیات این دسته‌بندی",
     "searchCategories": "جستجوی دسته‌بندی‌ها...",
-    "noCategories": "هیچ دسته‌بندی یافت نشد"
+    "noCategories": "هیچ دسته‌بندی یافت نشد",
+    "filesManagement": "مدیریت فایل‌ها",
+    "filesManagementDescription": "مشاهده و مدیریت فایل‌های آپلود شده",
+    "searchFiles": "جستجوی فایل‌ها...",
+    "allTypes": "همه نوع‌ها",
+    "images": "تصاویر",
+    "videos": "ویدیوها",
+    "documents": "اسناد",
+    "filter": "فیلتر",
+    "noFilesFound": "هیچ فایلی یافت نشد"
   }
 }

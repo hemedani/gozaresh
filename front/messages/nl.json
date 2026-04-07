@@ -347,6 +347,15 @@
     "editCategory": "Categorie Bewerken",
     "editCategoryDescription": "Werk de details van deze categorie bij",
     "searchCategories": "Zoek categorieën...",
-    "noCategories": "Geen categorieën gevonden"
+    "noCategories": "Geen categorieën gevonden",
+    "filesManagement": "Files Management",
+    "filesManagementDescription": "View and manage uploaded files",
+    "searchFiles": "Search files...",
+    "allTypes": "All Types",
+    "images": "Images",
+    "videos": "Videos",
+    "documents": "Documents",
+    "filter": "Filter",
+    "noFilesFound": "No files found"
   }
 }
