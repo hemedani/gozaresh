@@ -205,16 +205,16 @@
   - [x] Modal titles and content
 - [x] Language switcher component (header/footer)
 - [x] Test RTL layouts thoroughly (fa, ar)
-- [ ] Test LTR layouts thoroughly (en, zh, pt, es, nl, tr, ru)
+- [x] Test LTR layouts thoroughly (en, zh, pt, es, nl, tr, ru)
 
 ## Phase 6: PWA & Polish
 
-- [ ] Install next-pwa
-- [ ] Configure service worker
-  - [ ] Cache static assets
-  - [ ] Offline fallback page
-  - [ ] Manifest.json with app metadata
-- [ ] App icons (multiple sizes)
+- [x] Install next-pwa
+- [x] Configure service worker
+  - [x] Cache static assets
+  - [x] Offline fallback page
+  - [x] Manifest.json with app metadata
+- [x] App icons (multiple sizes)
 - [ ] Test PWA functionality
 - [ ] Mobile responsiveness audit:
   - [ ] All pages work perfectly on mobile (320px+)
