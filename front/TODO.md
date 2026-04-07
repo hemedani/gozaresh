@@ -179,7 +179,7 @@
 
 ## Phase 5: Internationalization (Complete all 9 languages)
 
-- [ ] Add translation files for all languages:
+- [x] Add translation files for all languages:
   - [x] fa.json (Persian – default, RTL) ✅ started
   - [x] en.json (English – LTR) ✅ started
   - [x] ar.json (Arabic – RTL) ✅
@@ -189,20 +189,20 @@
   - [x] nl.json (Dutch – LTR) ✅
   - [x] tr.json (Turkish – LTR) ✅
   - [x] ru.json (Russian – LTR) ✅
-- [ ] Translate all pages:
-  - [ ] Landing page
-  - [ ] Login/Register pages
-  - [ ] Report submission page
-  - [ ] My Reports page
-  - [ ] Report detail page
-  - [ ] Admin panel (all pages)
-- [ ] Translate all UI elements:
-  - [ ] Form labels, placeholders, error messages
-  - [ ] Button texts
-  - [ ] Navigation labels
-  - [ ] Toast notifications
-  - [ ] Table headers
-  - [ ] Modal titles and content
+- [x] Translate all pages:
+  - [x] Landing page
+  - [x] Login/Register pages
+  - [x] Report submission page
+  - [x] My Reports page
+  - [x] Report detail page
+  - [x] Admin panel (all pages)
+- [x] Translate all UI elements:
+  - [x] Form labels, placeholders, error messages
+  - [x] Button texts
+  - [x] Navigation labels
+  - [x] Toast notifications
+  - [x] Table headers
+  - [x] Modal titles and content
 - [ ] Language switcher component (header/footer)
 - [ ] Test RTL layouts thoroughly (fa, ar)
 - [ ] Test LTR layouts thoroughly (en, zh, pt, es, nl, tr, ru)
