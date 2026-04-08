@@ -269,10 +269,10 @@
 
 ## Known Issues & Technical Debt
 
-- [ ] Check if all server actions properly handle errors
-- [ ] Verify JWT cookie handling is secure (httpOnly, secure flags)
-- [ ] Ensure all forms have proper loading states
-- [ ] Test all RTL layouts for alignment issues
-- [ ] Verify all translation keys exist in all language files
+- [x] Check if all server actions properly handle errors
+- [x] Verify JWT cookie handling is secure (httpOnly, secure flags)
+- [x] Ensure all forms have proper loading states
+- [x] Test all RTL layouts for alignment issues
+- [x] Verify all translation keys exist in all language files
 
 **How to proceed**: Open `CONTINUE.md` in ZED, tell the AI agent: "Continue with next unchecked step from TODO.md". After each step the agent must update TODO.md and commit.
