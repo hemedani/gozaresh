@@ -3,7 +3,11 @@
 import { cookies } from "next/headers";
 
 export const logout = async () => {
-  const cookieStore = await cookies();
-  cookieStore.delete("token");
-  return { success: true };
+  try {
+    const cookieStore = await cookies();
+    cookieStore.delete("token");
+    return { success: true };
+  } catch (error: any) {
+    return { success: false, body: { message: error.message } };
+  }
 };

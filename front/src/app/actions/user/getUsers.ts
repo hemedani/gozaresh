@@ -3,19 +3,26 @@ import { AppApi } from "@/lib/api";
 import { ReqType, DeepPartial } from "@/types/declarations";
 import { cookies } from "next/headers";
 
-export const getUsers = async (data: ReqType["main"]["user"]["getUsers"]["set"], getSelection?: DeepPartial<ReqType["main"]["user"]["getUsers"]["get"]>) => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
-  
-  const result = await AppApi(undefined, token).send({
-    service: "main",
-    model: "user",
-    act: "getUsers",
-    details: {
-      set: data,
-      get: getSelection || {},
-    },
-  });
+export const getUsers = async (
+  data: ReqType["main"]["user"]["getUsers"]["set"],
+  getSelection?: DeepPartial<ReqType["main"]["user"]["getUsers"]["get"]>,
+) => {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
 
-  return result;
+    const result = await AppApi(undefined, token).send({
+      service: "main",
+      model: "user",
+      act: "getUsers",
+      details: {
+        set: data,
+        get: getSelection || {},
+      },
+    });
+
+    return result;
+  } catch (error: any) {
+    return { success: false, body: { message: error.message } };
+  }
 };

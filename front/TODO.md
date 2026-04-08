@@ -241,7 +241,7 @@
 
 - [x] Form validation testing (Zod schemas)
 - [x] Auth flow testing (login, register, logout, session)
-- [ ] Server actions error handling
+- [x] Server actions error handling
 - [ ] Edge cases handling:
   - [ ] Empty states
   - [ ] No data states

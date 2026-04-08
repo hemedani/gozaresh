@@ -7,32 +7,38 @@ export const registerUser = async (
   data: ReqType["main"]["user"]["registerUser"]["set"],
   getSelection?: DeepPartial<ReqType["main"]["user"]["registerUser"]["get"]>,
 ) => {
-  // Default selection if none is provided
-  const defaultGet: DeepPartial<ReqType["main"]["user"]["registerUser"]["get"]> = {
-    _id: 1,
-  };
-
-  const finalGetSelection = getSelection || defaultGet;
-
-  const result = await AppApi().send({
-    service: "main",
-    model: "user",
-    act: "registerUser",
-    details: {
-      set: data,
-      get: finalGetSelection,
-    },
-  });
-
-  if (!result.success) {
-    return {
-      success: false,
-      error: result.body?.message || result.error || "Registration failed",
+  try {
+    // Default selection if none is provided
+    const defaultGet: DeepPartial<
+      ReqType["main"]["user"]["registerUser"]["get"]
+    > = {
+      _id: 1,
     };
-  }
 
-  return {
-    success: true,
-    body: result.body,
-  };
+    const finalGetSelection = getSelection || defaultGet;
+
+    const result = await AppApi().send({
+      service: "main",
+      model: "user",
+      act: "registerUser",
+      details: {
+        set: data,
+        get: finalGetSelection,
+      },
+    });
+
+    if (!result.success) {
+      return {
+        success: false,
+        error: result.body?.message || result.error || "Registration failed",
+      };
+    }
+
+    return {
+      success: true,
+      body: result.body,
+    };
+  } catch (error: any) {
+    return { success: false, body: { message: error.message } };
+  }
 };
