@@ -23,12 +23,14 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Loader2 } from "lucide-react";
 
 const formSchema = z.object({
-  first_name: z.string().min(1, "Required"),
-  last_name: z.string().min(1, "Required"),
-  father_name: z.string().min(1, "Required"),
-  mobile: z.string().min(10, "Required"),
-  national_number: z.string().min(10, "Required"),
-  address: z.string().min(1, "Required"),
+  first_name: z.string().min(1, "validation.required"),
+  last_name: z.string().min(1, "validation.required"),
+  father_name: z.string().min(1, "validation.required"),
+  mobile: z.string().min(10, JSON.stringify({ key: "validation.minLength", values: { min: 10 } })),
+  national_number: z
+    .string()
+    .min(10, JSON.stringify({ key: "validation.minLength", values: { min: 10 } })),
+  address: z.string().min(1, "validation.required"),
   gender: z.enum(["Male", "Female"]),
   level: z.enum(["Ghost", "Manager", "Editor", "Ordinary"]),
   is_verified: z.boolean().default(true),

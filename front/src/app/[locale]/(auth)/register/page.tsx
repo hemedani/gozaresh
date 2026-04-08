@@ -25,7 +25,7 @@ const registerSchema = z.object({
   first_name: z.string().min(1, "auth.firstNameRequired"),
   last_name: z.string().min(1, "auth.lastNameRequired"),
   email: z.string().email("auth.emailInvalid"),
-  password: z.string().min(6, "validation.minLength"),
+  password: z.string().min(6, JSON.stringify({ key: "validation.minLength", values: { min: 6 } })),
 });
 
 type RegisterFormData = z.infer<typeof registerSchema>;

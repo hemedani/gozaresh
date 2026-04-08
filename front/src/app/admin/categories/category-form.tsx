@@ -17,7 +17,7 @@ import dynamic from "next/dynamic";
 const EmojiPicker = dynamic(() => import("emoji-picker-react"), { ssr: false });
 
 const categoryFormSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
+  name: z.string().min(2, JSON.stringify({ key: "validation.minLength", values: { min: 2 } })),
   description: z.string().optional(),
   color: z.string().optional(),
   icon: z.string().optional(),
@@ -77,7 +77,9 @@ export function CategoryForm({ initialData, onSubmit, onCancel }: CategoryFormPr
               <FormLabel>{t("description") || "Description"}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder={t("enterCategoryDescription") || "Describe what this category is used for"}
+                  placeholder={
+                    t("enterCategoryDescription") || "Describe what this category is used for"
+                  }
                   className="resize-none"
                   {...field}
                 />

@@ -239,8 +239,8 @@
 
 ## Phase 7: Testing & Production Readiness
 
-- [ ] Form validation testing (Zod schemas)
-- [ ] Auth flow testing (login, register, logout, session)
+- [x] Form validation testing (Zod schemas)
+- [x] Auth flow testing (login, register, logout, session)
 - [ ] Server actions error handling
 - [ ] Edge cases handling:
   - [ ] Empty states
