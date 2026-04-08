@@ -46,20 +46,17 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+ENV NODE_ENV=production
+ENV PORT=3005
+ENV HOSTNAME="0.0.0.0"
 
-# Copy package files and install production dependencies only
-COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile --prod=true
-
-# Copy built application
-COPY --from=builder /app/.next ./.next
+# Copy built application from standalone output
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/next.config.ts ./
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
 # Expose port
 EXPOSE 3005
 
 # Run production server
-CMD ["pnpm", "start"]
+CMD ["node", "server.js"]

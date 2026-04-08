@@ -263,9 +263,9 @@
   - [x] Remove console.logs
   - [x] Type safety check (no `any`)
   - [x] Lint and format check
-- [ ] Docker Compose testing
-- [ ] Production build test
-- [ ] Deployment preparation (env vars, ports, etc.)
+- [x] Docker Compose testing
+- [x] Production build test
+- [x] Deployment preparation (env vars, ports, etc.)
 
 ## Known Issues & Technical Debt
 
