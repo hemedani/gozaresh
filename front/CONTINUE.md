@@ -73,6 +73,7 @@ You are an expert full-stack TypeScript/Next.js 16 developer working exclusively
 - ✅ Completed mobile responsiveness audit (responsive admin layout, Sheet-based hamburger menu)
 - ✅ Completed loading states (skeleton loaders for lists, loading spinners for forms/actions)
 - ✅ Added error handling (global-error.tsx, locale/admin error boundaries, try/catch with friendly retry states)
+- ✅ Completed accessibility audit (improved focus indicators, added ARIA labels, semantic HTML)
 
 **Frontend Structure**:
 
@@ -197,8 +198,8 @@ export default function LoginForm() {
 - Follow accessibility best practices
 
 **Next Session Prompt**:
-Continue with **Phase 6: PWA & Polish**. Start with:
+Continue with **Phase 7: Testing & Production Readiness**. Start with:
 
-1. Accessibility audit (Keyboard navigation, Screen reader support, Color contrast)
+1. Form validation testing (Zod schemas)
 
 Follow the same patterns: one step at a time, update TODO.md, commit with Gitmoji.

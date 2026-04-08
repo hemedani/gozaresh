@@ -1,27 +1,27 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useLocale } from 'next-intl';
-import { usePathname, useRouter } from 'next/navigation';
-import { Globe } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import { useLocale } from "next-intl";
+import { usePathname, useRouter } from "next/navigation";
+import { Globe } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 
 const languages = [
-  { code: 'fa', name: 'فارسی', nativeName: 'فارسی', dir: 'rtl' },
-  { code: 'en', name: 'English', nativeName: 'English', dir: 'ltr' },
-  { code: 'ar', name: 'العربية', nativeName: 'العربية', dir: 'rtl' },
-  { code: 'zh', name: '中文', nativeName: '中文', dir: 'ltr' },
-  { code: 'pt', name: 'Português', nativeName: 'Português', dir: 'ltr' },
-  { code: 'es', name: 'Español', nativeName: 'Español', dir: 'ltr' },
-  { code: 'nl', name: 'Nederlands', nativeName: 'Nederlands', dir: 'ltr' },
-  { code: 'tr', name: 'Türkçe', nativeName: 'Türkçe', dir: 'ltr' },
-  { code: 'ru', name: 'Русский', nativeName: 'Русский', dir: 'ltr' },
+  { code: "fa", name: "فارسی", nativeName: "فارسی", dir: "rtl" },
+  { code: "en", name: "English", nativeName: "English", dir: "ltr" },
+  { code: "ar", name: "العربية", nativeName: "العربية", dir: "rtl" },
+  { code: "zh", name: "中文", nativeName: "中文", dir: "ltr" },
+  { code: "pt", name: "Português", nativeName: "Português", dir: "ltr" },
+  { code: "es", name: "Español", nativeName: "Español", dir: "ltr" },
+  { code: "nl", name: "Nederlands", nativeName: "Nederlands", dir: "ltr" },
+  { code: "tr", name: "Türkçe", nativeName: "Türkçe", dir: "ltr" },
+  { code: "ru", name: "Русский", nativeName: "Русский", dir: "ltr" },
 ];
 
 export function LanguageSwitcher() {
@@ -29,7 +29,7 @@ export function LanguageSwitcher() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const currentLang = languages.find(lang => lang.code === locale) || languages[0];
+  const currentLang = languages.find((lang) => lang.code === locale) || languages[0];
 
   const switchLanguage = (langCode: string) => {
     // Replace the locale in the pathname
@@ -40,25 +40,21 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="gap-2">
+        <Button variant="ghost" size="icon" className="gap-2" aria-label="Select language">
           <Globe className="h-5 w-5" />
-          <span className="hidden lg:inline text-sm font-medium">
-            {currentLang.nativeName}
-          </span>
+          <span className="hidden lg:inline text-sm font-medium">{currentLang.nativeName}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        {languages.map(lang => (
+        {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
             onClick={() => switchLanguage(lang.code)}
-            className={lang.code === locale ? 'bg-muted' : ''}
+            className={lang.code === locale ? "bg-muted" : ""}
           >
             <div className="flex items-center justify-between w-full">
               <span>{lang.nativeName}</span>
-              {lang.code === locale && (
-                <span className="text-xs text-muted-foreground">✓</span>
-              )}
+              {lang.code === locale && <span className="text-xs text-muted-foreground">✓</span>}
             </div>
           </DropdownMenuItem>
         ))}

@@ -74,9 +74,7 @@ export default function Home() {
             <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
               {t("hero.title")}
             </h1>
-            <p className="mb-8 text-lg text-muted-foreground md:text-xl">
-              {t("hero.description")}
-            </p>
+            <p className="mb-8 text-lg text-muted-foreground md:text-xl">{t("hero.description")}</p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button size="lg" asChild className="gap-2">
                 <Link href="/auth/register">
@@ -101,9 +99,7 @@ export default function Home() {
             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
               {t("features.title")}
             </h2>
-            <p className="text-lg text-muted-foreground">
-              {t("features.description")}
-            </p>
+            <p className="text-lg text-muted-foreground">{t("features.description")}</p>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -129,9 +125,7 @@ export default function Home() {
             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
               {t("howItWorks.title")}
             </h2>
-            <p className="text-lg text-muted-foreground">
-              {t("howItWorks.description")}
-            </p>
+            <p className="text-lg text-muted-foreground">{t("howItWorks.description")}</p>
           </div>
 
           <div className="grid gap-8 sm:grid-cols-3">
@@ -157,9 +151,7 @@ export default function Home() {
           <div className="mx-auto max-w-3xl rounded-xl border bg-card p-8 md:p-12">
             <div className="text-center mb-8">
               <h2 className="mb-4 text-2xl font-bold">{t("trust.title")}</h2>
-              <p className="text-muted-foreground">
-                {t("trust.description")}
-              </p>
+              <p className="text-muted-foreground">{t("trust.description")}</p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {[
@@ -182,12 +174,8 @@ export default function Home() {
       <section className="bg-primary py-20 md:py-32 text-primary-foreground">
         <div className="container px-4">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-              {t("cta.title")}
-            </h2>
-            <p className="mb-8 text-lg opacity-90">
-              {t("cta.description")}
-            </p>
+            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">{t("cta.title")}</h2>
+            <p className="mb-8 text-lg opacity-90">{t("cta.description")}</p>
             <Button size="lg" variant="secondary" asChild className="gap-2">
               <Link href="/auth/register">
                 {t("cta.button")} <ArrowRight className="h-4 w-4" />

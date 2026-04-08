@@ -94,6 +94,7 @@ export function Header() {
             size="icon"
             onClick={toggleTheme}
             title={mounted && theme === "dark" ? t("lightMode") : t("darkMode")}
+            aria-label={mounted && theme === "dark" ? t("lightMode") : t("darkMode")}
           >
             {mounted ? (
               theme === "dark" ? (
@@ -110,7 +111,12 @@ export function Header() {
           {isAuthenticated && user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full"
+                  aria-label={t("profile") || "User menu"}
+                >
                   <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
                     <User className="h-5 w-5" />
                   </div>
@@ -172,7 +178,7 @@ export function Header() {
           {/* Mobile menu button */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
+              <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open menu">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
