@@ -32,7 +32,7 @@ import { FileUploadField } from "@/components/form/file-upload-field";
 import { TagSelector } from "@/components/form/tag-selector";
 import { LocationPicker } from "@/components/form/location-picker";
 import { useToast } from "@/components/ui/use-toast";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
 
 const reportSchema = z.object({
   title: z.string().min(1, "report.titleRequired"),
@@ -84,8 +84,10 @@ export default function NewReportPage() {
       priority: data.priority,
       tags: data.tags,
       category: data.category,
-      location: data.location ? { type: "Point", coordinates: [data.location.longitude || 0, data.location.latitude || 0] } : undefined,
-      attachments: data.attachments?.map(f => f.name),
+      location: data.location
+        ? { type: "Point", coordinates: [data.location.longitude || 0, data.location.latitude || 0] }
+        : undefined,
+      attachments: data.attachments?.map((f) => f.name),
     });
 
     if (result.success) {
@@ -113,9 +115,7 @@ export default function NewReportPage() {
               <CheckCircle2 className="h-10 w-10 text-green-600 dark:text-green-400" />
             </div>
             <CardTitle className="text-center text-2xl">{t("common.success")}</CardTitle>
-            <CardDescription className="text-center">
-              {t("report.reportSubmitted")}
-            </CardDescription>
+            <CardDescription className="text-center">{t("report.reportSubmitted")}</CardDescription>
           </CardHeader>
           <CardFooter className="flex justify-center gap-4">
             <Button variant="outline" asChild>
@@ -135,9 +135,7 @@ export default function NewReportPage() {
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold">{t("report.newReport")}</CardTitle>
-          <CardDescription>
-            {t("report.newReportDescription")}
-          </CardDescription>
+          <CardDescription>{t("report.newReportDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -149,8 +147,7 @@ export default function NewReportPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      {t("report.reportTitle")}{" "}
-                      <span className="text-destructive">*</span>
+                      {t("report.reportTitle")} <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -171,8 +168,7 @@ export default function NewReportPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      {t("report.description")}{" "}
-                      <span className="text-destructive">*</span>
+                      {t("report.description")} <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Textarea
@@ -267,9 +263,7 @@ export default function NewReportPage() {
                       value={field.value || []}
                       onChange={field.onChange}
                     />
-                    <FormDescription>
-                      {t("report.attachmentsDescription")}
-                    </FormDescription>
+                    <FormDescription>{t("report.attachmentsDescription")}</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -281,9 +275,8 @@ export default function NewReportPage() {
                   <Link href="/">{t("common.cancel")}</Link>
                 </Button>
                 <Button type="submit" className="flex-1" disabled={loading}>
-                  {loading
-                    ? t("common.loading")
-                    : t("report.submitReport")}
+                  {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {loading ? t("common.loading") : t("report.submitReport")}
                 </Button>
               </div>
             </form>

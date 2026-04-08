@@ -17,7 +17,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Eye, MoreHorizontal, Check, X, Trash2 } from "lucide-react";
+import { Eye, MoreHorizontal, Check, X, Trash2, Loader2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -186,7 +186,11 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
             onClick={() => handleBulkUpdate("Approved")}
             disabled={isPending}
           >
-            <Check className="me-2 h-4 w-4 text-green-500" />
+            {isPending ? (
+              <Loader2 className="me-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Check className="me-2 h-4 w-4 text-green-500" />
+            )}
             {t("approve")}
           </Button>
           <Button
@@ -195,11 +199,19 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
             onClick={() => handleBulkUpdate("Rejected")}
             disabled={isPending}
           >
-            <X className="me-2 h-4 w-4 text-red-500" />
+            {isPending ? (
+              <Loader2 className="me-2 h-4 w-4 animate-spin" />
+            ) : (
+              <X className="me-2 h-4 w-4 text-red-500" />
+            )}
             {t("reject")}
           </Button>
           <Button variant="destructive" size="sm" onClick={handleBulkDelete} disabled={isPending}>
-            <Trash2 className="me-2 h-4 w-4" />
+            {isPending ? (
+              <Loader2 className="me-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Trash2 className="me-2 h-4 w-4" />
+            )}
             {t("delete")}
           </Button>
         </div>

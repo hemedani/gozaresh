@@ -221,10 +221,10 @@
   - [x] Touch-friendly buttons and interactions
   - [x] Mobile-optimized forms (keyboard handling)
   - [x] Hamburger menu for navigation
-- [ ] Loading states:
-  - [ ] Skeleton loaders for all data lists
-  - [ ] Loading spinners for async actions
-  - [ ] Optimistic updates where appropriate
+- [x] Loading states:
+  - [x] Skeleton loaders for all data lists
+  - [x] Loading spinners for async actions
+  - [x] Optimistic updates where appropriate
 - [ ] Error handling:
   - [ ] Network error handling
   - [ ] Server error handling

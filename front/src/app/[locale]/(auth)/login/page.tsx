@@ -8,6 +8,7 @@ import { z } from "zod";
 import { login } from "@/app/actions/user/login";
 import { Link, useRouter } from "@/i18n/routing";
 import { useAuthStore } from "@/stores/authStore";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -114,6 +115,7 @@ export default function LoginPage() {
               />
 
               <Button type="submit" className="w-full" disabled={loading}>
+                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {loading ? t("common.loading") : t("auth.loginButton")}
               </Button>
             </form>

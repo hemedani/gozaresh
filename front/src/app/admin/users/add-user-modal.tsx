@@ -16,24 +16,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Plus } from "lucide-react";
+import { Plus, Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   first_name: z.string().min(1, "Required"),
@@ -228,10 +215,7 @@ export function AddUserModal() {
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-start space-x-3 space-x-reverse space-y-0 rounded-md border p-4 mt-6">
                     <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
+                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <FormLabel>{t("isVerified") || "Is Verified"}</FormLabel>
@@ -263,7 +247,8 @@ export function AddUserModal() {
                 {t("cancel") || "Cancel"}
               </Button>
               <Button type="submit" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? "..." : t("submit") || "Submit"}
+                {form.formState.isSubmitting && <Loader2 className="me-2 h-4 w-4 animate-spin" />}
+                {form.formState.isSubmitting ? t("loading") || "Loading..." : t("submit") || "Submit"}
               </Button>
             </div>
           </form>
