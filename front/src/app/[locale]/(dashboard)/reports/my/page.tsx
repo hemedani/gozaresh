@@ -28,14 +28,22 @@ export default function MyReportsPage() {
   const [page, setPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [totalPages, setTotalPages] = useState(1);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchReports = async () => {
       setLoading(true);
-      const result = await getMyReports(page, 10);
-      if (result.success && result.body) {
-        setReports((result.body as any).reports || []);
-        setTotalPages((result.body as any).totalPages || 1);
+      setError(null);
+      try {
+        const result = await getMyReports(page, 10);
+        if (result.success && result.body) {
+          setReports((result.body as any).reports || []);
+          setTotalPages((result.body as any).totalPages || 1);
+        } else {
+          setError(result.error || "Failed to fetch reports");
+        }
+      } catch (err: any) {
+        setError(err.message || "An unexpected error occurred");
       }
       setLoading(false);
     };
@@ -73,6 +81,30 @@ export default function MyReportsPage() {
 
   const filteredReports =
     statusFilter === "all" ? reports : reports.filter((r) => r.status === statusFilter);
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <Card className="max-w-md mx-auto border-destructive/50 mt-12 text-center">
+          <CardHeader>
+            <CardTitle className="text-destructive">{t("common.error") || "Error"}</CardTitle>
+            <CardDescription>{error}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button
+              onClick={() => {
+                setPage(1);
+                setStatusFilter("all");
+                setError(null);
+              }}
+            >
+              {t("common.retry") || "Try Again"}
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   if (loading) {
     return (

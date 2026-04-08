@@ -72,6 +72,7 @@ You are an expert full-stack TypeScript/Next.js 16 developer working exclusively
 - ✅ Installed and configured next-pwa with manifest.json, icons, and offline fallback
 - ✅ Completed mobile responsiveness audit (responsive admin layout, Sheet-based hamburger menu)
 - ✅ Completed loading states (skeleton loaders for lists, loading spinners for forms/actions)
+- ✅ Added error handling (global-error.tsx, locale/admin error boundaries, try/catch with friendly retry states)
 
 **Frontend Structure**:
 
@@ -198,6 +199,6 @@ export default function LoginForm() {
 **Next Session Prompt**:
 Continue with **Phase 6: PWA & Polish**. Start with:
 
-1. Error handling (Network, Server, User-friendly messages)
+1. Accessibility audit (Keyboard navigation, Screen reader support, Color contrast)
 
 Follow the same patterns: one step at a time, update TODO.md, commit with Gitmoji.
