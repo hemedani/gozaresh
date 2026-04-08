@@ -41,6 +41,9 @@ The app will be available at `http://localhost:3000` (or the configured port).
 
 ### Production Build
 
+The project is configured to use Next.js `standalone` output mode for highly optimized Docker builds.
+In production (`Dockerfile`), we extract `.next/standalone` and run it natively via `node server.js` without reinstalling `node_modules`.
+
 ```bash
 pnpm build
 pnpm start
@@ -332,9 +335,25 @@ if (result.success) {
 
 ### Error Handling
 
+- All Server Actions **must** be wrapped in a `try...catch(error: unknown)` block and safely return `{ success: false, body: { message: error instanceof Error ? error.message : "Unknown error" } }` on failure. This ensures the Next.js process doesn't crash and the React Hook Form UI can display the error gracefully.
 - The app uses Next.js Error Boundaries (`error.tsx` and `global-error.tsx`).
-- Always provide user-friendly error messages and a "Try again" (reset) button.
+- Always provide user-friendly error messages and a "Try again" (reset) button (use the shared `ErrorState` component).
 - Client-side error states (e.g., in `MyReportsPage`) should display an inline error UI instead of completely crashing the page.
+
+### Standardized UI States
+
+To maintain consistent UX and reduce hardcoded layouts, use the standardized edge-case components from `@/components/ui/`:
+
+- **Loading:** Use `SkeletonTable` and `SkeletonList` for declarative, robust loading states.
+- **Empty/No Data:** Use `EmptyState` for empty tables, cleared filters, or missing data views.
+- **Error:** Use `ErrorState` for inline API failures requiring a user retry.
+
+### Performance & Security
+
+- **Images:** Always use `next/image` (`<Image />`) instead of standard `<img>` tags for automatic optimization.
+- **Code Splitting:** Lazy load heavy client components (like `emoji-picker-react` or mapping libraries) using `next/dynamic` to shrink the initial JS bundle.
+- **Security Headers:** The `next.config.ts` injects standard security headers (`X-DNS-Prefetch-Control`, `X-Frame-Options`, `X-Content-Type-Options`, `X-XSS-Protection`, etc.).
+- **Cookies:** Authentication JWT tokens are stored in `httpOnly` secure cookies via Next.js Server Actions.
 
 ### Accessibility (a11y)
 
