@@ -52,7 +52,7 @@ export const getMe = async (
       success: true,
       body: result.body,
     };
-  } catch (error: any) {
-    return { success: false, body: { message: error.message } };
+  } catch (error: unknown) {
+    return { success: false, body: { message: error instanceof Error ? error.message : "Unknown error" } };
   }
 };

@@ -7,7 +7,7 @@ export const logout = async () => {
     const cookieStore = await cookies();
     cookieStore.delete("token");
     return { success: true };
-  } catch (error: any) {
-    return { success: false, body: { message: error.message } };
+  } catch (error: unknown) {
+    return { success: false, body: { message: error instanceof Error ? error.message : "Unknown error" } };
   }
 };

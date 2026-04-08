@@ -137,11 +137,11 @@ export function Header() {
                 </div>
                 <DropdownMenuSeparator />
                 {!pathname.startsWith("/admin") &&
-                  (user.level === "Ghost"
+                  (user?.level === "Ghost"
                     ? 4
-                    : user.level === "Manager"
+                    : user?.level === "Manager"
                       ? 3
-                      : user.level === "Editor"
+                      : user?.level === "Editor"
                         ? 2
                         : 1) >= 3 && (
                     <DropdownMenuItem asChild>
@@ -205,11 +205,11 @@ export function Header() {
                           <FileText className="h-4 w-4" />
                           <span>{tAdmin("reports")}</span>
                         </Link>
-                        {(user.level === "Ghost"
+                        {(user?.level === "Ghost"
                           ? 4
-                          : user.level === "Manager"
+                          : user?.level === "Manager"
                             ? 3
-                            : user.level === "Editor"
+                            : user?.level === "Editor"
                               ? 2
                               : 1) >= 3 && (
                           <Link

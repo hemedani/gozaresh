@@ -56,7 +56,7 @@ export const login = async (
       body: result.body,
       user: result.body.user,
     };
-  } catch (error: any) {
-    return { success: false, body: { message: error.message } };
+  } catch (error: unknown) {
+    return { success: false, body: { message: error instanceof Error ? error.message : "Unknown error" } };
   }
 };

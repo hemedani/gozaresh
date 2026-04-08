@@ -24,7 +24,7 @@ export const updateUserRelations = async (
     });
 
     return result;
-  } catch (error: any) {
-    return { success: false, body: { message: error.message } };
+  } catch (error: unknown) {
+    return { success: false, body: { message: error instanceof Error ? error.message : "Unknown error" } };
   }
 };

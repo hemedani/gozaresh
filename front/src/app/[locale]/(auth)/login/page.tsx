@@ -49,7 +49,6 @@ export default function LoginPage() {
 
     const result = await login({ email: data.email, password: data.password });
 
-    console.log({ result }, "inisde OnSubmit at Login page");
 
     if (result.success) {
       if (result.user) {
