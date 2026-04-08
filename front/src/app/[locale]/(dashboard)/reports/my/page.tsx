@@ -37,8 +37,8 @@ export default function MyReportsPage() {
       try {
         const result = await getMyReports(page, 10);
         if (result.success && result.body) {
-          setReports((result.body as any).reports || []);
-          setTotalPages((result.body as any).totalPages || 1);
+          setReports(result.body.reports || []);
+          setTotalPages(result.body.totalPages || 1);
         } else {
           setError(result.error || "Failed to fetch reports");
         }

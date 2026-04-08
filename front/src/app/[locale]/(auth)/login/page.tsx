@@ -53,7 +53,7 @@ export default function LoginPage() {
 
     if (result.success) {
       if (result.user) {
-        setUser(result.user as any);
+        setUser(result.user);
         setToken("authenticated");
       }
       toast({

@@ -30,9 +30,14 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FileUploadField } from "@/components/form/file-upload-field";
 import { TagSelector } from "@/components/form/tag-selector";
-import { LocationPicker } from "@/components/form/location-picker";
+import dynamic from "next/dynamic";
 import { useToast } from "@/components/ui/use-toast";
 import { CheckCircle2, Loader2 } from "lucide-react";
+
+const LocationPicker = dynamic(
+  () => import("@/components/form/location-picker").then((mod) => mod.LocationPicker),
+  { ssr: false, loading: () => <div className="h-20 w-full animate-pulse rounded-md bg-muted" /> },
+);
 
 const reportSchema = z.object({
   title: z.string().min(1, "report.titleRequired"),

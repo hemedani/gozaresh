@@ -1,29 +1,22 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/routing';
-import { useParams } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import {
-  FileText,
-  Calendar,
-  MapPin,
-  Tag,
-  Paperclip,
-  ArrowLeft,
-  Download,
-} from 'lucide-react';
-import { format } from 'date-fns';
+import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
+import { useParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { FileText, Calendar, MapPin, Tag, Paperclip, ArrowLeft, Download } from "lucide-react";
+import { format } from "date-fns";
+import Image from "next/image";
 
 interface Report {
   _id: string;
   title: string;
   description: string;
-  status: 'Pending' | 'Approved' | 'Rejected' | 'InReview';
-  priority: 'Low' | 'Medium' | 'High';
+  status: "Pending" | "Approved" | "Rejected" | "InReview";
+  priority: "Low" | "Medium" | "High";
   address?: string;
   location?: {
     address: string;
@@ -44,7 +37,7 @@ interface Report {
 }
 
 export default function ReportDetailPage() {
-  const t = useTranslations('report');
+  const t = useTranslations("report");
   const params = useParams();
   const reportId = params.id as string;
 
@@ -56,74 +49,75 @@ export default function ReportDetailPage() {
     // For now, using mock data
     setReport({
       _id: reportId,
-      title: 'Sample Report - Street Light Not Working',
-      description: 'The street light at the main road intersection has not been working for the past 3 days. This is causing safety concerns for pedestrians and drivers. The area becomes very dark at night, making it difficult to see. Requesting immediate attention to this issue.',
-      status: 'Pending',
-      priority: 'Medium',
-      address: '123 Main Street, City Center',
+      title: "Sample Report - Street Light Not Working",
+      description:
+        "The street light at the main road intersection has not been working for the past 3 days. This is causing safety concerns for pedestrians and drivers. The area becomes very dark at night, making it difficult to see. Requesting immediate attention to this issue.",
+      status: "Pending",
+      priority: "Medium",
+      address: "123 Main Street, City Center",
       location: {
-        address: '123 Main Street, City Center',
+        address: "123 Main Street, City Center",
         latitude: 35.6892,
-        longitude: 51.3890,
+        longitude: 51.389,
       },
-      tags: ['Infrastructure', 'Lighting', 'Safety'],
-      category: 'Public Works',
+      tags: ["Infrastructure", "Lighting", "Safety"],
+      category: "Public Works",
       attachments: [
         {
-          _id: '1',
-          filename: 'street-light.jpg',
-          url: '#',
-          type: 'image/jpeg',
+          _id: "1",
+          filename: "street-light.jpg",
+          url: "#",
+          type: "image/jpeg",
           size: 2048000,
         },
       ],
-      createdAt: '2024-01-15T10:30:00Z',
-      updatedAt: '2024-01-15T10:30:00Z',
+      createdAt: "2024-01-15T10:30:00Z",
+      updatedAt: "2024-01-15T10:30:00Z",
     });
     setLoading(false);
   }, [reportId]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Pending':
-        return 'secondary';
-      case 'Approved':
-        return 'default';
-      case 'Rejected':
-        return 'destructive';
-      case 'InReview':
-        return 'outline';
+      case "Pending":
+        return "secondary";
+      case "Approved":
+        return "default";
+      case "Rejected":
+        return "destructive";
+      case "InReview":
+        return "outline";
       default:
-        return 'secondary';
+        return "secondary";
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'High':
-        return 'destructive';
-      case 'Medium':
-        return 'secondary';
-      case 'Low':
-        return 'outline';
+      case "High":
+        return "destructive";
+      case "Medium":
+        return "secondary";
+      case "Low":
+        return "outline";
       default:
-        return 'outline';
+        return "outline";
     }
   };
 
   const formatFileSize = (bytes: number) => {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
   };
 
-  const isImage = (type: string) => type.startsWith('image/');
+  const isImage = (type: string) => type.startsWith("image/");
 
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">
-          <p className="text-muted-foreground">{t('common.loading')}</p>
+          <p className="text-muted-foreground">{t("common.loading")}</p>
         </div>
       </div>
     );
@@ -134,14 +128,12 @@ export default function ReportDetailPage() {
       <div className="container mx-auto px-4 py-8">
         <Card>
           <CardHeader className="text-center">
-            <CardTitle>{t('reportNotFound')}</CardTitle>
-            <CardDescription>
-              {t('reportNotFoundDescription')}
-            </CardDescription>
+            <CardTitle>{t("reportNotFound")}</CardTitle>
+            <CardDescription>{t("reportNotFoundDescription")}</CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center pb-6">
             <Button asChild>
-              <Link href="/reports/my">{t('backToReports')}</Link>
+              <Link href="/reports/my">{t("backToReports")}</Link>
             </Button>
           </CardContent>
         </Card>
@@ -155,7 +147,7 @@ export default function ReportDetailPage() {
       <Button variant="ghost" asChild className="mb-6">
         <Link href="/reports/my" className="gap-2">
           <ArrowLeft className="h-4 w-4" />
-          {t('backToReports')}
+          {t("backToReports")}
         </Link>
       </Button>
 
@@ -174,7 +166,7 @@ export default function ReportDetailPage() {
           <CardDescription className="mt-2 flex items-center gap-4 text-sm">
             <span className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
-              {format(new Date(report.createdAt), 'MMM dd, yyyy')}
+              {format(new Date(report.createdAt), "MMM dd, yyyy")}
             </span>
             {report.category && (
               <span className="flex items-center gap-1">
@@ -189,7 +181,7 @@ export default function ReportDetailPage() {
       {/* Description */}
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle>{t('description')}</CardTitle>
+          <CardTitle>{t("description")}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground whitespace-pre-wrap">{report.description}</p>
@@ -202,16 +194,14 @@ export default function ReportDetailPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <MapPin className="h-5 w-5" />
-              {t('location')}
+              {t("location")}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">{report.address || report.location?.address}</p>
             {/* Map placeholder */}
             <div className="mt-4 h-48 rounded-lg bg-muted flex items-center justify-center">
-              <p className="text-sm text-muted-foreground">
-                {t('mapPlaceholder')}
-              </p>
+              <p className="text-sm text-muted-foreground">{t("mapPlaceholder")}</p>
             </div>
           </CardContent>
         </Card>
@@ -223,7 +213,7 @@ export default function ReportDetailPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Tag className="h-5 w-5" />
-              {t('tags')}
+              {t("tags")}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -244,23 +234,16 @@ export default function ReportDetailPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Paperclip className="h-5 w-5" />
-              {t('attachments')} ({report.attachments.length})
+              {t("attachments")} ({report.attachments.length})
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 sm:grid-cols-2">
               {report.attachments.map((file) => (
-                <div
-                  key={file._id}
-                  className="flex items-center gap-3 rounded-lg border p-4"
-                >
+                <div key={file._id} className="flex items-center gap-3 rounded-lg border p-4">
                   {isImage(file.type) ? (
-                    <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
-                      <img
-                        src={file.url}
-                        alt={file.filename}
-                        className="h-full w-full object-cover"
-                      />
+                    <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
+                      <Image src={file.url} alt={file.filename} fill className="object-cover" />
                     </div>
                   ) : (
                     <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-md bg-muted">
@@ -269,9 +252,7 @@ export default function ReportDetailPage() {
                   )}
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{file.filename}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {formatFileSize(file.size)}
-                    </p>
+                    <p className="text-xs text-muted-foreground">{formatFileSize(file.size)}</p>
                   </div>
                   <Button variant="ghost" size="icon" asChild>
                     <a href={file.url} download={file.filename}>

@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import Image from "next/image";
+
 import { Upload, X, FileIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -104,11 +106,11 @@ export function FileUploadField({
             {uploadedFiles.map((file, index) => (
               <div key={index} className="relative group">
                 {isImage(file) ? (
-                  <div className="aspect-square rounded-lg overflow-hidden bg-muted">
-                    <img
+                  <div className="relative aspect-square rounded-lg overflow-hidden bg-muted">
+                    <Image unoptimized fill
                       src={URL.createObjectURL(file)}
                       alt={file.name}
-                      className="w-full h-full object-cover"
+                      className="object-cover"
                       onLoad={() => URL.revokeObjectURL(URL.createObjectURL(file))}
                     />
                   </div>
