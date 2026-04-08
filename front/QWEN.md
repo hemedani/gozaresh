@@ -318,6 +318,36 @@ if (result.success) {
 }
 ```
 
+### PWA and Offline Support
+
+- The app uses `@ducanh2912/next-pwa` for PWA capabilities.
+- Configured in `next.config.ts` with a fallback offline page at `src/app/~offline/page.tsx`.
+- Manifest and icons are stored in the `public` directory.
+
+### UX and Loading States
+
+- Always use `shadcn/ui` `Skeleton` component for data lists while loading.
+- Use `loading.tsx` in Next.js App Router to automatically wrap Server Components with skeleton loaders.
+- Use the `Loader2` icon from `lucide-react` with the `animate-spin` class inside buttons to indicate form submission or async actions in progress.
+
+### Error Handling
+
+- The app uses Next.js Error Boundaries (`error.tsx` and `global-error.tsx`).
+- Always provide user-friendly error messages and a "Try again" (reset) button.
+- Client-side error states (e.g., in `MyReportsPage`) should display an inline error UI instead of completely crashing the page.
+
+### Accessibility (a11y)
+
+- Interactive elements (Buttons, Inputs, etc.) must have proper focus rings: `focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background`.
+- Use `aria-label` on icon-only buttons (e.g., Theme Switcher, Language Switcher, Hamburger Menu).
+
+### Form Validation Localization
+
+- Use `zod` for schema validation.
+- To localize Zod error messages with variables, pass a stringified JSON object as the custom error message.
+  Example: `z.string().min(6, JSON.stringify({ key: "validation.minLength", values: { min: 6 } }))`
+- The `FormMessage` component inside `src/components/ui/form.tsx` is equipped to parse this JSON and translate it using `next-intl`.
+
 ---
 
 ## Server Actions Architecture (Lesan Framework Integration)
@@ -730,7 +760,7 @@ import { count } from "@/app/actions/user/count";
 export default async function UsersList({ page = 1, limit = 20 }) {
   const totalResult = await count({}, { count: 1 });
   const totalUsers = totalResult.success ? totalResult.body : null;
-  
+
   const usersResult = await gets(
     { page, limit },
     {
