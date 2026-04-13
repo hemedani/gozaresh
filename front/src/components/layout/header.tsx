@@ -26,7 +26,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
 import { useAuthStore } from "@/stores/authStore";
 import { logout as logoutAction } from "@/app/actions/user/logout";
 import { LanguageSwitcher } from "./language-switcher";
@@ -43,7 +42,8 @@ export function Header() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleLogout = async () => {
@@ -94,6 +94,7 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
+            className="h-10 w-10 p-2"
             onClick={toggleTheme}
             title={mounted && theme === "dark" ? t("lightMode") : t("darkMode")}
             aria-label={mounted && theme === "dark" ? t("lightMode") : t("darkMode")}

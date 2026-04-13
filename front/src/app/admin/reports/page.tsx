@@ -43,7 +43,9 @@ export default async function AdminReportsPage({
   const categoriesResponse = await getCategories({ page: 1, limit: 100 }, { _id: 1, name: 1 });
   let categories: any[] = [];
   if (categoriesResponse?.success) {
-    categories = categoriesResponse.body.list || [];
+    categories = Array.isArray(categoriesResponse.body)
+      ? categoriesResponse.body
+      : categoriesResponse.body?.list || [];
   }
 
   // Fetch reports
@@ -59,7 +61,7 @@ export default async function AdminReportsPage({
   let reports: any[] = [];
   let error: string | null = null;
   if (response?.success) {
-    reports = response.body.list || [];
+    reports = Array.isArray(response.body) ? response.body : response.body?.list || [];
   } else {
     error = response?.error || response?.body?.message || "Failed to fetch reports";
   }
@@ -91,9 +93,10 @@ export default async function AdminReportsPage({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">{t("allStatuses") || "All Statuses"}</SelectItem>
-                <SelectItem value="pending">{t("status_pending")}</SelectItem>
-                <SelectItem value="approved">{t("status_approved")}</SelectItem>
-                <SelectItem value="rejected">{t("status_rejected")}</SelectItem>
+                <SelectItem value="Pending">{t("status_pending")}</SelectItem>
+                <SelectItem value="Approved">{t("status_approved")}</SelectItem>
+                <SelectItem value="Rejected">{t("status_rejected")}</SelectItem>
+                <SelectItem value="InReview">{t("status_in_review")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -104,9 +107,9 @@ export default async function AdminReportsPage({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">{t("allPriorities") || "All Priorities"}</SelectItem>
-                <SelectItem value="low">{t("priority_low")}</SelectItem>
-                <SelectItem value="medium">{t("priority_medium")}</SelectItem>
-                <SelectItem value="high">{t("priority_high")}</SelectItem>
+                <SelectItem value="Low">{t("priority_low")}</SelectItem>
+                <SelectItem value="Medium">{t("priority_medium")}</SelectItem>
+                <SelectItem value="High">{t("priority_high")}</SelectItem>
               </SelectContent>
             </Select>
           </div>

@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { gets as getCategories } from "@/app/actions/category/gets";
+import { gets as getTags } from "@/app/actions/tag/gets";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { createReport } from "@/app/actions/report/actions";
@@ -43,7 +45,6 @@ const reportSchema = z.object({
   title: z.string().min(1, "report.titleRequired"),
   description: z.string().min(1, "report.descriptionRequired"),
   address: z.string().optional(),
-  priority: z.enum(["Low", "Medium", "High"]).optional(),
   tags: z.array(z.string()).optional(),
   category: z.string().optional(),
   location: z
@@ -64,6 +65,29 @@ export default function NewReportPage() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [categories, setCategories] = useState<{ _id: string; name: string }[]>([]);
+  const [tags, setTags] = useState<{ _id: string; name: string }[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [categoriesRes, tagsRes] = await Promise.all([
+          getCategories({ page: 1, limit: 100 }, { _id: 1, name: 1 }),
+          getTags({ page: 1, limit: 100 }, { _id: 1, name: 1 }),
+        ]);
+
+        if (categoriesRes.success && Array.isArray(categoriesRes.body)) {
+          setCategories(categoriesRes.body);
+        }
+        if (tagsRes.success && Array.isArray(tagsRes.body)) {
+          setTags(tagsRes.body);
+        }
+      } catch (error) {
+        console.error("Failed to fetch categories or tags", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const form = useForm<ReportFormData>({
     resolver: zodResolver(reportSchema),
@@ -71,7 +95,6 @@ export default function NewReportPage() {
       title: "",
       description: "",
       address: "",
-      priority: "Low",
       tags: [],
       category: "",
       location: { address: "" },
@@ -85,8 +108,6 @@ export default function NewReportPage() {
     const result = await createReport({
       title: data.title,
       description: data.description,
-      address: data.address,
-      priority: data.priority,
       tags: data.tags,
       category: data.category,
       location: data.location
@@ -191,13 +212,13 @@ export default function NewReportPage() {
                 )}
               />
 
-              {/* Priority */}
+              {/* Category */}
               <FormField
                 control={form.control}
-                name="priority"
+                name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("report.priority")}</FormLabel>
+                    <FormLabel>{t("report.category")}</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -205,13 +226,15 @@ export default function NewReportPage() {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={t("report.selectPriority")} />
+                          <SelectValue placeholder={t("report.selectCategory")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="Low">{t("report.priorityLow")}</SelectItem>
-                        <SelectItem value="Medium">{t("report.priorityMedium")}</SelectItem>
-                        <SelectItem value="High">{t("report.priorityHigh")}</SelectItem>
+                        {categories.map((cat) => (
+                          <SelectItem key={cat._id} value={cat._id}>
+                            {cat.name}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -227,8 +250,11 @@ export default function NewReportPage() {
                   <FormItem>
                     <TagSelector
                       label={t("report.tags")}
-                      availableTags={[]}
-                      selectedTags={(field.value || []).map((id) => ({ id, name: id }))}
+                      availableTags={tags.map((t) => ({ id: t._id, name: t.name }))}
+                      selectedTags={(field.value || []).map((id) => {
+                        const existingTag = tags.find((t) => t._id === id);
+                        return { id, name: existingTag ? existingTag.name : id };
+                      })}
                       onChange={(tags) => field.onChange(tags.map((t) => t.id))}
                       creatable={true}
                     />
@@ -247,7 +273,7 @@ export default function NewReportPage() {
                       label={t("report.location")}
                       value={field.value}
                       onChange={field.onChange}
-                      showMap={false}
+                      showMap={true}
                     />
                     <FormMessage />
                   </FormItem>

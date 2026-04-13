@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { getMyReports } from "@/app/actions/report/actions";
+import { gets as getReports } from "@/app/actions/report/gets";
 import { FileText, Plus, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import { format } from "date-fns";
 
@@ -35,15 +35,26 @@ export default function MyReportsPage() {
       setLoading(true);
       setError(null);
       try {
-        const result = await getMyReports(page, 10);
+        const result = await getReports(
+          { page, limit: 10 },
+          {
+            _id: 1,
+            title: 1,
+            description: 1,
+            status: 1,
+            priority: 1,
+            createdAt: 1,
+          },
+        );
         if (result.success && result.body) {
-          setReports(result.body.reports || []);
+          const fetchedReports = Array.isArray(result.body) ? result.body : result.body.list || [];
+          setReports(fetchedReports);
           setTotalPages(result.body.totalPages || 1);
         } else {
-          setError(result.error || "Failed to fetch reports");
+          setError(result.error || result.body?.message || "Failed to fetch reports");
         }
-      } catch (err: any) {
-        setError(err.message || "An unexpected error occurred");
+      } catch (err: unknown) {
+        setError((err as Error).message || "An unexpected error occurred");
       }
       setLoading(false);
     };
@@ -211,12 +222,16 @@ export default function MyReportsPage() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="mb-2 flex flex-wrap items-center gap-2">
-                      <Badge variant={getStatusColor(report.status)}>
-                        {t(`status${report.status}`)}
-                      </Badge>
-                      <Badge variant={getPriorityColor(report.priority)}>
-                        {t(`priority${report.priority}`)}
-                      </Badge>
+                      {report.status && (
+                        <Badge variant={getStatusColor(report.status)}>
+                          {t(`status${report.status}`)}
+                        </Badge>
+                      )}
+                      {report.priority && (
+                        <Badge variant={getPriorityColor(report.priority)}>
+                          {t(`priority${report.priority}`)}
+                        </Badge>
+                      )}
                     </div>
                     <CardTitle className="text-xl">{report.title}</CardTitle>
                     <CardDescription className="line-clamp-2 mt-1">

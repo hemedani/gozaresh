@@ -5,7 +5,6 @@ import { AppApi, getToken } from "@/lib/api";
 export async function createReport(data: {
   title: string;
   description: string;
-  address?: string;
   location?: { type: string; coordinates: [number, number] };
   priority?: string;
   tags?: string[];
@@ -18,18 +17,20 @@ export async function createReport(data: {
       return { success: false, error: "Not authenticated" };
     }
 
-    const { tags, category, attachments, ...rest } = data;
-
     const result = await AppApi(undefined, token).send({
       service: "main",
       model: "report",
       act: "add",
       details: {
         set: {
-          ...rest,
-          tags: tags || [],
-          category: category || undefined,
-          attachments: attachments || [],
+          title: data.title,
+          description: data.description,
+          ...(data.location ? { location: data.location } : {}),
+          ...(data.tags && data.tags.length > 0 ? { tags: data.tags } : {}),
+          ...(data.category ? { category: data.category } : {}),
+          ...(data.attachments && data.attachments.length > 0
+            ? { attachments: data.attachments }
+            : {}),
         },
         get: {
           _id: 1,
@@ -42,7 +43,10 @@ export async function createReport(data: {
 
     return result;
   } catch (error: unknown) {
-    return { success: false, body: { message: error instanceof Error ? error.message : "Unknown error" } };
+    return {
+      success: false,
+      body: { message: error instanceof Error ? error.message : "Unknown error" },
+    };
   }
 }
 
@@ -72,6 +76,9 @@ export async function getMyReports(page = 1, limit = 10) {
 
     return result;
   } catch (error: unknown) {
-    return { success: false, body: { message: error instanceof Error ? error.message : "Unknown error" } };
+    return {
+      success: false,
+      body: { message: error instanceof Error ? error.message : "Unknown error" },
+    };
   }
 }

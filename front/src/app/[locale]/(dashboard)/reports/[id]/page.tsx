@@ -10,6 +10,16 @@ import { Badge } from "@/components/ui/badge";
 import { FileText, Calendar, MapPin, Tag, Paperclip, ArrowLeft, Download } from "lucide-react";
 import { format } from "date-fns";
 import Image from "next/image";
+import { get as getReport } from "@/app/actions/report/get";
+import dynamic from "next/dynamic";
+
+const ReadonlyMap = dynamic(
+  () => import("@/components/map/readonly-map").then((mod) => mod.ReadonlyMap),
+  {
+    ssr: false,
+    loading: () => <div className="h-[350px] w-full animate-pulse rounded-xl bg-muted" />,
+  },
+);
 
 interface Report {
   _id: string;
@@ -19,25 +29,23 @@ interface Report {
   priority: "Low" | "Medium" | "High";
   address?: string;
   location?: {
-    address: string;
-    latitude?: number;
-    longitude?: number;
+    type?: string;
+    coordinates?: number[];
   };
-  tags?: string[];
-  category?: string;
+  tags?: Array<{ _id: string; name: string }>;
+  category?: { _id: string; name: string };
   attachments?: Array<{
     _id: string;
-    filename: string;
-    url: string;
-    type: string;
-    size: number;
+    name: string;
+    mimType: string;
   }>;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 export default function ReportDetailPage() {
   const t = useTranslations("report");
+  const tCommon = useTranslations("common");
   const params = useParams();
   const reportId = params.id as string;
 
@@ -45,36 +53,39 @@ export default function ReportDetailPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Fetch report details
-    // For now, using mock data
-    setReport({
-      _id: reportId,
-      title: "Sample Report - Street Light Not Working",
-      description:
-        "The street light at the main road intersection has not been working for the past 3 days. This is causing safety concerns for pedestrians and drivers. The area becomes very dark at night, making it difficult to see. Requesting immediate attention to this issue.",
-      status: "Pending",
-      priority: "Medium",
-      address: "123 Main Street, City Center",
-      location: {
-        address: "123 Main Street, City Center",
-        latitude: 35.6892,
-        longitude: 51.389,
-      },
-      tags: ["Infrastructure", "Lighting", "Safety"],
-      category: "Public Works",
-      attachments: [
-        {
-          _id: "1",
-          filename: "street-light.jpg",
-          url: "#",
-          type: "image/jpeg",
-          size: 2048000,
-        },
-      ],
-      createdAt: "2024-01-15T10:30:00Z",
-      updatedAt: "2024-01-15T10:30:00Z",
-    });
-    setLoading(false);
+    const fetchReport = async () => {
+      setLoading(true);
+      try {
+        const result = await getReport(
+          { _id: reportId },
+          {
+            _id: 1,
+            title: 1,
+            description: 1,
+            status: 1,
+            priority: 1,
+            location: 1,
+            address: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            category: { _id: 1, name: 1 },
+            tags: { _id: 1, name: 1 },
+            attachments: { _id: 1, name: 1, mimType: 1 },
+          },
+        );
+
+        if (result.success && result.body) {
+          const fetchedReport = Array.isArray(result.body) ? result.body[0] : result.body;
+          setReport(fetchedReport as unknown as Report);
+        }
+      } catch (error) {
+        console.error("Failed to fetch report details:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReport();
   }, [reportId]);
 
   const getStatusColor = (status: string) => {
@@ -105,19 +116,13 @@ export default function ReportDetailPage() {
     }
   };
 
-  const formatFileSize = (bytes: number) => {
-    if (bytes < 1024) return bytes + " B";
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
-    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
-  };
-
   const isImage = (type: string) => type.startsWith("image/");
 
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">
-          <p className="text-muted-foreground">{t("common.loading")}</p>
+          <p className="text-muted-foreground">{tCommon("loading")}</p>
         </div>
       </div>
     );
@@ -155,23 +160,29 @@ export default function ReportDetailPage() {
       <Card className="mb-6">
         <CardHeader>
           <div className="mb-4 flex flex-wrap items-center gap-2">
-            <Badge variant={getStatusColor(report.status)} className="text-sm">
-              {t(`status${report.status}`)}
-            </Badge>
-            <Badge variant={getPriorityColor(report.priority)} className="text-sm">
-              {t(`priority${report.priority}`)}
-            </Badge>
+            {report.status && (
+              <Badge variant={getStatusColor(report.status)} className="text-sm">
+                {t(`status${report.status}`)}
+              </Badge>
+            )}
+            {report.priority && (
+              <Badge variant={getPriorityColor(report.priority)} className="text-sm">
+                {t(`priority${report.priority}`)}
+              </Badge>
+            )}
           </div>
           <CardTitle className="text-3xl">{report.title}</CardTitle>
-          <CardDescription className="mt-2 flex items-center gap-4 text-sm">
-            <span className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" />
-              {format(new Date(report.createdAt), "MMM dd, yyyy")}
-            </span>
+          <CardDescription className="flex items-center gap-4">
+            {report.createdAt && (
+              <span className="flex items-center gap-1">
+                <Calendar className="h-4 w-4" />
+                {format(new Date(report.createdAt), "MMM dd, yyyy")}
+              </span>
+            )}
             {report.category && (
               <span className="flex items-center gap-1">
                 <FileText className="h-4 w-4" />
-                {report.category}
+                {report.category.name}
               </span>
             )}
           </CardDescription>
@@ -189,7 +200,7 @@ export default function ReportDetailPage() {
       </Card>
 
       {/* Location */}
-      {(report.address || report.location) && (
+      {(report.address || report.location?.coordinates) && (
         <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -198,11 +209,16 @@ export default function ReportDetailPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground">{report.address || report.location?.address}</p>
-            {/* Map placeholder */}
-            <div className="mt-4 h-48 rounded-lg bg-muted flex items-center justify-center">
-              <p className="text-sm text-muted-foreground">{t("mapPlaceholder")}</p>
-            </div>
+            {report.address && <p className="text-muted-foreground">{report.address}</p>}
+            {report.location?.coordinates && (
+              <div className="mt-4">
+                <ReadonlyMap
+                  latitude={report.location.coordinates[1]}
+                  longitude={report.location.coordinates[0]}
+                  className="h-[350px] w-full rounded-xl overflow-hidden border-2 shadow-sm relative z-0"
+                />
+              </div>
+            )}
           </CardContent>
         </Card>
       )}
@@ -219,8 +235,8 @@ export default function ReportDetailPage() {
           <CardContent>
             <div className="flex flex-wrap gap-2">
               {report.tags.map((tag, index) => (
-                <Badge key={index} variant="secondary">
-                  {tag}
+                <Badge key={tag._id || index} variant="secondary">
+                  {tag.name}
                 </Badge>
               ))}
             </div>
@@ -241,9 +257,14 @@ export default function ReportDetailPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               {report.attachments.map((file) => (
                 <div key={file._id} className="flex items-center gap-3 rounded-lg border p-4">
-                  {isImage(file.type) ? (
+                  {isImage(file.mimType || "") ? (
                     <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
-                      <Image src={file.url} alt={file.filename} fill className="object-cover" />
+                      <Image
+                        src={file.name ? `/uploads/${file.name}` : "https://placehold.co/400x400.png"}
+                        alt={file.name || "Attachment"}
+                        fill
+                        className="object-cover"
+                      />
                     </div>
                   ) : (
                     <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-md bg-muted">
@@ -251,11 +272,10 @@ export default function ReportDetailPage() {
                     </div>
                   )}
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium">{file.filename}</p>
-                    <p className="text-xs text-muted-foreground">{formatFileSize(file.size)}</p>
+                    <p className="truncate text-sm font-medium">{file.name}</p>
                   </div>
                   <Button variant="ghost" size="icon" asChild>
-                    <a href={file.url} download={file.filename}>
+                    <a href={file.name ? `/uploads/${file.name}` : "#"} download={file.name}>
                       <Download className="h-4 w-4" />
                     </a>
                   </Button>

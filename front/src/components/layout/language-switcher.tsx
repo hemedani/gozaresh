@@ -40,12 +40,18 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="gap-2" aria-label="Select language">
-          <Globe className="h-5 w-5" />
-          <span className="hidden lg:inline text-sm font-medium">{currentLang.nativeName}</span>
+        <Button
+          variant="ghost"
+          className="h-9 px-3 gap-2 justify-center rounded-md"
+          aria-label="Select language"
+        >
+          <Globe className="h-4 w-4 shrink-0" />
+          <span className="hidden lg:inline text-sm font-medium leading-none">
+            {currentLang.nativeName}
+          </span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
+      <DropdownMenuContent align="center" sideOffset={8} className="w-48">
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
