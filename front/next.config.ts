@@ -52,6 +52,10 @@ const nextConfig: NextConfig = {
         port: "1405",
         pathname: "/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+      },
     ],
   },
 };
