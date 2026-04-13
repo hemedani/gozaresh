@@ -25,7 +25,10 @@
     "optional": "可选",
     "characters": "字符",
     "fileUpload": {
-      "browse": "浏览文件"
+      "browse": "浏览文件",
+      "maxFiles": "最多 {count} 个文件",
+      "maxSize": "每个文件最大 {size}",
+      "uploadedFiles": "已上传 {count} 个文件"
     },
     "locationPicker": {
       "currentLocation": "当前位置",
@@ -164,12 +167,7 @@
     "trust": {
       "title": "深受成千上万人的信任",
       "description": "加入我们活跃市民的社区。",
-      "benefits": [
-        "与政府官员直接沟通",
-        "透明的处理流程",
-        "快速的解决方案",
-        "产生社区影响"
-      ]
+      "benefits": ["与政府官员直接沟通", "透明的处理流程", "快速的解决方案", "产生社区影响"]
     },
     "cta": {
       "title": "准备好开始了吗？",

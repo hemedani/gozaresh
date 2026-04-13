@@ -25,7 +25,10 @@
     "optional": "Optional",
     "characters": "characters",
     "fileUpload": {
-      "browse": "Browse files"
+      "browse": "Browse files",
+      "maxFiles": "Max {count} files",
+      "maxSize": "Max size per file {size}",
+      "uploadedFiles": "{count} files uploaded"
     },
     "locationPicker": {
       "currentLocation": "Current Location",
@@ -357,5 +360,10 @@
     "documents": "Documents",
     "filter": "Filter",
     "noFilesFound": "No files found"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "Sorry, the page you are looking for does not exist.",
+    "backHome": "Back to Home"
   }
 }

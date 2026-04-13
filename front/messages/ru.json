@@ -25,7 +25,10 @@
     "optional": "Необязательно",
     "characters": "символов",
     "fileUpload": {
-      "browse": "Обзор файлов"
+      "browse": "Обзор файлов",
+      "maxFiles": "Максимум {count} файлов",
+      "maxSize": "Максимальный размер файла {size}",
+      "uploadedFiles": "Загружено файлов: {count}"
     },
     "locationPicker": {
       "currentLocation": "Текущее местоположение",

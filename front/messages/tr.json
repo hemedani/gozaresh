@@ -25,7 +25,10 @@
     "optional": "İsteğe Bağlı",
     "characters": "karakter",
     "fileUpload": {
-      "browse": "Dosyalara göz at"
+      "browse": "Dosyalara göz at",
+      "maxFiles": "En fazla {count} dosya",
+      "maxSize": "Dosya başına en fazla {size}",
+      "uploadedFiles": "{count} dosya yüklendi"
     },
     "locationPicker": {
       "currentLocation": "Mevcut Konum",
@@ -164,12 +167,7 @@
     "trust": {
       "title": "Binlerce kişi tarafından güveniliyor",
       "description": "Aktif vatandaşlardan oluşan topluluğumuza katılın.",
-      "benefits": [
-        "Yetkililerle doğrudan iletişim",
-        "Şeffaf süreç",
-        "Hızlı çözüm",
-        "Toplumsal etki"
-      ]
+      "benefits": ["Yetkililerle doğrudan iletişim", "Şeffaf süreç", "Hızlı çözüm", "Toplumsal etki"]
     },
     "cta": {
       "title": "Başlamaya hazır mısınız?",

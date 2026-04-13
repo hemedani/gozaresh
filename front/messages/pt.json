@@ -25,7 +25,10 @@
     "optional": "Opcional",
     "characters": "caracteres",
     "fileUpload": {
-      "browse": "Procurar arquivos"
+      "browse": "Procurar arquivos",
+      "maxFiles": "Máximo de {count} arquivos",
+      "maxSize": "Tamanho máximo por arquivo {size}",
+      "uploadedFiles": "{count} arquivos enviados"
     },
     "locationPicker": {
       "currentLocation": "Localização Atual",

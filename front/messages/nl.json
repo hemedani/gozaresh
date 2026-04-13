@@ -25,7 +25,10 @@
     "optional": "Optioneel",
     "characters": "tekens",
     "fileUpload": {
-      "browse": "Bestanden bladeren"
+      "browse": "Bestanden bladeren",
+      "maxFiles": "Maximaal {count} bestanden",
+      "maxSize": "Maximale grootte per bestand: {size}",
+      "uploadedFiles": "{count} bestanden geüpload"
     },
     "locationPicker": {
       "currentLocation": "Huidige locatie",
