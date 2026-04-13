@@ -77,3 +77,6 @@ data/db/
 
 # Redis dump (if used)
 dump.rdb
+
+# Front development assets
+front/ignoreAssets
