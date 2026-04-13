@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,6 +20,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuthStore } from "@/stores/authStore";
 
 const registerSchema = z.object({
   first_name: z.string().min(1, "auth.firstNameRequired"),
@@ -35,6 +36,13 @@ export default function RegisterPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  const { isAuthenticated } = useAuthStore();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated, router]);
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
@@ -62,7 +70,7 @@ export default function RegisterPage() {
         title: t("common.success"),
         description: t("auth.registerSuccess"),
       });
-      router.push("/auth/login");
+      router.push("/login");
     } else {
       toast({
         variant: "destructive",
@@ -156,7 +164,7 @@ export default function RegisterPage() {
         <CardFooter className="flex flex-col space-y-4">
           <p className="text-center text-sm text-muted-foreground">
             {t("auth.hasAccount")}{" "}
-            <Link href="/auth/login" className="text-primary font-medium hover:underline">
+            <Link href="/login" className="text-primary font-medium hover:underline">
               {t("auth.loginButton")}
             </Link>
           </p>

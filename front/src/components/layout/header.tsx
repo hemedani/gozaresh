@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import {
   Moon,
@@ -17,7 +17,7 @@ import {
   FolderOpen,
   FileImage,
 } from "lucide-react";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/components/providers/theme-provider";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -36,6 +36,7 @@ export function Header() {
   const t = useTranslations("header");
   const tAdmin = useTranslations("admin");
   const pathname = usePathname();
+  const router = useRouter();
   const locale = useLocale();
   const { theme, setTheme } = useTheme();
   const { user, isAuthenticated, logout } = useAuthStore();
@@ -48,6 +49,7 @@ export function Header() {
   const handleLogout = async () => {
     await logoutAction();
     logout();
+    router.push(`/${locale}`);
   };
 
   const toggleTheme = () => {
@@ -69,7 +71,7 @@ export function Header() {
         {!pathname.startsWith("/admin") && isAuthenticated && (
           <nav className="hidden md:flex items-center gap-6">
             <Link
-              href={`/${locale}/reports`}
+              href={`/${locale}/reports/my`}
               className="text-sm font-medium hover:text-primary transition-colors"
             >
               {t("myReports")}
@@ -243,7 +245,7 @@ export function Header() {
                         </Link>
                         <div className="my-2 h-px bg-muted" />
                         <Link
-                          href={`/${locale}/reports`}
+                          href={`/${locale}/reports/my`}
                           className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
                         >
                           {t("myReports")}
@@ -258,7 +260,7 @@ export function Header() {
                     ) : (
                       <>
                         <Link
-                          href={`/${locale}/reports`}
+                          href={`/${locale}/reports/my`}
                           className="text-sm font-medium hover:text-primary transition-colors"
                         >
                           {t("myReports")}

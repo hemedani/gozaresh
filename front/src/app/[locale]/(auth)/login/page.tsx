@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -34,7 +34,13 @@ export default function LoginPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const { setUser, setToken } = useAuthStore();
+  const { setUser, setToken, isAuthenticated } = useAuthStore();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated, router]);
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -48,7 +54,6 @@ export default function LoginPage() {
     setLoading(true);
 
     const result = await login({ email: data.email, password: data.password });
-
 
     if (result.success) {
       if (result.user) {
@@ -123,7 +128,7 @@ export default function LoginPage() {
         <CardFooter className="flex flex-col space-y-4">
           <p className="text-center text-sm text-muted-foreground">
             {t("auth.noAccount")}{" "}
-            <Link href="/auth/register" className="text-primary font-medium hover:underline">
+            <Link href="/register" className="text-primary font-medium hover:underline">
               {t("auth.registerButton")}
             </Link>
           </p>

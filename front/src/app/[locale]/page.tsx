@@ -6,10 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Shield, Globe, FileText, Lock, Zap, Users, ArrowRight, CheckCircle2 } from "lucide-react";
+import { useAuthStore } from "@/stores/authStore";
 
 export default function Home() {
   const t = useTranslations("home");
   const nav = useTranslations("nav");
+  const { isAuthenticated } = useAuthStore();
 
   const features = [
     {
@@ -76,14 +78,29 @@ export default function Home() {
             </h1>
             <p className="mb-8 text-lg text-muted-foreground md:text-xl">{t("hero.description")}</p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <Button size="lg" asChild className="gap-2">
-                <Link href="/auth/register">
-                  {t("hero.ctaButton")} <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/auth/login">{nav("login")}</Link>
-              </Button>
+              {isAuthenticated ? (
+                <>
+                  <Button size="lg" asChild className="gap-2">
+                    <Link href="/reports/my">
+                      {nav("myReports") || "My Reports"} <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button size="lg" variant="outline" asChild>
+                    <Link href="/reports/new">{nav("newReport") || "New Report"}</Link>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button size="lg" asChild className="gap-2">
+                    <Link href="/register">
+                      {t("hero.ctaButton")} <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button size="lg" variant="outline" asChild>
+                    <Link href="/login">{nav("login")}</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -171,19 +188,21 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-primary py-20 md:py-32 text-primary-foreground">
-        <div className="container px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">{t("cta.title")}</h2>
-            <p className="mb-8 text-lg opacity-90">{t("cta.description")}</p>
-            <Button size="lg" variant="secondary" asChild className="gap-2">
-              <Link href="/auth/register">
-                {t("cta.button")} <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
+      {!isAuthenticated && (
+        <section className="bg-primary py-20 md:py-32 text-primary-foreground">
+          <div className="container px-4">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">{t("cta.title")}</h2>
+              <p className="mb-8 text-lg opacity-90">{t("cta.description")}</p>
+              <Button size="lg" variant="secondary" asChild className="gap-2">
+                <Link href="/register">
+                  {t("cta.button")} <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   );
 }
