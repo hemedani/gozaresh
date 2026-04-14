@@ -27,13 +27,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function ReportsTable({ reports, error }: { reports: any[]; error?: string | null }) {
+type ReportItem = {
+  _id: string;
+  title: string;
+  status: string;
+  priority: string;
+  createdAt: string;
+  category?: { _id: string; name: string };
+};
+
+export function ReportsTable({ reports, error }: { reports: ReportItem[]; error?: string | null }) {
   const t = useTranslations("admin");
   const { toast } = useToast();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [selectedReport, setSelectedReport] = useState<any>(null);
+  const [selectedReport, setSelectedReport] = useState<ReportItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -46,7 +55,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
     }
   }, [error, toast, t]);
 
-  const openReportDetails = (report: any) => {
+  const openReportDetails = (report: ReportItem) => {
     setSelectedReport(report);
     setIsModalOpen(true);
   };
@@ -244,7 +253,7 @@ export function ReportsTable({ reports, error }: { reports: any[]; error?: strin
                 </TableCell>
               </TableRow>
             ) : (
-              reports.map((report: any) => (
+              reports.map((report: ReportItem) => (
                 <TableRow key={report._id}>
                   <TableCell className="ps-4">
                     <Checkbox

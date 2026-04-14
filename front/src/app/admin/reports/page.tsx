@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from "next/link";
 import { ReportsTable } from "./reports-table";
+import { ReqType } from "@/types/declarations";
 
 export default async function AdminReportsPage({
   searchParams,
@@ -31,17 +32,18 @@ export default async function AdminReportsPage({
   const sortBy = resolvedSearchParams.sortBy || "createdAt";
   const sortOrder = resolvedSearchParams.sortOrder || "desc";
 
-  const setQuery: any = { page, limit: 10 };
+  const setQuery: ReqType["main"]["report"]["gets"]["set"] = { page, limit: 10 };
   if (search) setQuery.search = search;
-  if (status !== "all") setQuery.status = status;
-  if (priority !== "all") setQuery.priority = priority;
+  if (status !== "all") setQuery.status = status as ReqType["main"]["report"]["gets"]["set"]["status"];
+  if (priority !== "all")
+    setQuery.priority = priority as ReqType["main"]["report"]["gets"]["set"]["priority"];
   if (category !== "all") setQuery.categoryIds = [category];
-  setQuery.sortBy = sortBy;
-  setQuery.sortOrder = sortOrder;
+  setQuery.sortBy = sortBy as ReqType["main"]["report"]["gets"]["set"]["sortBy"];
+  setQuery.sortOrder = sortOrder as ReqType["main"]["report"]["gets"]["set"]["sortOrder"];
 
   // Fetch categories for filter
   const categoriesResponse = await getCategories({ page: 1, limit: 100 }, { _id: 1, name: 1 });
-  let categories: any[] = [];
+  let categories: { _id: string; name: string }[] = [];
   if (categoriesResponse?.success) {
     categories = Array.isArray(categoriesResponse.body)
       ? categoriesResponse.body
@@ -58,7 +60,14 @@ export default async function AdminReportsPage({
     category: { _id: 1, name: 1 },
   });
 
-  let reports: any[] = [];
+  let reports: Array<{
+    _id: string;
+    title: string;
+    status: string;
+    priority: string;
+    createdAt: string;
+    category?: { _id: string; name: string };
+  }> = [];
   let error: string | null = null;
   if (response?.success) {
     reports = Array.isArray(response.body) ? response.body : response.body?.list || [];
@@ -120,7 +129,7 @@ export default async function AdminReportsPage({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">{t("allCategories") || "All Categories"}</SelectItem>
-                {categories.map((cat: any) => (
+                {categories.map((cat) => (
                   <SelectItem key={cat._id} value={cat._id}>
                     {cat.name}
                   </SelectItem>
