@@ -54,7 +54,7 @@ const reportSchema = z.object({
       longitude: z.number().optional(),
     })
     .optional(),
-  attachments: z.array(z.instanceof(File)).optional(),
+  attachments: z.array(z.string()).optional(),
 });
 
 type ReportFormData = z.infer<typeof reportSchema>;
@@ -113,7 +113,7 @@ export default function NewReportPage() {
       location: data.location
         ? { type: "Point", coordinates: [data.location.longitude || 0, data.location.latitude || 0] }
         : undefined,
-      attachments: data.attachments?.map((f) => f.name),
+      attachments: data.attachments,
     });
 
     if (result.success) {
